@@ -62,19 +62,52 @@ app.get("/api/test", (req, res) => {
 // MYSQL CONNECTION TEST
 // ===============================
 app.get("/api/db-test", async (req, res) => {
-  try {
-    await db.query("SELECT 1");
+  if (process.env.NODE_ENV === "production") {
+    return res.sendStatus(404);
+  }
 
-    res.json({
-      success: true,
-      message: "MySQL connected successfully",
+  try {
+    const requiredTables = [
+      "agreements",
+      "loads",
+      "invoices",
+      "deposit_payment_verifications",
+      "refundable_receipts",
+      "refundable_receipt_settings",
+      "refundable_receipt_events",
+    ];
+    const [[databaseRow]] = await db.query("SELECT DATABASE() AS databaseName");
+    await db.query("SELECT 1");
+    const [tableRows] = await db.query(
+      `SELECT table_name AS tableName
+       FROM information_schema.tables
+       WHERE table_schema = DATABASE()
+         AND table_name IN (${requiredTables.map(() => "?").join(", ")})`,
+      requiredTables,
+    );
+    const existingTables = new Set(tableRows.map((row) => row.tableName));
+    const missingTables = requiredTables.filter(
+      (tableName) => !existingTables.has(tableName),
+    );
+
+    return res.status(missingTables.length ? 503 : 200).json({
+      success: missingTables.length === 0,
+      database: databaseRow.databaseName,
+      missingTables,
+      requiredTables,
+      message: missingTables.length
+        ? "MySQL is reachable, but required application tables are missing."
+        : "MySQL connection and required tables verified.",
     });
   } catch (error) {
-    console.error("MySQL connection error:", error.message);
+    console.error(
+      "Development database health check failed:",
+      error.code || error.name,
+    );
 
-    res.status(500).json({
+    return res.status(503).json({
       success: false,
-      message: "MySQL connection failed",
+      message: "MySQL connection or database health check failed.",
     });
   }
 });
