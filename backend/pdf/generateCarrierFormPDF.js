@@ -1,14 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 
-const puppeteerCore = require("puppeteer-core");
-
 const carrierFormTemplate = require("../templates/carrierFormTemplate");
 
 async function generateCarrierFormPDF(formData) {
   let browser;
 
   try {
+    const puppeteerCore = await import("puppeteer-core");
     // ==========================================
     // Launch Browser
     // ==========================================
@@ -22,7 +21,7 @@ async function generateCarrierFormPDF(formData) {
         headless: chromium.headless,
       });
     } else {
-      const puppeteer = require("puppeteer");
+      const puppeteer = (await import("puppeteer")).default;
 
       browser = await puppeteer.launch({
         headless: true,

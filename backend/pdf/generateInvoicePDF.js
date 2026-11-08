@@ -1,11 +1,11 @@
 const fs = require("fs");
 const path = require("path");
-const puppeteerCore = require("puppeteer-core");
 const invoiceTemplate = require("../templates/invoiceTemplate");
 
 async function generateInvoicePDF(invoice, outputPath) {
   let browser;
   try {
+    const puppeteerCore = await import("puppeteer-core");
     if (process.env.NODE_ENV === "production") {
       const chromium = (await import("@sparticuz/chromium")).default;
       browser = await puppeteerCore.launch({
