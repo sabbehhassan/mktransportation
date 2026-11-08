@@ -90,10 +90,11 @@ router.post("/submit-agreement", async (req, res) => {
             email,
             selected_services,
             payment_method,
+            payment_terms_method,
             print_name,
             submission_status,
             deposit_status
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             trackingId,
             formData.agreementType || null,
@@ -107,6 +108,7 @@ router.post("/submit-agreement", async (req, res) => {
             formData.email.trim(),
             selectedServices,
             formData.paymentMethod,
+            formData.paymentTermsMethod || null,
             formData.printName || null,
             "processing",
             "pending",

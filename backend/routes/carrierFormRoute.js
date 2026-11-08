@@ -1,5 +1,6 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
+const company = require("../companyDetails");
 
 const router = express.Router();
 
@@ -91,10 +92,9 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Recipient: your personal Gmail during local testing.
-    // Later, change COMPANY_EMAIL to your company mailbox.
+    // Send carrier form notifications to the configured company inbox.
     const recipient =
-      process.env.COMPANY_EMAIL || process.env.EMAIL_USER;
+      process.env.COMPANY_EMAIL || "admin@mktransportationgroup.com";
 
     const safeName = escapeHtml(name.trim());
     const safeEmail = escapeHtml(email.trim());
@@ -355,7 +355,7 @@ router.post("/", async (req, res) => {
                 font-size:14px;
                 font-weight:bold;
               ">
-                MK Transportation LLC
+                ${company.name}
               </p>
 
               <p style="
@@ -364,6 +364,17 @@ router.post("/", async (req, res) => {
                 font-size:12px;
               ">
                 Your Trusted Logistics Partner
+              </p>
+              <p style="
+                margin:12px 0 0;
+                color:#D8E5E1;
+                font-size:11px;
+                line-height:1.7;
+              ">
+                MC/MX/FF: ${company.mcNumber} | USDOT: ${company.usdotNumber}<br>
+                Physical: ${company.physicalAddress}<br>
+                Mailing: ${company.mailingAddress}<br>
+                ${company.email} | ${company.adminEmail}
               </p>
 
             </div>
@@ -381,7 +392,7 @@ router.post("/", async (req, res) => {
     // ========================================
 
     await transporter.sendMail({
-      from: `"MK Transportation LLC" <${process.env.EMAIL_USER}>`,
+      from: `"${company.name}" <${process.env.EMAIL_USER}>`,
 
       to: recipient,
 

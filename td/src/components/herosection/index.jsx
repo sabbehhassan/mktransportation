@@ -69,7 +69,7 @@ const HeroSection = () => {
           {/* CTA Buttons */}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
-              to="/carrier-form"
+              to="/carrier-agreement"
               className="group inline-flex min-h-[54px] items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-[#17665B] to-[#218575] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#17665B]/30 sm:px-7 sm:text-base"
             >
               Become a Carrier

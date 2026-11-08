@@ -274,7 +274,7 @@ export default function FactoringRegistration() {
             </div>
 
             <Link
-              to="/carrier-form"
+              to="/carrier-agreement"
               className="inline-flex shrink-0 items-center justify-center gap-3 rounded-xl bg-[#103C3A] px-7 py-4 text-sm font-extrabold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-[#17665B] hover:shadow-xl"
             >
               Apply as Carrier

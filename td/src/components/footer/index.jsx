@@ -6,6 +6,14 @@ import {
   FaArrowRight,
 } from "react-icons/fa";
 import { FiClock } from "react-icons/fi";
+import {
+  COMPANY_EMAIL,
+  COMPANY_NAME,
+  COMPANY_PHYSICAL_ADDRESS,
+  ADMIN_EMAIL,
+  COMPANY_MC_NUMBER,
+  COMPANY_USDOT_NUMBER,
+} from "../../constants/companyDetails";
 
 const Footer = () => {
   const quickLinks = [
@@ -52,7 +60,7 @@ const Footer = () => {
             >
               <img
                 src={logo}
-                alt="MK Transportation LLC"
+                alt={COMPANY_NAME}
                 className="w-44 object-contain"
                 loading="lazy"
               />
@@ -65,7 +73,7 @@ const Footer = () => {
             </p>
 
             <Link
-              to="/carrier-form"
+              to="/carrier-agreement"
               className="group mt-5 inline-flex items-center gap-2 rounded-lg bg-[#D4A84F] px-5 py-3 text-sm font-bold text-[#103C3A] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#E6BE70] hover:shadow-lg hover:shadow-black/10"
             >
               Become a Carrier
@@ -122,7 +130,11 @@ const Footer = () => {
                 </div>
 
                 <p className="pt-1 text-sm leading-7 text-emerald-50/75">
-                  MK Transportation LLC
+                  <strong>{COMPANY_NAME}</strong>
+                  <br />
+                  MC/MX/FF: {COMPANY_MC_NUMBER} | USDOT: {COMPANY_USDOT_NUMBER}
+                  <br />
+                  Physical: {COMPANY_PHYSICAL_ADDRESS}
                 </p>
               </div>
 
@@ -134,32 +146,13 @@ const Footer = () => {
 
                 <div className="space-y-3 pt-1 text-left text-sm leading-6">
                   <a
-                    href="mailto:contact@mktransportationllc.com"
+                    href={`mailto:${ADMIN_EMAIL}`}
                     className="block break-all text-emerald-50/75 transition-colors duration-300 hover:text-[#F0C879]"
                   >
-                    contact@mktransportationllc.com
-                  </a>
-
-                  <a
-                    href="mailto:michael@mktransportationllc.com"
-                    className="block break-all text-emerald-50/75 transition-colors duration-300 hover:text-[#F0C879]"
-                  >
-                    michael@mktransportationllc.com
+                    {ADMIN_EMAIL}
                   </a>
                 </div>
               </div>
-
-              {/* Working Hours */}
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[#D4A84F]/25 bg-white/5 text-[#F0C879]">
-                  <FiClock />
-                </div>
-
-                <p className="text-sm text-emerald-50/75">
-                  Monday – Friday
-                </p>
-              </div>
-
             </div>
           </div>
         </div>
@@ -167,7 +160,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="flex flex-col items-center justify-between gap-3 pt-6 text-center sm:flex-row sm:text-left">
           <p className="text-xs leading-6 text-emerald-50/60 sm:text-sm">
-            © {currentYear} MK Transportation LLC. All rights reserved.
+            © {currentYear} {COMPANY_NAME} All rights reserved.
           </p>
 
           <p className="text-sm font-medium text-emerald-50/80">

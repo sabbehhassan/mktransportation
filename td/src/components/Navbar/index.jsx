@@ -1,10 +1,22 @@
 import { useState } from "react";
-import { FiMail, FiClock, FiArrowRight, FiSearch } from "react-icons/fi";
+import {
+  FiMail,
+  FiClock,
+  FiArrowRight,
+  FiSearch,
+  FiMapPin,
+} from "react-icons/fi";
 import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/logo/logo.png";
+import {
+  COMPANY_EMAIL,
+  COMPANY_MAILING_ADDRESS,
+  ADMIN_EMAIL,
+  COMPANY_NAME,
+} from "../../constants/companyDetails";
 
-const Navbar = ({ onApplyCarrier }) => {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -20,7 +32,6 @@ const Navbar = ({ onApplyCarrier }) => {
 
   const handleApplyCarrier = () => {
     setMenuOpen(false);
-    onApplyCarrier?.();
   };
 
   const handleTrackingClick = () => {
@@ -34,25 +45,31 @@ const Navbar = ({ onApplyCarrier }) => {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-2.5 text-xs">
           <div className="flex items-center gap-6">
             <a
-              href="mailto:contact@mktransportationllc.com"
+              href={`mailto:${COMPANY_EMAIL}`}
               className="group flex items-center gap-2 text-emerald-50/80 transition-colors duration-300 hover:text-[#F0C879]"
             >
               <FiMail className="text-[#F0C879] transition-transform duration-300 group-hover:scale-110" />
-              contact@mktransportationllc.com
+              {COMPANY_EMAIL}
             </a>
 
             <a
-              href="mailto:michael@mktransportationllc.com"
+              href={`mailto:${ADMIN_EMAIL}`}
               className="hidden items-center gap-2 text-emerald-50/80 transition-colors duration-300 hover:text-[#F0C879] xl:flex"
             >
               <FiMail className="text-[#F0C879]" />
-              michael@mktransportationllc.com
+              {ADMIN_EMAIL}
             </a>
           </div>
 
-          <div className="flex shrink-0 items-center gap-2 text-emerald-50/80">
-            <FiClock className="text-[#F0C879]" />
-            <span>Monday – Friday</span>
+          <div className="flex shrink-0 items-center gap-5 text-emerald-50/80">
+            <span className="hidden items-center gap-2 xl:flex">
+              <FiMapPin className="shrink-0 text-[#F0C879]" />
+              {COMPANY_MAILING_ADDRESS}
+            </span>
+            <span className="flex items-center gap-2">
+              <FiClock className="text-[#F0C879]" />
+              Monday – Friday
+            </span>
           </div>
         </div>
       </div>
@@ -69,7 +86,7 @@ const Navbar = ({ onApplyCarrier }) => {
             >
               <img
                 src={logo}
-                alt="MK Transportation LLC"
+                alt={COMPANY_NAME}
                 className="h-18 w-auto max-w-[155px] object-contain transition-transform duration-300 group-hover:scale-[1.03] sm:h-24 sm:max-w-[180px]"
               />
             </Link>
@@ -114,14 +131,14 @@ const Navbar = ({ onApplyCarrier }) => {
                 Track Agreement
               </Link>
 
-              <button
-                type="button"
+              <Link
+                to="/carrier-agreement"
                 onClick={handleApplyCarrier}
                 className="group inline-flex shrink-0 items-center gap-2 rounded-lg bg-gradient-to-r from-[#17665B] to-[#218477] px-4 py-3 text-sm font-bold text-white shadow-md shadow-[#17665B]/15 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#17665B]/25 focus:outline-none focus:ring-4 focus:ring-[#17665B]/20"
               >
                 Apply as Carrier
                 <FiArrowRight className="text-base transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#F0C879]" />
-              </button>
+              </Link>
             </div>
 
             {/* Mobile Toggle */}
@@ -188,31 +205,31 @@ const Navbar = ({ onApplyCarrier }) => {
               </Link>
 
               {/* Mobile Apply as Carrier Button */}
-              <button
-                type="button"
+              <Link
+                to="/carrier-agreement"
                 onClick={handleApplyCarrier}
                 className="group mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#17665B] to-[#218477] px-4 py-3.5 text-sm font-bold text-white shadow-md shadow-[#17665B]/15 transition-all duration-300 hover:from-[#103C3A] hover:to-[#17665B] focus:outline-none focus:ring-4 focus:ring-[#17665B]/20"
               >
                 Apply as Carrier
                 <FiArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
+              </Link>
 
               {/* Mobile Contact Information */}
               <div className="mt-5 space-y-3 border-t border-[#E5EEE9] pt-4">
                 <a
-                  href="mailto:contact@mktransportationllc.com"
+                  href={`mailto:${COMPANY_EMAIL}`}
                   className="flex items-start gap-2.5 break-all text-xs leading-5 text-[#61766E] transition-colors hover:text-[#17665B]"
                 >
                   <FiMail className="mt-0.5 shrink-0 text-[#17665B]" />
-                  contact@mktransportationllc.com
+                  {COMPANY_EMAIL}
                 </a>
 
                 <a
-                  href="mailto:michael@mktransportationllc.com"
+                  href={`mailto:${ADMIN_EMAIL}`}
                   className="flex items-start gap-2.5 break-all text-xs leading-5 text-[#61766E] transition-colors hover:text-[#17665B]"
                 >
                   <FiMail className="mt-0.5 shrink-0 text-[#17665B]" />
-                  michael@mktransportationllc.com
+                  {ADMIN_EMAIL}
                 </a>
 
                 <p className="flex items-center gap-2.5 text-xs text-[#61766E]">

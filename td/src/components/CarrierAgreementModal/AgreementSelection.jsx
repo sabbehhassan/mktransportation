@@ -1,5 +1,4 @@
 import {
-  X,
   Truck,
   ShieldCheck,
   ArrowRight,
@@ -9,15 +8,13 @@ import {
 
 export default function AgreementSelection({
   setStep,
-  onClose,
-  agreementData,
   setAgreementData,
 }) {
   const handleSelectAgreement = () => {
-    setAgreementData({
-      ...agreementData,
+    setAgreementData((previous) => ({
+      ...previous,
       agreementType: "Trucking Service Agreement",
-    });
+    }));
 
     setStep(2);
   };
@@ -39,16 +36,6 @@ export default function AgreementSelection({
         }}
       />
 
-      {/* Close button */}
-      <button
-        type="button"
-        onClick={onClose}
-        aria-label="Close agreement setup"
-        className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-xl border border-[#103C3A]/10 bg-white text-[#103C3A] shadow-sm transition duration-300 hover:border-[#D4A84F] hover:bg-[#103C3A] hover:text-white sm:right-6 sm:top-6"
-      >
-        <X size={21} />
-      </button>
-
       <div className="relative mx-auto w-full max-w-4xl">
 
         {/* Header */}
@@ -58,7 +45,7 @@ export default function AgreementSelection({
             <ShieldCheck size={16} className="text-[#17665B]" />
 
             <span className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#17665B] sm:text-xs">
-              Carrier Partnership Portal
+              Step 1 of 7 · Carrier Partnership Portal
             </span>
           </div>
 

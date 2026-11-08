@@ -1,15 +1,24 @@
 import { useState } from "react";
+import {
+  COMPANY_EMAIL,
+  COMPANY_NAME,
+  COMPANY_MC_NUMBER,
+  COMPANY_USDOT_NUMBER,
+  COMPANY_PHYSICAL_ADDRESS,
+  COMPANY_MAILING_ADDRESS,
+  COMPANY_WEBSITE,
+} from "../../constants/companyDetails";
 import DispatchStep from "./DispatchStep";
 import {
   Building2,
   Globe,
   Mail,
+  MapPin,
   Truck,
   ArrowLeft,
   ArrowRight,
   ShieldCheck,
   CalendarDays,
-  MapPin,
   FileText,
   AlertCircle,
   CheckCircle2,
@@ -60,21 +69,36 @@ export default function TruckingAgreement({
 
   const companyDetails = [
     {
+      icon: Building2,
+      label: "Company",
+      value: COMPANY_NAME,
+    },
+    {
+      icon: Building2,
+      label: "MC/MX/FF / USDOT",
+      value: `${COMPANY_MC_NUMBER} / ${COMPANY_USDOT_NUMBER}`,
+    },
+    {
       icon: MapPin,
-      label: "Business Address",
-      value: "MK Transportation LLC",
+      label: "Physical Address",
+      value: COMPANY_PHYSICAL_ADDRESS,
+    },
+    {
+      icon: MapPin,
+      label: "Mailing Address",
+      value: COMPANY_MAILING_ADDRESS,
     },
     {
       icon: Globe,
       label: "Website",
-      value: "www.mktransportationllc.com",
-      href: "https://www.mktransportationllc.com",
+      value: COMPANY_WEBSITE,
+      href: `https://${COMPANY_WEBSITE}`,
     },
     {
       icon: Mail,
       label: "Email",
-      value: "contact@mktransportationllc.com",
-      href: "mailto:contact@mktransportationllc.com",
+      value: COMPANY_EMAIL,
+      href: `mailto:${COMPANY_EMAIL}`,
     },
   ];
 
@@ -88,7 +112,7 @@ export default function TruckingAgreement({
         {/* Brand accent */}
         <div className="h-1.5 bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
 
-        <div className="max-h-[84dvh] overflow-y-auto">
+        <div>
           {/* Header */}
           <div className="border-b border-gray-100 bg-gradient-to-br from-white to-[#F3F7F3] px-5 py-6 sm:px-9 sm:py-8">
             <button
@@ -125,7 +149,7 @@ export default function TruckingAgreement({
             <div className="mt-8">
               <div className="mb-2 flex items-center justify-between text-xs font-semibold">
                 <span className="text-[#103C3A]">Agreement details</span>
-                <span className="text-[#17665B]">Step 2 of 5</span>
+                <span className="text-[#17665B]">Step 2 of 7</span>
               </div>
 
               <div
@@ -134,9 +158,9 @@ export default function TruckingAgreement({
                 aria-label="Agreement progress"
                 aria-valuemin={0}
                 aria-valuemax={100}
-                aria-valuenow={40}
+                aria-valuenow={29}
               >
-                <div className="h-full w-2/5 rounded-full bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
+                <div className="h-full w-[29%] rounded-full bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
               </div>
             </div>
           </div>

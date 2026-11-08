@@ -87,26 +87,34 @@ router.get("/agreements", require("../middleware/adminAuth"), async (req, res) =
 
     const [rows] = await db.query(`
       SELECT
-        id,
-        tracking_id,
-        agreement_type,
-        selected_dispatch,
-        agreement_date,
-        carrier_name,
-        company_name,
-        mc_dot,
-        phone,
-        carrier_type,
-        email,
-        selected_services,
-        payment_method,
-        print_name,
-        submission_status,
-        deposit_status,
-        created_at,
-        updated_at
-      FROM agreements
-      ORDER BY created_at DESC
+        a.id,
+        a.tracking_id,
+        a.agreement_type,
+        a.selected_dispatch,
+        a.agreement_date,
+        a.carrier_name,
+        a.company_name,
+        a.mc_dot,
+        a.phone,
+        a.carrier_type,
+        a.email,
+        a.selected_services,
+        a.payment_method,
+        a.payment_terms_method,
+        a.print_name,
+        a.submission_status,
+        a.deposit_status,
+        a.created_at,
+        a.updated_at,
+        i.id AS invoice_id,
+        i.invoice_number,
+        i.status AS invoice_status,
+        i.sent_at AS invoice_sent_at
+      FROM agreements a
+      LEFT JOIN invoices i ON i.id = (
+        SELECT MAX(i2.id) FROM invoices i2 WHERE i2.agreement_id = a.id
+      )
+      ORDER BY a.created_at DESC
     `);
 
     return res.status(200).json({

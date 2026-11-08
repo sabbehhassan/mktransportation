@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   Route,
   Building2,
-  CheckCircle2,
   ChevronDown,
   ArrowRight,
   ShieldCheck,
@@ -16,26 +15,11 @@ export default function DispatchStep({
   const [error, setError] = useState("");
 
   const dispatchCompanies = [
-    {
-      name: "3D Dispatch",
-      description: "Dispatch coordination and load support.",
-    },
-    {
-      name: "GO Lane Dispatch",
-      description: "Dispatch services for trucking operations.",
-    },
-    {
-      name: "Logity Dispatch",
-      description: "Support for carrier dispatch management.",
-    },
-    {
-      name: "AFT Dispatch",
-      description: "Dispatch assistance for freight operations.",
-    },
-    {
-      name: "Solace Dispatch",
-      description: "Dispatch coordination for carriers.",
-    },
+    "3D Dispatch",
+    "GO Lane Dispatch",
+    "Logity Dispatch",
+    "AFT Dispatch",
+    "Solace Dispatch",
   ];
 
   const handleSelect = (company) => {
@@ -87,82 +71,12 @@ export default function DispatchStep({
           <div className="h-1.5 bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
 
           <div className="p-5 sm:p-7">
-            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h3 className="text-base font-extrabold text-[#103C3A]">
-                  Dispatch Provider
-                </h3>
-                <p className="mt-1 text-xs leading-5 text-slate-500">
-                  Choose one option from the list.
-                </p>
-              </div>
-
-              {selectedDispatch && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#17665B]/10 px-3 py-1.5 text-xs font-bold text-[#17665B]">
-                  <CheckCircle2 size={15} />
-                  Selected
-                </span>
-              )}
-            </div>
-
-            {/* Company options */}
-            <div className="grid gap-3 sm:grid-cols-2">
-              {dispatchCompanies.map((company) => {
-                const isSelected = selectedDispatch === company.name;
-
-                return (
-                  <button
-                    key={company.name}
-                    type="button"
-                    onClick={() => handleSelect(company.name)}
-                    aria-pressed={isSelected}
-                    className={`flex min-h-[100px] items-start gap-3 rounded-xl border p-4 text-left transition-all duration-200 ${
-                      isSelected
-                        ? "border-[#17665B] bg-[#17665B]/5 ring-2 ring-[#17665B]/10"
-                        : "border-[#103C3A]/10 bg-[#F7F9F7] hover:border-[#D4A84F] hover:bg-white"
-                    }`}
-                  >
-                    <span
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
-                        isSelected
-                          ? "bg-[#103C3A] text-[#F0D99B]"
-                          : "bg-white text-[#17665B] shadow-sm"
-                      }`}
-                    >
-                      <Building2 size={19} />
-                    </span>
-
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-extrabold text-[#103C3A]">
-                        {company.name}
-                      </span>
-
-                      <span className="mt-1.5 block text-xs leading-5 text-slate-500">
-                        {company.description}
-                      </span>
-                    </span>
-
-                    <span
-                      className={`mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
-                        isSelected
-                          ? "border-[#17665B] bg-[#17665B] text-white"
-                          : "border-[#103C3A]/20 bg-white"
-                      }`}
-                    >
-                      {isSelected && <CheckCircle2 size={14} />}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Alternative select input */}
-            <div className="mt-6">
+            <div>
               <label
                 htmlFor="dispatch-company"
                 className="mb-2 block text-sm font-bold text-[#103C3A]"
               >
-                Or select from the dropdown
+                Select Dispatch Company
               </label>
 
               <div className="relative">
@@ -180,8 +94,8 @@ export default function DispatchStep({
                   <option value="">Select a dispatch company</option>
 
                   {dispatchCompanies.map((company) => (
-                    <option key={company.name} value={company.name}>
-                      {company.name}
+                    <option key={company} value={company}>
+                      {company}
                     </option>
                   ))}
                 </select>

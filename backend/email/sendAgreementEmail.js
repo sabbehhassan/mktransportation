@@ -1,6 +1,7 @@
 // backend/email/sendAgreementEmail.js
 
 const nodemailer = require("nodemailer");
+const company = require("../companyDetails");
 
 async function sendAgreementEmail(userEmail, pdfPath, formData) {
   // Gmail SMTP configuration
@@ -38,9 +39,12 @@ async function sendAgreementEmail(userEmail, pdfPath, formData) {
   const submittedDate = escapeHtml(new Date().toLocaleString("en-US"));
 
   const mailOptions = {
-    from: `"MK Transportation" <${process.env.EMAIL_USER}>`,
+    from: `"${company.name}" <${process.env.EMAIL_USER}>`,
     to: userEmail,
-    cc: "hassansubbeh2446@gmail.com",
+    cc:
+      process.env.ADMIN_EMAIL ||
+      process.env.COMPANY_EMAIL ||
+      company.adminEmail,
     subject: "Your Carrier Agreement Has Been Submitted Successfully",
 
     html: `
@@ -160,16 +164,18 @@ async function sendAgreementEmail(userEmail, pdfPath, formData) {
 
           <p style="font-size:15px;color:#555;margin-top:30px;">
             Best Regards,<br>
-            <strong>MK Transportation Team</strong>
+            <strong>${company.name}</strong>
           </p>
         </div>
 
         <!-- Footer -->
         <div style="background:#f5f6fa;padding:25px;text-align:center;font-size:13px;color:#666;">
-          MK Transportation<br>
-          MK Transportation LLC<br>
-          contact@mktransportationllc.com<br>
-          michael@mktransportationllc.com
+          ${company.name}<br>
+          MC/MX/FF: ${company.mcNumber} | USDOT: ${company.usdotNumber}<br>
+          Physical: ${company.physicalAddress}<br>
+          Mailing: ${company.mailingAddress}<br>
+          ${company.email}<br>
+          ${company.adminEmail}
         </div>
 
       </div>

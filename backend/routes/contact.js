@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
+const company = require("../companyDetails");
 
 // Gmail SMTP Configuration
 const transporter = nodemailer.createTransport({
@@ -54,7 +55,7 @@ router.post("/", async (req, res) => {
     }
 
     const recipient =
-      process.env.COMPANY_EMAIL || process.env.EMAIL_USER;
+      process.env.COMPANY_EMAIL || company.adminEmail;
 
     console.log("EMAIL_USER =>", process.env.EMAIL_USER);
     console.log("EMAIL_PASS =>", process.env.EMAIL_PASS ? "Loaded" : "Missing");
@@ -86,13 +87,13 @@ router.post("/", async (req, res) => {
     // Email content
 // Premium MK Transportation Email Template
 const mailOptions = {
-  from: `"MK Transportation" <${process.env.EMAIL_USER}>`,
+  from: `"${company.name}" <${process.env.EMAIL_USER}>`,
   to: recipient,
   replyTo: email.trim(),
   subject: `New Website Inquiry | ${name.trim()}`,
 
   text: `
-MK Transportation
+${company.name}
 NEW WEBSITE INQUIRY
 
 Name: ${name.trim()}
@@ -174,7 +175,7 @@ This inquiry was submitted through the MK Transportation website.
                   letter-spacing: 3px;
                   text-transform: uppercase;
                 ">
-                  MK Transportation
+                  ${company.name}
                 </p>
 
                 <h1 style="
@@ -475,7 +476,10 @@ This inquiry was submitted through the MK Transportation website.
                   font-size: 12px;
                   line-height: 1.7;
                 ">
-                  Reliable Logistics. Professional Service.
+                  MC/MX/FF: ${company.mcNumber} | USDOT: ${company.usdotNumber}<br>
+                  Physical: ${company.physicalAddress}<br>
+                  Mailing: ${company.mailingAddress}<br>
+                  ${company.email} | ${company.adminEmail}
                 </p>
 
                 <p style="
@@ -513,7 +517,7 @@ This inquiry was submitted through the MK Transportation website.
             line-height: 1.7;
             text-align: center;
           ">
-            © MK Transportation. All rights reserved.
+            © ${company.name} All rights reserved.
           </p>
 
         </td>

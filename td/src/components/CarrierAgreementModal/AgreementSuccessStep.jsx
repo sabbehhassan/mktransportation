@@ -1,22 +1,14 @@
 import { CheckCircle2, Mail, Headset, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function AgreementSuccessStep({ onClose }) {
+export default function AgreementSuccessStep({ trackingId }) {
   const navigate = useNavigate();
 
   const handleContactSupport = () => {
-    if (onClose) {
-      onClose();
-    }
-
     navigate("/contact");
   };
 
   const handleBackHome = () => {
-    if (onClose) {
-      onClose();
-    }
-
     navigate("/");
   };
 
@@ -45,6 +37,17 @@ export default function AgreementSuccessStep({ onClose }) {
             Your carrier agreement has been submitted successfully. Your
             Tracking ID has been sent to your registered email address.
           </p>
+
+          {trackingId && (
+            <div className="mt-6 rounded-xl border border-[#17665B]/20 bg-[#EAF4EF] p-4">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#61766E]">
+                Agreement Tracking ID
+              </p>
+              <p className="mt-2 break-all text-lg font-black text-[#17665B]">
+                {trackingId}
+              </p>
+            </div>
+          )}
 
           {/* Email notice */}
           <div className="mt-7 flex items-start gap-3 rounded-2xl border border-[#D4A84F]/40 bg-[#FBF6E9] p-4 text-left sm:p-5">

@@ -8,7 +8,7 @@ import About from "../pages/about";
 import Services from "../pages/service";
 import Contact from "../pages/contact";
 import PrivacyPolicy from "../pages/privacyPolicy";
-import CarrierForm from "../components/CarrierAgreementModal";
+import CarrierAgreementPage from "../components/CarrierAgreementModal/CarrierAgreementPage";
 
 import AdminLogin from "../pages/admin/AdminLogin";
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -22,12 +22,6 @@ const withScrollToTop = (element) => (
 );
 
 const router = createBrowserRouter([
-  // Carrier Form
-  {
-    path: "/carrier-form",
-    element: <CarrierForm />,
-  },
-
   // Admin Panel
   {
     path: "/admin",
@@ -66,8 +60,11 @@ const router = createBrowserRouter([
       {
         path: "tracking",
         element: <TrackingPage />,
-      }
-
+      },
+      {
+        path: "carrier-agreement",
+        element: <CarrierAgreementPage />,
+      },
     ],
   },
 ]);

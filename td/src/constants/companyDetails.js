@@ -1,0 +1,9 @@
+export const COMPANY_NAME = "MK Transportation Group Inc.";
+export const COMPANY_BRAND = "MKTransportation Group";
+export const COMPANY_WEBSITE = "mktransportationgroup.com";
+export const COMPANY_EMAIL = "contact@mktransportationgroup.com";
+export const ADMIN_EMAIL = "admin@mktransportationgroup.com";
+export const COMPANY_MC_NUMBER = "MC-110984";
+export const COMPANY_USDOT_NUMBER = "3160712";
+export const COMPANY_PHYSICAL_ADDRESS = "P.O. Box 419, Croydon, PA 19021";
+export const COMPANY_MAILING_ADDRESS = "P.O. Box 419, Croydon, PA 19021";

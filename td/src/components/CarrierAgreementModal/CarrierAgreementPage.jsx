@@ -1,11 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { X, ShieldCheck } from "lucide-react";
-
+import { useEffect, useState } from "react";
 import AgreementSelection from "./AgreementSelection";
 import TruckingAgreement from "./TruckingAgreement";
 import CarrierInformationStep from "./CarrierInformationStep";
-import NewCarrierPaymentStep from "./NewCarrierPaymentStep";
+import ConditionsStep from "./ConditionsStep";
+import ServicesAndPaymentStep from "./ServicesAndPaymentStep";
 import FinalSubmissionStep from "./FinalSubmissionStep";
 import AgreementSuccessStep from "./AgreementSuccessStep";
 
@@ -17,8 +15,12 @@ const initialAgreementData = {
   companyName: "",
   mcDot: "",
   phone: "",
+  driverName: "",
+  driverPhone: "",
+  licenseNumber: "",
   carrierType: "",
   selectedServices: [],
+  paymentTermsMethod: "",
   paymentMethod: "",
   signature: "",
   printName: "",
@@ -30,137 +32,119 @@ const initialAgreementData = {
   trackingId: "",
 };
 
+const steps = [
+  "Agreement Selection",
+  "Trucking Agreement",
+  "Carrier Information",
+  "Conditions",
+  "Services & Fees",
+  "Final Submission",
+  "Success",
+];
+
 export default function CarrierAgreementPage() {
-  const navigate = useNavigate();
-
   const [step, setStep] = useState(1);
-  const [agreementData, setAgreementData] = useState({
-    ...initialAgreementData,
-  });
-  const [trackingId, setTrackingId] = useState("");
+  const [agreementData, setAgreementData] = useState(initialAgreementData);
 
-  const handleSubmissionSuccess = (id) => {
-    const receivedId = String(id || "").trim();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [step]);
 
-    if (!receivedId) {
-      console.error("Success callback received an empty tracking ID.");
-      return;
-    }
-
-    console.log("SUCCESS CALLBACK RECEIVED:", receivedId);
-
-    setTrackingId(receivedId);
-
-    setAgreementData((previous) => ({
-      ...previous,
-      trackingId: receivedId,
-    }));
-
-    setStep(6);
-  };
-
-  const handleClose = () => {
-    setStep(1);
-    setAgreementData({ ...initialAgreementData });
-    setTrackingId("");
-    navigate("/");
+  const handleSubmissionSuccess = (trackingId) => {
+    setAgreementData((previous) => ({ ...previous, trackingId }));
+    setStep(7);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#103C3A]/75 p-3 backdrop-blur-md sm:p-6">
-      <div className="relative my-auto flex max-h-[94dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-white/50 bg-[#F5F7F4] shadow-[0_30px_100px_rgba(0,0,0,0.28)] sm:rounded-3xl">
-        <div className="h-1.5 w-full shrink-0 bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
-
-        <div className="relative flex shrink-0 items-center justify-between gap-4 border-b border-[#103C3A]/10 bg-white px-4 py-3 sm:px-6 sm:py-4">
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#103C3A] text-[#F0D99B]">
-              <ShieldCheck size={22} />
-            </div>
-
-            <div className="min-w-0">
-              <p className="truncate text-sm font-black text-[#103C3A] sm:text-base">
+    <div className="bg-[#F5F8F5] px-4 pb-12 pt-4 sm:px-6 lg:px-8 lg:pt-12">
+      <div className="mx-auto max-w-7xl">
+        <header className="mb-7 rounded-2xl border border-[#DCE7DF] bg-white p-4 shadow-sm sm:mb-9 sm:p-6">
+          <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#17665B]">
                 MK Transportation
               </p>
-              <p className="mt-0.5 text-xs text-slate-500">
-                Carrier Agreement Portal
-              </p>
+              <h1 className="mt-1 text-xl font-black text-[#103C3A] sm:text-2xl">
+                Carrier Agreement
+              </h1>
             </div>
+            <p className="text-sm font-bold text-[#61766E]">
+              Step {step} of 7
+            </p>
           </div>
 
-          <div className="hidden items-center gap-2 rounded-full border border-[#D4A84F]/40 bg-[#F0D99B]/15 px-3 py-2 sm:flex">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#17665B]">
-              {step === 6 ? "Completed" : `Step ${step} of 5`}
-            </span>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleClose}
-            aria-label="Close carrier agreement"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#103C3A]/10 bg-white text-[#103C3A] transition duration-300 hover:border-[#D4A84F] hover:bg-[#103C3A] hover:text-white"
+          <ol
+            aria-label="Agreement steps"
+            className="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7"
           >
-            <X size={20} />
-          </button>
-        </div>
+            {steps.map((label, index) => {
+              const stepNumber = index + 1;
+              const isCurrent = stepNumber === step;
+              const isComplete = stepNumber < step;
 
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
-          {step === 1 && (
-            <AgreementSelection
-              setStep={setStep}
-              onClose={handleClose}
-              agreementData={agreementData}
-              setAgreementData={setAgreementData}
-            />
-          )}
+              return (
+                <li
+                  key={label}
+                  aria-current={isCurrent ? "step" : undefined}
+                  className={`flex min-w-0 items-center gap-2 rounded-xl px-2 py-2 text-xs font-bold sm:px-3 ${
+                    isCurrent
+                      ? "bg-[#103C3A] text-white"
+                      : isComplete
+                        ? "bg-[#EAF4EF] text-[#17665B]"
+                        : "bg-[#F5F8F5] text-slate-500"
+                  }`}
+                >
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-current text-[11px]">
+                    {stepNumber}
+                  </span>
+                  <span className="truncate">{label}</span>
+                </li>
+              );
+            })}
+          </ol>
+        </header>
 
-          {step === 2 && (
-            <TruckingAgreement
-              setStep={setStep}
-              agreementData={agreementData}
-              setAgreementData={setAgreementData}
-            />
-          )}
-
-          {step === 3 && (
-            <CarrierInformationStep
-              setStep={setStep}
-              agreementData={agreementData}
-              setAgreementData={setAgreementData}
-            />
-          )}
-
-          {step === 4 && (
-            <NewCarrierPaymentStep
-              setStep={setStep}
-              agreementData={agreementData}
-              setAgreementData={setAgreementData}
-            />
-          )}
-
-          {step === 5 && (
-            <FinalSubmissionStep
-              setStep={setStep}
-              agreementData={agreementData}
-              setAgreementData={setAgreementData}
-              onSubmissionSuccess={handleSubmissionSuccess}
-            />
-          )}
-
-          {step === 6 && (
-            <AgreementSuccessStep
-              setStep={setStep}
-              onClose={handleClose}
-              trackingId={trackingId || agreementData.trackingId}
-            />
-          )}
-        </div>
-
-        <div className="flex shrink-0 items-center justify-center gap-2 border-t border-[#103C3A]/10 bg-white px-4 py-3 text-center">
-          <ShieldCheck size={14} className="shrink-0 text-[#17665B]" />
-          <p className="text-[10px] leading-5 text-slate-500 sm:text-xs">
-            Please review your information carefully before final submission.
-          </p>
-        </div>
+        {step === 1 && (
+          <AgreementSelection
+            setStep={setStep}
+            setAgreementData={setAgreementData}
+          />
+        )}
+        {step === 2 && (
+          <TruckingAgreement
+            setStep={setStep}
+            agreementData={agreementData}
+            setAgreementData={setAgreementData}
+          />
+        )}
+        {step === 3 && (
+          <CarrierInformationStep
+            setStep={setStep}
+            agreementData={agreementData}
+            setAgreementData={setAgreementData}
+          />
+        )}
+        {step === 4 && (
+          <ConditionsStep setStep={setStep} agreementData={agreementData} />
+        )}
+        {step === 5 && (
+          <ServicesAndPaymentStep
+            setStep={setStep}
+            agreementData={agreementData}
+            setAgreementData={setAgreementData}
+          />
+        )}
+        {step === 6 && (
+          <FinalSubmissionStep
+            setStep={setStep}
+            agreementData={agreementData}
+            setAgreementData={setAgreementData}
+            onSubmissionSuccess={handleSubmissionSuccess}
+          />
+        )}
+        {step === 7 && (
+          <AgreementSuccessStep trackingId={agreementData.trackingId} />
+        )}
       </div>
     </div>
   );

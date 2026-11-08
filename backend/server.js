@@ -7,6 +7,8 @@ const db = require("./db");
 const agreementRoutes = require("./routes/agreementRoutes");
 const contactRoutes = require("./routes/contact");
 const adminRoutes = require("./routes/adminRoutes");
+const adminInvoiceRoutes = require("./routes/adminInvoiceRoutes");
+const adminAuth = require("./middleware/adminAuth");
 const trackingRoutes = require("./routes/trackingRoutes");
 
 const app = express();
@@ -83,6 +85,7 @@ app.use("/api/contact", contactRoutes);
 // Admin FORM API
 // ===============================
 
+app.use("/api/admin/invoices", adminAuth, adminInvoiceRoutes);
 app.use("/api/admin", adminRoutes);
 
 // ===============================

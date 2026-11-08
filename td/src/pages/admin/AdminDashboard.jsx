@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import InvoiceModal from "./InvoiceModal";
 
 const API_URL = "http://localhost:4000/api/admin";
 
@@ -16,6 +17,7 @@ const AdminDashboard = () => {
   const [submittingLoad, setSubmittingLoad] = useState(false);
   const [loadFormError, setLoadFormError] = useState("");
   const [loadFormSuccess, setLoadFormSuccess] = useState("");
+  const [invoiceAgreementId, setInvoiceAgreementId] = useState(null);
   const [loadForm, setLoadForm] = useState({
     agreement_id: "",
     load_title: "",
@@ -47,10 +49,10 @@ const AdminDashboard = () => {
     load_details: "",
   });
 
-  const handleUnauthorized = () => {
+  const handleUnauthorized = useCallback(() => {
     localStorage.removeItem("adminToken");
     navigate("/admin", { replace: true });
-  };
+  }, [navigate]);
 
   const fetchDashboardData = useCallback(async () => {
     const token = localStorage.getItem("adminToken");
@@ -116,7 +118,7 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [navigate]);
+  }, [handleUnauthorized, navigate]);
 
   useEffect(() => {
     fetchDashboardData();
@@ -632,7 +634,7 @@ const AdminDashboard = () => {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[1050px] text-left text-sm">
+              <table className="w-full min-w-[1300px] text-left text-sm">
                 <thead className="bg-slate-950/70 text-xs uppercase tracking-wider text-slate-400">
                   <tr>
                     <th className="px-5 py-4">Tracking ID</th>
@@ -641,6 +643,7 @@ const AdminDashboard = () => {
                     <th className="px-5 py-4">Agreement</th>
                     <th className="px-5 py-4">Payment Method</th>
                     <th className="px-5 py-4">Deposit Status</th>
+                    <th className="px-5 py-4">Invoice Status</th>
                     <th className="px-5 py-4">Submitted</th>
                     <th className="px-5 py-4">Action</th>
                   </tr>
@@ -685,7 +688,9 @@ const AdminDashboard = () => {
                         </td>
 
                         <td className="px-5 py-4 text-slate-300">
-                          {agreement.payment_method || "—"}
+                          {agreement.payment_terms_method ||
+                            agreement.payment_method ||
+                            "—"}
                         </td>
 
                         <td className="px-5 py-4">
@@ -696,6 +701,30 @@ const AdminDashboard = () => {
                           </span>
                         </td>
 
+                        <td className="px-5 py-4">
+                          {(() => {
+                            const invoiceStatus = String(
+                              agreement.invoice_status || "not created",
+                            ).toLowerCase();
+                            const invoiceStyles = {
+                              sent: "bg-blue-500/10 text-blue-300 ring-blue-500/20",
+                              pending: "bg-amber-500/10 text-amber-300 ring-amber-500/20",
+                              paid: "bg-emerald-500/10 text-emerald-300 ring-emerald-500/20",
+                              cancelled: "bg-red-500/10 text-red-300 ring-red-500/20",
+                            };
+                            return (
+                              <span
+                                className={`inline-flex whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold capitalize ring-1 ${
+                                  invoiceStyles[invoiceStatus] ||
+                                  "bg-slate-500/10 text-slate-300 ring-slate-500/20"
+                                }`}
+                              >
+                                {invoiceStatus}
+                              </span>
+                            );
+                          })()}
+                        </td>
+
                         <td className="whitespace-nowrap px-5 py-4 text-slate-400">
                           {formatDate(
                             agreement.created_at || agreement.agreement_date,
@@ -703,6 +732,7 @@ const AdminDashboard = () => {
                         </td>
 
                         <td className="px-5 py-4">
+                          <div className="flex flex-wrap gap-2">
                           <button
                             type="button"
                             onClick={() =>
@@ -726,6 +756,15 @@ const AdminDashboard = () => {
                                 ? "Mark Pending"
                                 : "Verify Deposit"}
                           </button>
+                          <button
+                            type="button"
+                            onClick={() => setInvoiceAgreementId(agreement.id)}
+                            disabled={!agreement.id}
+                            className="whitespace-nowrap rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-2 text-xs font-semibold text-blue-300 transition hover:bg-blue-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            {agreement.invoice_id ? "View Invoice" : "Send Invoice"}
+                          </button>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -1200,6 +1239,14 @@ const AdminDashboard = () => {
           MK Transportation Admin Portal
         </footer>
       </main>
+      {invoiceAgreementId && (
+        <InvoiceModal
+          agreementId={invoiceAgreementId}
+          onClose={() => setInvoiceAgreementId(null)}
+          onUnauthorized={handleUnauthorized}
+          onUpdated={fetchDashboardData}
+        />
+      )}
     </div>
   );
 };

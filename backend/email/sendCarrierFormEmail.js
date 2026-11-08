@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const fs = require("fs");
+const company = require("../companyDetails");
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST || "smtp.gmail.com",
@@ -86,7 +87,7 @@ const emailLayout = (content) => `
           font-size:14px;
           font-weight:bold;
         ">
-          MK Transportation LLC
+          ${company.name}
         </div>
 
         <div style="
@@ -103,6 +104,10 @@ const emailLayout = (content) => `
           margin-top:14px;
           line-height:1.7;
         ">
+          MC/MX/FF: ${company.mcNumber} | USDOT: ${company.usdotNumber}<br>
+          Physical: ${company.physicalAddress}<br>
+          Mailing: ${company.mailingAddress}<br>
+          ${company.email} | ${company.adminEmail}<br><br>
           This email was generated in connection with a carrier
           application submitted through our website.
         </div>
@@ -171,7 +176,7 @@ const sendCarrierFormEmail = async (carrierFormData, pdfPath) => {
     */
 
     const companyEmail =
-      process.env.COMPANY_EMAIL || "hassansubbeh2446@gmail.com";
+      process.env.COMPANY_EMAIL || "admin@mktransportationgroup.com";
 
     const companyHtml = emailLayout(`
       <div style="
@@ -292,7 +297,7 @@ const sendCarrierFormEmail = async (carrierFormData, pdfPath) => {
     `);
 
     await transporter.sendMail({
-      from: `"MK Transportation LLC" <${process.env.EMAIL_USER}>`,
+      from: `"${company.name}" <${process.env.EMAIL_USER}>`,
       to: companyEmail,
       replyTo: carrierFormData.email,
       subject: `New Carrier Application - ${
@@ -360,7 +365,7 @@ const sendCarrierFormEmail = async (carrierFormData, pdfPath) => {
       ">
         Thank you for submitting your carrier application to
         <strong style="color:#103C3A;">
-          MK Transportation LLC
+          ${company.name}
         </strong>.
         We appreciate your interest in working with us.
       </p>
@@ -418,17 +423,23 @@ const sendCarrierFormEmail = async (carrierFormData, pdfPath) => {
             color:#103C3A;
             font-size:15px;
           ">
-            MK Transportation LLC
+            ${company.name}
           </strong>
+          <br/>
+          MC/MX/FF: ${company.mcNumber} | USDOT: ${company.usdotNumber}<br/>
+          Physical: ${company.physicalAddress}<br/>
+          Mailing: ${company.mailingAddress}<br/>
+          ${company.email}
         </p>
       </div>
     `);
 
     await transporter.sendMail({
-      from: `"MK Transportation LLC" <${process.env.EMAIL_USER}>`,
+      from: `"${company.name}" <${process.env.EMAIL_USER}>`,
       to: carrierFormData.email,
-      replyTo: process.env.COMPANY_EMAIL || process.env.EMAIL_USER,
-      subject: "Carrier Application Received | MK Transportation LLC",
+      replyTo:
+        process.env.CONTACT_EMAIL || "contact@mktransportationgroup.com",
+      subject: `Carrier Application Received | ${company.name}`,
       html: applicantHtml,
     });
 

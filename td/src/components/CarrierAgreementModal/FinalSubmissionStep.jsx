@@ -217,10 +217,10 @@ export default function FinalSubmissionStep({
       } else {
         // Fallback: open the success screen even if the callback is missing.
         console.warn(
-          "onSubmissionSuccess callback is missing. Using setStep(6) fallback.",
+          "onSubmissionSuccess callback is missing. Using setStep(7) fallback.",
         );
 
-        setStep(6);
+        setStep(7);
       }
     } catch (error) {
       console.error("AGREEMENT SUBMISSION ERROR:", error);
@@ -260,12 +260,12 @@ export default function FinalSubmissionStep({
       <div className="relative mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-[#DCE7DF] bg-white shadow-[0_24px_70px_rgba(16,60,58,0.10)]">
         <div className="h-1.5 bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
 
-        <div className="max-h-[84dvh] overflow-y-auto">
+        <div>
           {/* Header */}
           <div className="border-b border-gray-100 bg-gradient-to-br from-white via-white to-[#F3F7F3] px-5 py-6 sm:px-9 sm:py-8">
             <button
               type="button"
-              onClick={() => setStep(4)}
+              onClick={() => setStep(5)}
               disabled={isLoading}
               className="mb-7 inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-[#17665B] transition hover:bg-[#17665B]/5 hover:text-[#103C3A] disabled:cursor-not-allowed disabled:opacity-50"
             >
@@ -289,8 +289,8 @@ export default function FinalSubmissionStep({
                 </h1>
 
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-500 sm:text-base">
-                  Review the agreement terms, complete your signature and
-                  payment information, and submit your application.
+                  Complete your signature and payment information, then submit
+                  your agreement.
                 </p>
               </div>
             </div>
@@ -298,7 +298,7 @@ export default function FinalSubmissionStep({
             <div className="mt-8">
               <div className="mb-2 flex items-center justify-between text-xs font-semibold">
                 <span className="text-[#103C3A]">Final submission</span>
-                <span className="text-[#17665B]">Step 5 of 5</span>
+                <span className="text-[#17665B]">Step 6 of 7</span>
               </div>
 
               <div
@@ -307,9 +307,9 @@ export default function FinalSubmissionStep({
                 aria-label="Agreement progress"
                 aria-valuemin={0}
                 aria-valuemax={100}
-                aria-valuenow={100}
+                aria-valuenow={86}
               >
-                <div className="h-full w-full rounded-full bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
+                <div className="h-full w-[86%] rounded-full bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
               </div>
             </div>
           </div>
@@ -342,9 +342,24 @@ export default function FinalSubmissionStep({
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-gray-600">
                       The term of this Agreement shall be{" "}
-                      <strong className="text-[#103C3A]">180 days</strong>,
+                      <strong className="text-[#103C3A]">120 days</strong>,
                       commencing on the date listed above. If not cancelled, it
                       will automatically renew.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 border-t border-gray-100 pt-4">
+                  <CalendarDays
+                    size={19}
+                    className="mt-0.5 shrink-0 text-[#17665B]"
+                  />
+                  <div>
+                    <h3 className="text-sm font-bold text-[#103C3A]">
+                      Agreement Date
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-600">
+                      {agreementData.agreementDate || today}
                     </p>
                   </div>
                 </div>
@@ -481,7 +496,7 @@ export default function FinalSubmissionStep({
 
                 <div>
                   <h2 className="text-lg font-bold text-[#103C3A]">
-                    Payment Preferences
+                    How Do You Get Paid?
                   </h2>
                   <p className="text-sm text-gray-500">
                     Select your preferred payment method.
@@ -569,9 +584,31 @@ export default function FinalSubmissionStep({
               )}
             </section>
 
+            <section className="grid gap-4 sm:grid-cols-2">
+              <article className="rounded-2xl border border-[#DCE7DF] bg-white p-5 sm:p-6">
+                <h2 className="font-bold text-[#103C3A]">Entire Contract</h2>
+                <p className="mt-3 text-sm leading-7 text-gray-600">
+                  This CARRIER SETUP / AGREEMENT contains all the terms and
+                  conditions that fully represent the mutual understanding and
+                  CARRIER SETUP / AGREEMENT between the parties. It supersedes
+                  all prior CARRIER SETUP / AGREEMENT, whether verbal or
+                  written, and no other understandings - express or implied -
+                  exist between the parties, except as expressly stated in
+                  this document.
+                </p>
+              </article>
+              <article className="rounded-2xl border border-[#DCE7DF] bg-white p-5 sm:p-6">
+                <h2 className="font-bold text-[#103C3A]">Notices</h2>
+                <p className="mt-3 text-sm leading-7 text-gray-600">
+                  If the Carrier intends to terminate the contract or change
+                  jobs, the Carrier must provide at least 15 days&apos; prior
+                  notice before ending the contract.
+                </p>
+              </article>
+            </section>
+
             {/* Bank details */}
-            {agreementData.paymentMethod &&
-              agreementData.paymentMethod !== "Cash On Delivery" && (
+            {agreementData.paymentMethod !== "Cash On Delivery" && (
                 <section className="rounded-2xl border border-[#DCE7DF] bg-[#F8FAF8] p-5 sm:p-6">
                   <div className="mb-5 flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#103C3A] text-[#F0D99B]">
@@ -691,31 +728,6 @@ export default function FinalSubmissionStep({
               </p>
             </section>
 
-            {/* New carrier slot fee */}
-            {agreementData.carrierType !== "old" && (
-              <section className="rounded-2xl border border-[#D4A84F]/50 bg-gradient-to-br from-[#FBF6E9] to-white p-5 sm:p-6">
-                <div className="mb-3 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D4A84F]/20 text-[#806020]">
-                    <CreditCard size={20} />
-                  </div>
-
-                  <div>
-                    <h2 className="font-bold text-[#72541D]">
-                      Slot Fee — Refundable
-                    </h2>
-                    <p className="text-xs text-[#806B43]">
-                      Applicable to new carriers
-                    </p>
-                  </div>
-                </div>
-
-                <p className="text-sm leading-7 text-[#725F3B]">
-                  Carrier shall pay a refundable security deposit of{" "}
-                  <strong>$485</strong> via instant payment.
-                </p>
-              </section>
-            )}
-
             {/* Carrier obligations */}
             <section className="rounded-2xl border border-[#DCE7DF] bg-white p-5 sm:p-6">
               <h2 className="mb-4 flex items-center gap-2 font-bold text-[#103C3A]">
@@ -764,7 +776,7 @@ export default function FinalSubmissionStep({
               <div className="flex flex-col-reverse gap-3 sm:flex-row">
                 <button
                   type="button"
-                  onClick={() => setStep(4)}
+                  onClick={() => setStep(5)}
                   disabled={isLoading}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#DCE7DF] bg-white px-6 py-3.5 text-sm font-bold text-[#103C3A] transition hover:border-[#17665B] hover:bg-[#F5F8F5] disabled:cursor-not-allowed disabled:opacity-50 sm:w-1/2"
                 >

@@ -13,6 +13,14 @@ import {
   Clock3,
   Users,
 } from "lucide-react";
+import {
+  COMPANY_EMAIL,
+  COMPANY_MAILING_ADDRESS,
+  COMPANY_MC_NUMBER,
+  COMPANY_NAME,
+  COMPANY_USDOT_NUMBER,
+  ADMIN_EMAIL,
+} from "../../constants/companyDetails";
 
 const sections = [
   { id: "intro", label: "Introduction", icon: FileText },
@@ -112,7 +120,7 @@ export default function PrivacyPolicy() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-white/75 sm:text-lg">
-              Learn how MK Transportation LLC collects, uses, shares,
+              Learn how {COMPANY_NAME} collects, uses, shares,
               and protects information when you visit our website or
               communicate with our team.
             </p>
@@ -216,7 +224,7 @@ export default function PrivacyPolicy() {
 
             <div className="border-t border-[#103C3A]/10 p-4">
               <a
-                href="mailto:contact@mktransportationllc.com"
+                href="mailto:contact@mktransportationgroup.com"
                 className="flex items-center justify-center gap-2 rounded-xl bg-[#D4A84F] px-4 py-3 text-sm font-extrabold text-[#103C3A] transition hover:bg-[#F0D99B]"
               >
                 Ask a Privacy Question
@@ -235,7 +243,7 @@ export default function PrivacyPolicy() {
             icon={FileText}
           >
             <p>
-              MK Transportation LLC values your trust and is committed
+              {COMPANY_NAME} values your trust and is committed
               to protecting your personal information. This Privacy Policy
               explains how we collect, use, disclose, and safeguard your
               information whenever you interact with our website, submit
@@ -328,7 +336,7 @@ export default function PrivacyPolicy() {
             icon={ShieldCheck}
           >
             <p>
-              MK Transportation LLC respects your privacy and does not
+              {COMPANY_NAME} respects your privacy and does not
               sell your personal information. We only share your
               information when it is necessary to operate our business or
               comply with legal obligations.
@@ -504,7 +512,7 @@ export default function PrivacyPolicy() {
             icon={FileText}
           >
             <p>
-              MK Transportation LLC may update this Privacy Policy from
+              {COMPANY_NAME} may update this Privacy Policy from
               time to time to reflect changes in our services, technology,
               legal requirements, or business practices. Any updates will
               be posted on this page together with the revised "Last
@@ -536,8 +544,8 @@ export default function PrivacyPolicy() {
 
                 <p className="mt-4 max-w-2xl text-sm leading-7 text-white/75 sm:text-base">
                   If you have questions about this Privacy Policy or wish
-                  to exercise your privacy rights, contact MK Transportation
-                  Logistics LLC using the details below.
+                  to exercise your privacy rights, contact {COMPANY_NAME}
+                  using the details below.
                 </p>
 
                 <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -546,24 +554,29 @@ export default function PrivacyPolicy() {
                       Company
                     </p>
                     <p className="mt-2 font-bold text-white">
-                      MK Transportation LLC
+                      {COMPANY_NAME}
+                    </p>
+                    <p className="mt-2 text-sm leading-6 text-white/75">
+                      MC/MX/FF: {COMPANY_MC_NUMBER} | USDOT: {COMPANY_USDOT_NUMBER}
+                      <br />
+                      Mailing address: {COMPANY_MAILING_ADDRESS}
                     </p>
 
                     <p className="mt-5 text-xs font-bold uppercase tracking-wider text-[#F0D99B]">
                       Privacy Contact
                     </p>
                     <a
-                      href="mailto:contact@mktransportationllc.com"
+                      href={`mailto:${COMPANY_EMAIL}`}
                       className="mt-2 block break-words text-sm font-semibold leading-6 text-white transition hover:text-[#F0D99B]"
                     >
-                      contact@mktransportationllc.com
+                      {COMPANY_EMAIL}
                     </a>
 
                     <a
-                      href="mailto:michael@mktransportationllc.com"
+                      href={`mailto:${ADMIN_EMAIL}`}
                       className="mt-2 block break-words text-sm font-semibold leading-6 text-white/80 transition hover:text-[#F0D99B]"
                     >
-                      michael@mktransportationllc.com
+                      {ADMIN_EMAIL}
                     </a>
                   </div>
 
@@ -581,7 +594,7 @@ export default function PrivacyPolicy() {
                     </p>
 
                     <a
-                      href="mailto:contact@mktransportationllc.com"
+                      href={`mailto:${COMPANY_EMAIL}`}
                       className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#D4A84F] px-4 py-3 text-sm font-extrabold text-[#103C3A] transition hover:bg-[#F0D99B]"
                     >
                       Contact Us

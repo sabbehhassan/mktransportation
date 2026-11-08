@@ -14,6 +14,11 @@ import {
 } from "lucide-react";
 
 import contactHero from "../../assets/images/contactus.png";
+import {
+  COMPANY_EMAIL,
+  COMPANY_MAILING_ADDRESS,
+  ADMIN_EMAIL,
+} from "../../constants/companyDetails";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -78,22 +83,29 @@ const Contact = () => {
       icon: Mail,
       title: "Email Our Team",
       description: "Send us your questions or inquiries",
-      value: "contact@mktransportationllc.com",
-      href: "mailto:contact@mktransportationllc.com",
+      value: COMPANY_EMAIL,
+      href: `mailto:${COMPANY_EMAIL}`,
+    },
+    {
+      icon: Mail,
+      title: "Administration",
+      description: "For administrative correspondence",
+      value: ADMIN_EMAIL,
+      href: `mailto:${ADMIN_EMAIL}`,
     },
     {
       icon: MapPin,
       title: "Our Mailing Address",
       description: "Get in touch with our business office",
-      value: "PO BOX 53, KENYON, MN 55946",
-      href: "https://www.google.com/maps/search/?api=1&query=PO+BOX+53+Kenyon+MN+55946",
+      value: COMPANY_MAILING_ADDRESS,
+      href: "https://www.google.com/maps/search/?api=1&query=PO+Box+419+Croydon+PA+19021",
     },
     {
       icon: Clock3,
       title: "Customer Support",
       description: "Here to help with your logistics questions",
       value: "Contact us for support availability",
-      href: "mailto:contact@mktransportationllc.com",
+      href: `mailto:${COMPANY_EMAIL}`,
     },
   ];
 
@@ -145,7 +157,7 @@ const Contact = () => {
               </a>
 
               <a
-                href="mailto:contact@mktransportationllc.com"
+                href="mailto:contact@mktransportationgroup.com"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-4 text-sm font-bold text-white backdrop-blur-md transition duration-300 hover:bg-white/20"
               >
                 <Mail size={18} />
@@ -259,7 +271,7 @@ const Contact = () => {
                   </p>
 
                   <a
-                    href="mailto:contact@mktransportationllc.com"
+                    href="mailto:contact@mktransportationgroup.com"
                     className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#F0D99B] transition hover:text-white"
                   >
                     Contact Our Team
@@ -444,13 +456,13 @@ const Contact = () => {
                 <div>
                   <h3 className="font-extrabold">Our Mailing Location</h3>
                   <p className="mt-1 text-sm text-slate-500">
-                    Kenyon, Minnesota 55946
+                      {COMPANY_MAILING_ADDRESS}
                   </p>
                 </div>
               </div>
 
               <a
-                href="https://www.google.com/maps/search/?api=1&query=PO+BOX+53+Kenyon+MN+55946"
+                href="https://www.google.com/maps/search/?api=1&query=PO+Box+419+Croydon+PA+19021"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 self-start text-sm font-bold text-[#17665B] hover:text-[#103C3A] sm:self-center"
@@ -461,8 +473,8 @@ const Contact = () => {
             </div>
 
             <iframe
-              title="MK Transportation mailing location in Kenyon, Minnesota"
-              src="https://www.google.com/maps?q=PO+BOX+53+Kenyon,+MN+55946&output=embed"
+              title="MK Transportation Group mailing location in Croydon, Pennsylvania"
+              src="https://www.google.com/maps?q=PO+Box+419+Croydon,+PA+19021&output=embed"
               className="h-[280px] w-full rounded-2xl border-0 sm:h-[360px]"
               loading="lazy"
               allowFullScreen

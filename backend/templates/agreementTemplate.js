@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const company = require("../companyDetails");
 
 const logoBase64 = fs.readFileSync(
   path.join(__dirname, "../public/logo.png"),
@@ -27,11 +28,17 @@ module.exports = function agreementTemplate(formData) {
     carrierType === "new"
       ? "New Carrier"
       : carrierType === "old"
-      ? "2 Year's Old"
+      ? "Old Carrier"
       : "N/A";
 
   const formattedServices = (formData.selectedServices || []).map((service) => {
     if (carrierType === "old") {
+      if (
+        service ===
+        "Dedicated Lane Setup - $425 (Refundable after first delivery)"
+      ) {
+        return "ONBOARDING LANE SETUP FEE";
+      }
       return service.split(" - $")[0];
     }
     return service;
@@ -130,8 +137,8 @@ li{
 
     font-size:18px;
     font-weight:bold;
-    color:#0F4C81;
-    border-bottom:2px solid #0F4C81;
+    color:#17665B;
+    border-bottom:2px solid #17665B;
     padding-bottom:7px;
     margin-bottom:16px;
     text-transform:uppercase;
@@ -144,7 +151,7 @@ li{
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
-    border-bottom:3px solid #0F4C81;
+    border-bottom:3px solid #17665B;
     padding-bottom:18px;
     margin-bottom:28px;
 
@@ -164,7 +171,7 @@ li{
 .company h2{
 
     font-size:24px;
-    color:#0F4C81;
+    color:#17665B;
 
 }
 
@@ -185,7 +192,7 @@ li{
 .title h1{
 
     font-size:30px;
-    color:#0F4C81;
+    color:#17665B;
     font-weight:bold;
     letter-spacing:.5px;
 
@@ -226,8 +233,8 @@ li{
 
 .notice{
 
-    background:#F5F8FC;
-    border-left:4px solid #0F4C81;
+    background:#F3F7F3;
+    border-left:4px solid #17665B;
     padding:18px;
     margin-top:18px;
 
@@ -303,7 +310,7 @@ li{
 
 .highlight{
 
-    color:#0F4C81;
+    color:#17665B;
     font-weight:bold;
 
 }
@@ -360,11 +367,11 @@ li{
 
         <div class="company">
 
-            <h2>MK Transportation</h2>
+            <h2>${company.brand}</h2>
 
-            <p><strong>MC:</strong> MC-1218504</p>
+            <p><strong>MC/MX/FF:</strong> ${company.mcNumber}</p>
 
-            <p><strong>USDOT:</strong> 3594205</p>
+            <p><strong>USDOT:</strong> ${company.usdotNumber}</p>
 
         </div>
 
@@ -398,7 +405,7 @@ li{
         <strong>${agreementDate}</strong>
 
         by and between
-        <strong>MK Transportation LLC</strong>
+        <strong>${company.name}</strong>
         (hereinafter referred to as the
         <strong>"Company"</strong>)
         and the following Carrier.
@@ -432,7 +439,7 @@ li{
 
                     <td class="value">
 
-                        MK Transportation LLC
+                        ${company.name}
 
                     </td>
 
@@ -442,13 +449,13 @@ li{
 
                     <td class="label">
 
-                        MC Number
+                        MC/MX/FF Number
 
                     </td>
 
                     <td class="value">
 
-                        MC-1218504
+                        ${company.mcNumber}
 
                     </td>
 
@@ -464,7 +471,39 @@ li{
 
                     <td class="value">
 
-                        3594205
+                        ${company.usdotNumber}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td class="label">
+
+                        Physical Address
+
+                    </td>
+
+                    <td class="value">
+
+                        ${company.physicalAddress}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td class="label">
+
+                        Mailing Address
+
+                    </td>
+
+                    <td class="value">
+
+                        ${company.mailingAddress}
 
                     </td>
 
@@ -480,7 +519,7 @@ li{
 
                     <td class="value">
 
-                        contact@mktransportationllc.com
+                        ${company.email}
 
                     </td>
 
@@ -654,6 +693,57 @@ li{
         </table>
 
     </div>
+
+<div class="section">
+
+    <div class="section-title">
+
+        Load Pickup and Delivery Schedule
+
+    </div>
+
+    <ul>
+
+        ${["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+          .map(
+            (day) => `
+        <li>
+
+            Pickup on ${day} between 7:00 AM and 10:00 AM. Delivery is
+            available 24/7 with backhaul service.
+
+        </li>
+        `,
+          )
+          .join("")}
+
+    </ul>
+
+</div>
+
+<div class="section">
+
+    <div class="section-title">
+
+        Carrier Setup Agreement and Security Practices
+
+    </div>
+
+    <p>
+
+        This Carrier Setup Agreement between ${company.name} and the
+        Carrier/Shipper is intended to support cooperation and strengthen
+        cargo and equipment security throughout the transportation process.
+        The Carrier/Shipper agrees to establish, maintain, and update a
+        traceable, documented security program consistent with applicable
+        guidelines. If the Carrier/Shipper does not oversee a manufacturing
+        site, distribution point, or another part of the supply chain, it will
+        encourage the responsible third parties to follow appropriate
+        security practices.
+
+    </p>
+
+</div>
 
 
     <!-- ========================= -->
@@ -889,17 +979,54 @@ li{
 
     <p>
 
-        The term of this Agreement shall be 180 days, commencing on the date listed above. If not
+        The term of this Agreement shall be 120 days, commencing on the date listed above. If not
 cancelled by one of the Parties, the Agreement shall automatically renew itself for consecutive
 one-year terms.
-The Agreement can be terminated at any time by either of the Parties with thirty (30) days'
-written or electronic notice to the other party, provided all balances are settled.
 This Agreement cannot, by law, exempt the CARRIER / BROKER from any regulatory sanctions in
 the event that discrepancies are discovered during a physical examination of cargo or the review
 of documents associated with the carrier's Customs transactions.
 Nothing in the Agreement relieves CARRIER / BROKER of any responsibilities with respect to
 Canadian and United States law, including Customs Regulations.
 
+
+    </p>
+
+</div>
+
+<div class="section">
+
+    <div class="section-title">
+
+        Entire Contract
+
+    </div>
+
+    <p>
+
+        This CARRIER SETUP / AGREEMENT contains all the terms and conditions
+        that fully represent the mutual understanding and CARRIER SETUP /
+        AGREEMENT between the parties. It supersedes all prior CARRIER SETUP /
+        AGREEMENT, whether verbal or written, and no other understandings -
+        express or implied - exist between the parties, except as expressly
+        stated in this document.
+
+    </p>
+
+</div>
+
+<div class="section">
+
+    <div class="section-title">
+
+        Notices
+
+    </div>
+
+    <p>
+
+        If the Carrier intends to terminate the contract or change jobs, the
+        Carrier must provide at least 15 days' prior notice before ending the
+        contract.
 
     </p>
 
