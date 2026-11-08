@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const chromium = require("@sparticuz/chromium");
 const puppeteerCore = require("puppeteer-core");
 const refundableReceiptTemplate = require("../templates/refundableReceiptTemplate");
 
@@ -8,6 +7,7 @@ async function generateRefundableReceiptPDF(receipt) {
   let browser;
   try {
     if (process.env.NODE_ENV === "production") {
+      const chromium = (await import("@sparticuz/chromium")).default;
       browser = await puppeteerCore.launch({
         args: chromium.args,
         executablePath: await chromium.executablePath(),

@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 
-const chromium = require("@sparticuz/chromium");
 const puppeteerCore = require("puppeteer-core");
 
 const carrierFormTemplate = require("../templates/carrierFormTemplate");
@@ -14,6 +13,7 @@ async function generateCarrierFormPDF(formData) {
     // Launch Browser
     // ==========================================
     if (process.env.NODE_ENV === "production") {
+      const chromium = (await import("@sparticuz/chromium")).default;
       const executablePath = await chromium.executablePath();
 
       browser = await puppeteerCore.launch({

@@ -3,7 +3,6 @@ const path = require("path");
 
 const agreementTemplate = require("../templates/agreementTemplate");
 
-const chromium = require("@sparticuz/chromium");
 const puppeteerCore = require("puppeteer-core");
 
 async function generateAgreementPDF(formData) {
@@ -12,6 +11,7 @@ async function generateAgreementPDF(formData) {
   try {
     if (process.env.NODE_ENV === "production") {
       // Vercel / production
+      const chromium = (await import("@sparticuz/chromium")).default;
       const executablePath = await chromium.executablePath();
 
       browser = await puppeteerCore.launch({
