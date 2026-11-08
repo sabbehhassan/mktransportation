@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { API_BASE_URL } from "../../constants/api";
 
-const API_URL = "http://localhost:4000/api/admin/invoices";
+const API_URL = `${API_BASE_URL}/admin/invoices`;
 
 const getToken = () => localStorage.getItem("adminToken");
 

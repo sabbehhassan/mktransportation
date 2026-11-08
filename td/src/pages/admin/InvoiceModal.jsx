@@ -8,8 +8,9 @@ import {
 } from "react";
 import { CARRIER_SERVICES } from "../../components/CarrierAgreementModal/carrierServices";
 import RefundableSlipModal from "./RefundableSlipModal";
+import { API_BASE_URL } from "../../constants/api";
 
-const API_URL = "http://localhost:4000/api/admin/invoices";
+const API_URL = `${API_BASE_URL}/admin/invoices`;
 
 const toDateInput = (date) => {
   const year = date.getFullYear();

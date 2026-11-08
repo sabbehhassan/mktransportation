@@ -2,8 +2,9 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InvoiceModal from "./InvoiceModal";
 import DepositVerificationModal from "./DepositVerificationModal";
+import { API_BASE_URL } from "../../constants/api";
 
-const API_URL = "http://localhost:4000/api/admin";
+const API_URL = `${API_BASE_URL}/admin`;
 
 const AdminDashboard = () => {
   const navigate = useNavigate();

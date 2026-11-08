@@ -17,13 +17,23 @@ const app = express();
 // ===============================
 // MIDDLEWARE
 // ===============================
-const allowedOrigins = [
-  process.env.FRONTEND_URL || "http://localhost:5173",
-];
+const allowedOrigins = (
+  process.env.FRONTEND_URLS ||
+  process.env.FRONTEND_URL ||
+  (process.env.NODE_ENV === "production" ? "" : "http://localhost:5173")
+)
+  .split(",")
+  .map((origin) => origin.trim().replace(/\/+$/, ""))
+  .filter(Boolean);
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin.replace(/\/+$/, ""))) {
+        return callback(null, true);
+      }
+      return callback(new Error("Origin is not allowed by CORS."));
+    },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
@@ -53,14 +63,11 @@ app.get("/api/test", (req, res) => {
 // ===============================
 app.get("/api/db-test", async (req, res) => {
   try {
-    const [rows] = await db.query(
-      "SELECT DATABASE() AS databaseName"
-    );
+    await db.query("SELECT 1");
 
     res.json({
       success: true,
       message: "MySQL connected successfully",
-      database: rows[0].databaseName,
     });
   } catch (error) {
     console.error("MySQL connection error:", error.message);

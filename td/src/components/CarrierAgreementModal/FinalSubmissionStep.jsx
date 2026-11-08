@@ -17,6 +17,8 @@ import {
   Landmark,
   FileText,
 } from "lucide-react";
+import { API_BASE_URL } from "../../constants/api";
+
 export default function FinalSubmissionStep({
   setStep,
   agreementData,
@@ -158,18 +160,10 @@ export default function FinalSubmissionStep({
     }
 
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL?.replace(/\/+$/, "");
-
-      if (!backendUrl) {
-        throw new Error(
-          "Backend URL is missing. Please check VITE_BACKEND_URL in your frontend .env file.",
-        );
-      }
-
-      console.log("Submitting carrier agreement to:", backendUrl);
+      console.log("Submitting carrier agreement to:", API_BASE_URL);
 
       const response = await fetch(
-        `${backendUrl}/api/agreement/submit-agreement`,
+        `${API_BASE_URL}/agreement/submit-agreement`,
         {
           method: "POST",
           headers: {

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import contactHero from "../../assets/images/contactus.png";
+import { API_BASE_URL } from "../../constants/api";
 import {
   COMPANY_EMAIL,
   COMPANY_MAILING_ADDRESS,
@@ -48,7 +49,7 @@ const Contact = () => {
       setStatus(null);
 
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/contact`,
+        `${API_BASE_URL}/contact`,
         formData
       );
 
