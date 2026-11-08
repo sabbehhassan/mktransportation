@@ -8,6 +8,7 @@ const agreementRoutes = require("./routes/agreementRoutes");
 const contactRoutes = require("./routes/contact");
 const adminRoutes = require("./routes/adminRoutes");
 const adminInvoiceRoutes = require("./routes/adminInvoiceRoutes");
+const adminRefundableReceiptRoutes = require("./routes/adminRefundableReceiptRoutes");
 const adminAuth = require("./middleware/adminAuth");
 const trackingRoutes = require("./routes/trackingRoutes");
 
@@ -28,7 +29,7 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "4mb" }));
 
 // ===============================
 // HOME ROUTE
@@ -86,6 +87,7 @@ app.use("/api/contact", contactRoutes);
 // ===============================
 
 app.use("/api/admin/invoices", adminAuth, adminInvoiceRoutes);
+app.use("/api/admin/invoices", adminAuth, adminRefundableReceiptRoutes);
 app.use("/api/admin", adminRoutes);
 
 // ===============================

@@ -1,23 +1,8 @@
 const express = require("express");
-const nodemailer = require("nodemailer");
 const company = require("../companyDetails");
+const createTransporter = require("../email/createTransporter");
 
 const router = express.Router();
-
-// ========================================
-// GMAIL SMTP CONFIGURATION
-// ========================================
-
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || "smtp.gmail.com",
-  port: Number(process.env.EMAIL_PORT || 465),
-  secure: Number(process.env.EMAIL_PORT || 465) === 465,
-
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
 
 // ========================================
 // HTML SECURITY
@@ -82,8 +67,7 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Check Gmail credentials
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS || !process.env.EMAIL_FROM) {
       console.error("Email credentials are missing.");
 
       return res.status(500).json({
@@ -92,9 +76,9 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Send carrier form notifications to the configured company inbox.
-    const recipient =
-      process.env.COMPANY_EMAIL || "admin@mktransportationgroup.com";
+    // Send carrier form notifications to the company contact inbox.
+    const recipient = company.email;
+    const transporter = createTransporter();
 
     const safeName = escapeHtml(name.trim());
     const safeEmail = escapeHtml(email.trim());
@@ -392,7 +376,7 @@ router.post("/", async (req, res) => {
     // ========================================
 
     await transporter.sendMail({
-      from: `"${company.name}" <${process.env.EMAIL_USER}>`,
+      from: `"${company.name}" <${process.env.EMAIL_FROM}>`,
 
       to: recipient,
 

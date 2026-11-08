@@ -1,17 +1,10 @@
 // backend/email/sendAgreementEmail.js
 
-const nodemailer = require("nodemailer");
 const company = require("../companyDetails");
+const createTransporter = require("./createTransporter");
 
 async function sendAgreementEmail(userEmail, pdfPath, formData) {
-  // Gmail SMTP configuration
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  const transporter = createTransporter();
 
   // Escape dynamic values before inserting them into HTML
   const escapeHtml = (value) =>
@@ -27,6 +20,16 @@ async function sendAgreementEmail(userEmail, pdfPath, formData) {
       return entities[char];
     });
 
+  const submittedName = String(
+    formData.carrierName || formData.printName || "Carrier",
+  )
+    .replace(/[\u0000-\u001F\u007F]/g, "")
+    .trim()
+    .slice(0, 160);
+  const from = {
+    name: `${submittedName} via ${company.brand}`,
+    address: process.env.EMAIL_FROM,
+  };
   const carrierName = escapeHtml(formData.carrierName);
   const companyName = escapeHtml(formData.companyName);
   const mcDot = escapeHtml(formData.mcDot);
@@ -39,12 +42,9 @@ async function sendAgreementEmail(userEmail, pdfPath, formData) {
   const submittedDate = escapeHtml(new Date().toLocaleString("en-US"));
 
   const mailOptions = {
-    from: `"${company.name}" <${process.env.EMAIL_USER}>`,
+    from,
     to: userEmail,
-    cc:
-      process.env.ADMIN_EMAIL ||
-      process.env.COMPANY_EMAIL ||
-      company.adminEmail,
+    replyTo: userEmail,
     subject: "Your Carrier Agreement Has Been Submitted Successfully",
 
     html: `
@@ -191,13 +191,102 @@ async function sendAgreementEmail(userEmail, pdfPath, formData) {
     ],
   };
 
-  // Verify Gmail connection and send email
+  const notificationRows = [
+    ["Carrier", formData.carrierName],
+    ["Carrier company", formData.companyName],
+    ["Carrier email", userEmail],
+    ["Phone", formData.phone],
+    ["MC / DOT", formData.mcDot],
+    ["Carrier type", formData.carrierType],
+    ["Agreement type", formData.agreementType],
+    ["Payment method", formData.paymentMethod],
+    ["Services", Array.isArray(formData.selectedServices)
+      ? formData.selectedServices.join(", ")
+      : formData.selectedServices],
+    ["Tracking ID", formData.trackingId],
+  ]
+    .filter(([, value]) => value)
+    .map(
+      ([label, value]) => `
+        <tr>
+          <th style="padding:12px 14px;border-bottom:1px solid #e8eeeb;text-align:left;color:#53645f;font-size:13px;font-weight:600">${escapeHtml(label)}</th>
+          <td style="padding:12px 14px;border-bottom:1px solid #e8eeeb;color:#172f2a;font-size:13px">${escapeHtml(value)}</td>
+        </tr>`,
+    )
+    .join("");
+
+  const companyNotification = {
+    from,
+    to: company.email,
+    replyTo: userEmail,
+    subject: `New Carrier Agreement Received | ${formData.carrierName || "Carrier"}`,
+    text: [
+      "A new carrier agreement was submitted through the website.",
+      "",
+      `Carrier: ${formData.carrierName || "Not provided"}`,
+      `Company: ${formData.companyName || "Not provided"}`,
+      `Email: ${userEmail}`,
+      `Phone: ${formData.phone || "Not provided"}`,
+      `MC / DOT: ${formData.mcDot || "Not provided"}`,
+      `Agreement type: ${formData.agreementType || "Not provided"}`,
+      `Tracking ID: ${formData.trackingId || "Not provided"}`,
+      "",
+      "The signed carrier agreement PDF is attached.",
+    ].join("\n"),
+    html: `
+      <div style="margin:0;padding:36px 12px;background:#f2f5f4;font-family:Arial,Helvetica,sans-serif;color:#173b35">
+        <div style="max-width:680px;margin:0 auto;overflow:hidden;border:1px solid #dfe8e4;border-radius:14px;background:#fff">
+          <div style="padding:28px 32px;background:#123f39;color:#fff">
+            <div style="color:#e2b957;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase">${escapeHtml(company.brand)}</div>
+            <h1 style="margin:12px 0 6px;font-size:24px">New Carrier Agreement</h1>
+            <p style="margin:0;color:#dce8e3;font-size:14px">A new agreement has been submitted for review.</p>
+          </div>
+          <div style="padding:28px 32px">
+            <p style="margin:0 0 18px;color:#425650;font-size:14px;line-height:1.6">The signed agreement is attached. Use the tracking ID below to locate this submission in the admin panel.</p>
+            <div style="margin-bottom:18px;padding:14px 16px;border:1px solid #e5ece8;border-radius:8px;background:#f7faf8">
+              <div style="color:#75847f;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase">Tracking ID</div>
+              <div style="margin-top:5px;color:#123f39;font-size:16px;font-weight:700">${escapeHtml(formData.trackingId || "Not provided")}</div>
+            </div>
+            <table role="presentation" style="width:100%;border-collapse:collapse">${notificationRows}</table>
+            <p style="margin:22px 0 0;color:#75847f;font-size:12px;line-height:1.6">This is an automated notification sent to ${escapeHtml(company.email)}.</p>
+          </div>
+        </div>
+      </div>`,
+    attachments: [
+      {
+        filename: "Carrier-Agreement.pdf",
+        path: pdfPath,
+        contentType: "application/pdf",
+      },
+    ],
+  };
+
+  // Verify SMTP connection before sending the carrier confirmation and company notification.
   await transporter.verify();
-  const info = await transporter.sendMail(mailOptions);
+  const companyInfo = await transporter.sendMail(companyNotification);
+  const carrierInfo = await transporter.sendMail(mailOptions);
 
-  console.log("AGREEMENT EMAIL SENT:", info.messageId);
+  for (const [label, info, recipient] of [
+    ["company notification", companyInfo, company.email],
+    ["carrier confirmation", carrierInfo, userEmail],
+  ]) {
+    const acceptedRecipients = Array.isArray(info.accepted)
+      ? info.accepted.map((address) => String(address).trim().toLowerCase())
+      : [];
+    console.info("AGREEMENT EMAIL DELIVERY RESULT:", {
+      type: label,
+      to: recipient,
+      accepted: info.accepted || [],
+      rejected: info.rejected || [],
+      response: info.response || "",
+      messageId: info.messageId || "",
+    });
+    if (!acceptedRecipients.includes(recipient.trim().toLowerCase())) {
+      throw new Error(`The mail server did not accept the ${label} recipient.`);
+    }
+  }
 
-  return info;
+  return { companyInfo, carrierInfo };
 }
 
 module.exports = sendAgreementEmail;

@@ -21,7 +21,13 @@ const getAgreement = async (id) => {
   const [rows] = await db.query(
     `SELECT id, tracking_id, agreement_type, selected_dispatch, carrier_name,
             company_name, mc_dot, phone, carrier_type, email, selected_services,
-            payment_terms_method, print_name
+            payment_terms_method, print_name, deposit_status,
+            (
+              SELECT p.id
+              FROM deposit_payment_verifications p
+              WHERE p.agreement_id = agreements.id AND p.status = 'verified'
+              ORDER BY p.id DESC LIMIT 1
+            ) AS deposit_payment_id
      FROM agreements WHERE id = ? LIMIT 1`,
     [id],
   );
@@ -90,8 +96,13 @@ router.get("/agreements/:agreementId", async (req, res) => {
     }
 
     const [existingInvoices] = await db.query(
-      `SELECT id, invoice_number, status, sent_at, created_at, invoice_data
-       FROM invoices WHERE agreement_id = ? ORDER BY id DESC`,
+      `SELECT i.id, i.invoice_number, i.status, i.sent_at, i.created_at,
+              i.invoice_data, r.id AS receipt_id,
+              r.receipt_number, r.status AS receipt_status,
+              r.email_sent_at AS receipt_sent_at
+       FROM invoices i
+       LEFT JOIN refundable_receipts r ON r.invoice_id = i.id
+       WHERE i.agreement_id = ? ORDER BY i.id DESC`,
       [agreementId],
     );
     for (const invoice of existingInvoices) {
@@ -157,7 +168,7 @@ router.post("/agreements/:agreementId", async (req, res) => {
     if (!validateAgreementEmail(agreement)) {
       return res.status(400).json({ success: false, message: "The agreement does not contain a valid carrier email." });
     }
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS || !process.env.EMAIL_FROM) {
       return res.status(503).json({ success: false, message: "Invoice email delivery is not configured." });
     }
 
@@ -282,7 +293,7 @@ router.post("/:invoiceId/resend", async (req, res) => {
     if (["paid", "cancelled"].includes(invoice.status)) {
       return res.status(409).json({ success: false, message: `A ${invoice.status} invoice cannot be resent.` });
     }
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS || !process.env.EMAIL_FROM) {
       return res.status(503).json({ success: false, message: "Invoice email delivery is not configured." });
     }
     const [claimed] = await db.query(

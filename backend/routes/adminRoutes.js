@@ -109,11 +109,45 @@ router.get("/agreements", require("../middleware/adminAuth"), async (req, res) =
         i.id AS invoice_id,
         i.invoice_number,
         i.status AS invoice_status,
-        i.sent_at AS invoice_sent_at
+        i.sent_at AS invoice_sent_at,
+        (
+          SELECT p.amount_received
+          FROM deposit_payment_verifications p
+          WHERE p.agreement_id = a.id AND p.status = 'verified'
+          ORDER BY p.id DESC LIMIT 1
+        ) AS deposit_amount_received,
+        (
+          SELECT p.payment_method
+          FROM deposit_payment_verifications p
+          WHERE p.agreement_id = a.id AND p.status = 'verified'
+          ORDER BY p.id DESC LIMIT 1
+        ) AS deposit_payment_method,
+        (
+          SELECT p.payment_date
+          FROM deposit_payment_verifications p
+          WHERE p.agreement_id = a.id AND p.status = 'verified'
+          ORDER BY p.id DESC LIMIT 1
+        ) AS deposit_payment_date,
+        (
+          SELECT p.payment_reference
+          FROM deposit_payment_verifications p
+          WHERE p.agreement_id = a.id AND p.status = 'verified'
+          ORDER BY p.id DESC LIMIT 1
+        ) AS deposit_payment_reference,
+        (
+          SELECT p.verified_at
+          FROM deposit_payment_verifications p
+          WHERE p.agreement_id = a.id AND p.status = 'verified'
+          ORDER BY p.id DESC LIMIT 1
+        ) AS deposit_verified_at,
+        r.receipt_number AS refundable_receipt_number,
+        r.status AS refundable_receipt_status,
+        r.email_sent_at AS refundable_receipt_sent_at
       FROM agreements a
       LEFT JOIN invoices i ON i.id = (
         SELECT MAX(i2.id) FROM invoices i2 WHERE i2.agreement_id = a.id
       )
+      LEFT JOIN refundable_receipts r ON r.invoice_id = i.id
       ORDER BY a.created_at DESC
     `);
 
@@ -143,9 +177,16 @@ router.patch(
       const db = require("../db");
       const { id } = req.params;
       const { deposit_status } = req.body || {};
+      const payment = req.body?.payment || {};
+      const replaceExistingVerification =
+        req.body?.replace_existing_verification === true;
 
       // Validate agreement ID
-      if (!/^\d+$/.test(id) || Number(id) < 1) {
+      if (
+        !/^\d+$/.test(id) ||
+        !Number.isSafeInteger(Number(id)) ||
+        Number(id) < 1
+      ) {
         return res.status(400).json({
           success: false,
           message: "Invalid agreement ID.",
@@ -165,26 +206,159 @@ router.patch(
         });
       }
 
-      // Check whether the agreement exists
-      const [existing] = await db.query(
-        "SELECT id, deposit_status FROM agreements WHERE id = ?",
-        [Number(id)]
-      );
+      let verifiedPayment = null;
+      let invoiceId = null;
+      let amountReceived = null;
+      let paymentMethod = "";
+      let paymentDate = "";
+      let paymentReference = "";
+      if (deposit_status === "verified") {
+        invoiceId = /^\d+$/.test(String(req.body?.invoice_id || ""))
+          ? Number(req.body.invoice_id)
+          : null;
+        amountReceived = Number(payment.amountReceived);
+        paymentMethod =
+          typeof payment.method === "string"
+            ? payment.method.replace(/[\u0000-\u001F\u007F]/g, "").trim()
+            : "";
+        paymentDate =
+          typeof payment.date === "string" ? payment.date.trim() : "";
+        paymentReference =
+          typeof payment.reference === "string"
+            ? payment.reference.replace(/[\u0000-\u001F\u007F]/g, "").trim()
+            : "";
+        const parsedDate = /^\d{4}-\d{2}-\d{2}$/.test(paymentDate)
+          ? new Date(`${paymentDate}T00:00:00.000Z`)
+          : null;
 
-      if (existing.length === 0) {
-        return res.status(404).json({
-          success: false,
-          message: "Carrier agreement not found.",
-        });
+        if (
+          !Number.isSafeInteger(invoiceId) ||
+          invoiceId < 1 ||
+          !Number.isFinite(amountReceived) ||
+          amountReceived <= 0 ||
+          amountReceived > 1000000 ||
+          !paymentMethod ||
+          paymentMethod.length > 100 ||
+          !parsedDate ||
+          Number.isNaN(parsedDate.getTime()) ||
+          parsedDate.toISOString().slice(0, 10) !== paymentDate ||
+          paymentReference.length > 160
+        ) {
+          return res.status(400).json({
+            success: false,
+            message:
+              "Enter a valid amount, payment method and payment date. Payment reference is optional.",
+          });
+        }
       }
 
-      // Update the deposit status
-      await db.query(
-        `UPDATE agreements
-         SET deposit_status = ?, updated_at = NOW()
-         WHERE id = ?`,
-        [deposit_status, Number(id)]
-      );
+      const connection = await db.getConnection();
+      try {
+        await connection.beginTransaction();
+        const [existing] = await connection.query(
+          "SELECT id, deposit_status FROM agreements WHERE id = ? FOR UPDATE",
+          [Number(id)],
+        );
+        if (!existing.length) {
+          await connection.rollback();
+          return res.status(404).json({
+            success: false,
+            message: "Carrier agreement not found.",
+          });
+        }
+
+        if (deposit_status === "verified") {
+          const [invoices] = await connection.query(
+            `SELECT id, status
+             FROM invoices
+             WHERE id = ? AND agreement_id = ?
+             FOR UPDATE`,
+            [invoiceId, Number(id)],
+          );
+          if (!invoices.length) {
+            await connection.rollback();
+            return res.status(404).json({
+              success: false,
+              message: "Invoice not found for this carrier agreement.",
+            });
+          }
+          if (!["sent", "paid"].includes(invoices[0].status)) {
+            await connection.rollback();
+            return res.status(409).json({
+              success: false,
+              message: "Send the invoice successfully before verifying its deposit.",
+            });
+          }
+
+          const [activePayments] = await connection.query(
+            `SELECT id
+             FROM deposit_payment_verifications
+             WHERE agreement_id = ? AND status = 'verified'
+             ORDER BY id DESC
+             LIMIT 1
+             FOR UPDATE`,
+            [Number(id)],
+          );
+          if (activePayments.length && !replaceExistingVerification) {
+            await connection.rollback();
+            return res.status(409).json({
+              success: false,
+              message:
+                "This deposit is already verified. Use Update Payment Record to intentionally replace its payment details.",
+            });
+          }
+
+          await connection.query(
+            `UPDATE deposit_payment_verifications
+             SET status = 'revoked', revoked_by = ?, revoked_at = NOW()
+             WHERE agreement_id = ? AND status = 'verified'`,
+            [req.admin?.email || "admin", Number(id)],
+          );
+          const amountReceived =
+            Math.round(Number(payment.amountReceived) * 100) / 100;
+          const [inserted] = await connection.query(
+            `INSERT INTO deposit_payment_verifications (
+              agreement_id, amount_received, payment_method, payment_date,
+              payment_reference, status, verified_by, verified_at
+            ) VALUES (?, ?, ?, ?, ?, 'verified', ?, NOW())`,
+            [
+              Number(id),
+              amountReceived,
+              paymentMethod,
+              paymentDate,
+              paymentReference || null,
+              req.admin?.email || "admin",
+            ],
+          );
+          verifiedPayment = {
+            id: inserted.insertId,
+            amount_received: amountReceived,
+            payment_method: paymentMethod,
+            payment_date: paymentDate,
+            payment_reference: paymentReference || null,
+          };
+        } else {
+          await connection.query(
+            `UPDATE deposit_payment_verifications
+             SET status = 'revoked', revoked_by = ?, revoked_at = NOW()
+             WHERE agreement_id = ? AND status = 'verified'`,
+            [req.admin?.email || "admin", Number(id)],
+          );
+        }
+
+        await connection.query(
+          `UPDATE agreements
+           SET deposit_status = ?, updated_at = NOW()
+           WHERE id = ?`,
+          [deposit_status, Number(id)],
+        );
+        await connection.commit();
+      } catch (error) {
+        await connection.rollback();
+        throw error;
+      } finally {
+        connection.release();
+      }
 
       return res.status(200).json({
         success: true,
@@ -194,7 +368,9 @@ router.patch(
             : "Deposit marked as pending.",
         agreement: {
           id: Number(id),
+          invoice_id: invoiceId,
           deposit_status,
+          payment: verifiedPayment,
         },
       });
     } catch (error) {

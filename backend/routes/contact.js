@@ -1,19 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const nodemailer = require("nodemailer");
 const company = require("../companyDetails");
-
-// Gmail SMTP Configuration
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || "smtp.gmail.com",
-  port: Number(process.env.EMAIL_PORT || 465),
-  secure: Number(process.env.EMAIL_PORT || 465) === 465,
-  auth: {
-    user: process.env.EMAIL_USER,
-    // Remove spaces from Gmail App Password
-    pass: process.env.EMAIL_PASS?.replace(/\s/g, ""),
-  },
-});
+const createTransporter = require("../email/createTransporter");
 
 router.post("/", async (req, res) => {
   try {
@@ -45,7 +33,7 @@ router.post("/", async (req, res) => {
     }
 
     // Validate environment variables
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS || !process.env.EMAIL_FROM) {
       console.error("Email configuration is missing.");
 
       return res.status(500).json({
@@ -54,21 +42,19 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const recipient =
-      process.env.COMPANY_EMAIL || company.adminEmail;
+    const recipient = company.email;
 
-    console.log("EMAIL_USER =>", process.env.EMAIL_USER);
-    console.log("EMAIL_PASS =>", process.env.EMAIL_PASS ? "Loaded" : "Missing");
+    const transporter = createTransporter();
     console.log("SMTP =>", {
-      host: process.env.EMAIL_HOST || "smtp.gmail.com",
-      port: Number(process.env.EMAIL_PORT || 465),
-      secure: Number(process.env.EMAIL_PORT || 465) === 465,
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      secure: String(process.env.SMTP_SECURE).toLowerCase() === "true",
     });
 
     // Verify SMTP connection and authentication
     await transporter.verify();
 
-    console.log("Gmail SMTP authentication successful.");
+    console.log("SMTP authentication successful.");
 
     // Escape user input before inserting it into HTML
     const escapeHtml = (value) =>
@@ -87,7 +73,10 @@ router.post("/", async (req, res) => {
     // Email content
 // Premium MK Transportation Email Template
 const mailOptions = {
-  from: `"${company.name}" <${process.env.EMAIL_USER}>`,
+  from: {
+    name: `${name.trim()} via ${company.brand}`,
+    address: process.env.EMAIL_FROM,
+  },
   to: recipient,
   replyTo: email.trim(),
   subject: `New Website Inquiry | ${name.trim()}`,
@@ -532,11 +521,32 @@ This inquiry was submitted through the MK Transportation website.
     // Send email
     const info = await transporter.sendMail(mailOptions);
 
-    console.log("MAIL SENT SUCCESSFULLY =>", info.messageId);
+    console.info(
+      "CONTACT FORM SMTP RESULT =>",
+      JSON.stringify({
+        from: info.envelope?.from || process.env.EMAIL_FROM,
+        to: info.envelope?.to || [recipient],
+        replyTo: mailOptions.replyTo,
+        cc: mailOptions.cc || [],
+        bcc: mailOptions.bcc || [],
+        accepted: info.accepted || [],
+        rejected: info.rejected || [],
+        response: info.response || "",
+        messageId: info.messageId || "",
+      }),
+    );
+
+    const acceptedRecipients = Array.isArray(info.accepted)
+      ? info.accepted.map((address) => String(address).trim().toLowerCase())
+      : [];
+    if (!acceptedRecipients.includes(recipient.trim().toLowerCase())) {
+      throw new Error("The SMTP server did not accept the contact form recipient.");
+    }
 
     return res.status(200).json({
       success: true,
-      message: "Your message has been sent successfully!",
+      message:
+        "Your message was send Succesfully. We will contact soon. Thank You",
     });
   } catch (error) {
     console.error("CONTACT FORM ERROR =>", error.message);
@@ -550,7 +560,7 @@ This inquiry was submitted through the MK Transportation website.
     return res.status(500).json({
       success: false,
       message: isAuthError
-        ? "Email authentication failed. Please check your Gmail App Password and SMTP settings."
+        ? "Email authentication failed. Please check your SMTP credentials and settings."
         : "Unable to send your message right now. Please try again later.",
     });
   }

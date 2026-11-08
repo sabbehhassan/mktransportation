@@ -10,7 +10,7 @@ router.get("/:trackingId", async (req, res) => {
       .trim()
       .toUpperCase();
 
-    if (!/^SSL-\d{8}-[A-F0-9]{8}$/.test(trackingId)) {
+    if (!/^MKT-\d{8}-[A-F0-9]{8}$/.test(trackingId)) {
       return res.status(400).json({
         success: false,
         message: "Please enter a valid Agreement Tracking ID.",

@@ -133,7 +133,7 @@ export default function TrackingPage() {
                 type="text"
                 value={trackingId}
                 onChange={(event) => setTrackingId(event.target.value)}
-                placeholder="e.g. SSL-20261027-02564D9A"
+                placeholder="e.g. MKT-20261027-02564D9A"
                 autoComplete="off"
                 className="min-w-0 flex-1 rounded-xl border border-slate-700 bg-[#050816] px-4 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
               />

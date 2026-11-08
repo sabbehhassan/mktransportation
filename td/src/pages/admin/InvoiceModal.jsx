@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { CARRIER_SERVICES } from "../../components/CarrierAgreementModal/carrierServices";
+import RefundableSlipModal from "./RefundableSlipModal";
 
 const API_URL = "http://localhost:4000/api/admin/invoices";
 
@@ -151,6 +152,7 @@ export default function InvoiceModal({
   const [agreement, setAgreement] = useState(null);
   const [invoice, setInvoice] = useState(null);
   const [invoiceHistory, setInvoiceHistory] = useState([]);
+  const [receiptInvoice, setReceiptInvoice] = useState(null);
   const [form, setForm] = useState(getInitialForm);
   const [previewUrl, setPreviewUrl] = useState("");
   const previewUrlRef = useRef("");
@@ -173,6 +175,9 @@ export default function InvoiceModal({
   const hasOpenInvoice = invoiceHistory.some((item) =>
     ["pending", "sent"].includes(item.status),
   );
+  const depositVerified =
+    String(agreement?.agreement?.deposit_status || "").toLowerCase() ===
+      "verified" && Boolean(agreement?.agreement?.deposit_payment_id);
   const statusLabel = useMemo(
     () => String(invoice?.status || "").replaceAll("_", " "),
     [invoice?.status],
@@ -419,6 +424,58 @@ export default function InvoiceModal({
     }
   };
 
+  const handleDownloadReceipt = async (historyInvoice) => {
+    setError("");
+    setBusy("receipt-download");
+    try {
+      const response = await request(
+        `${API_URL}/${historyInvoice.id}/receipt/pdf?download=1`,
+      );
+      if (!response.ok) {
+        const data = await readApiJson(response, "Unable to download refundable receipt.");
+        throw new Error(data.message || "Unable to download refundable receipt.");
+      }
+      const url = URL.createObjectURL(await response.blob());
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `${historyInvoice.receipt_number}.pdf`;
+      anchor.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (downloadError) {
+      setError(downloadError.message || "Unable to download refundable receipt.");
+    } finally {
+      setBusy("");
+    }
+  };
+
+  const handleReceiptUpdated = (updatedReceipt) => {
+    setInvoiceHistory((current) =>
+      current.map((historyInvoice) =>
+        historyInvoice.id === updatedReceipt.invoice_id
+          ? {
+              ...historyInvoice,
+              receipt_id: updatedReceipt.id,
+              receipt_number: updatedReceipt.receipt_number,
+              receipt_status: updatedReceipt.status,
+              receipt_sent_at: updatedReceipt.email_sent_at,
+            }
+          : historyInvoice,
+      ),
+    );
+    setInvoice((current) =>
+      current && current.id === updatedReceipt.invoice_id
+        ? {
+            ...current,
+            receipt_id: updatedReceipt.id,
+            receipt_number: updatedReceipt.receipt_number,
+            receipt_status: updatedReceipt.status,
+            receipt_sent_at: updatedReceipt.email_sent_at,
+          }
+        : current,
+    );
+    onUpdated();
+  };
+
   const handleSelectInvoice = async (selectedInvoice) => {
     setError("");
     setNotice("");
@@ -497,6 +554,20 @@ export default function InvoiceModal({
                     <p className="mt-1 text-sm capitalize text-slate-400">
                       Status: {statusLabel} {invoice.sent_at ? `· Sent ${new Date(invoice.sent_at).toLocaleString()}` : ""}
                     </p>
+                    <p className="mt-1 text-xs text-slate-400">
+                      Deposit:{" "}
+                      <span className={depositVerified ? "text-emerald-300" : "text-amber-300"}>
+                        {agreement?.agreement?.deposit_status || "not verified"}
+                      </span>
+                      {" · "}Refundable slip:{" "}
+                      <span className="capitalize text-slate-300">
+                        {invoice.receipt_status || "Not Generated"}
+                      </span>
+                      {invoice.receipt_number ? ` · ${invoice.receipt_number}` : ""}
+                      {invoice.receipt_sent_at
+                        ? ` · Sent ${new Date(invoice.receipt_sent_at).toLocaleString()}`
+                        : ""}
+                    </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {!hasOpenInvoice && ["paid", "cancelled"].includes(invoice.status) && (
@@ -518,16 +589,56 @@ export default function InvoiceModal({
                         {busy === "resend" ? "Sending..." : invoice.status === "pending" ? "Send Invoice" : "Resend Invoice"}
                       </button>
                     )}
-                    {["pending", "sent"].includes(invoice.status) && (
+                    {invoice.receipt_status === "sent" ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => setReceiptInvoice(invoice)}
+                          className="rounded-lg border border-emerald-500/40 px-3 py-2 text-sm font-semibold text-emerald-300"
+                        >
+                          View Refundable Slip
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDownloadReceipt(invoice)}
+                          disabled={Boolean(busy)}
+                          className="rounded-lg border border-slate-600 px-3 py-2 text-sm font-semibold text-slate-300 disabled:opacity-50"
+                        >
+                          {busy === "receipt-download" ? "Downloading..." : "Download Refundable Slip"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setReceiptInvoice(invoice)}
+                          className="rounded-lg border border-blue-500/40 px-3 py-2 text-sm font-semibold text-blue-300"
+                        >
+                          Resend Refundable Slip
+                        </button>
+                      </>
+                    ) : (
                       <button
                         type="button"
-                        onClick={() => handleStatus("paid")}
-                        disabled={Boolean(busy)}
-                        className="rounded-lg border border-blue-500/40 px-3 py-2 text-sm font-semibold text-blue-300 disabled:opacity-50"
+                        onClick={() => setReceiptInvoice(invoice)}
+                        disabled={!depositVerified || !["sent", "paid"].includes(invoice.status) || Boolean(busy)}
+                        title={
+                          !depositVerified
+                            ? "Manually verify the deposit before issuing a receipt."
+                            : "Open the refundable receipt preview."
+                        }
+                        className="rounded-lg border border-emerald-500/40 px-3 py-2 text-sm font-semibold text-emerald-300 disabled:cursor-not-allowed disabled:opacity-40"
                       >
-                        Mark Paid
+                        {invoice.receipt_status === "failed"
+                          ? "Retry Refundable Slip"
+                          : invoice.receipt_status === "draft"
+                            ? "Continue Refundable Slip"
+                            : "Send Refundable Slip"}
                       </button>
                     )}
+                    {String(agreement?.agreement?.deposit_status || "").toLowerCase() === "verified" &&
+                      !agreement?.agreement?.deposit_payment_id && (
+                        <p className="self-center text-xs text-amber-300">
+                          Record verified payment details in the Agreements table before issuing a receipt.
+                        </p>
+                      )}
                     {["pending", "sent"].includes(invoice.status) && (
                       <button
                         type="button"
@@ -558,7 +669,15 @@ export default function InvoiceModal({
                         }`}
                       >
                         <span className="block font-semibold">{historyInvoice.invoice_number}</span>
-                        <span className="mt-1 block capitalize text-slate-400">{historyInvoice.status}</span>
+                        <span className="mt-1 block capitalize text-slate-400">
+                          Invoice: {historyInvoice.status}
+                          {" · "}Receipt: {historyInvoice.receipt_status || "Not Generated"}
+                        </span>
+                        {historyInvoice.receipt_number && (
+                          <span className="mt-1 block text-emerald-300">
+                            {historyInvoice.receipt_number}
+                          </span>
+                        )}
                       </button>
                     ))}
                   </div>
@@ -791,6 +910,14 @@ export default function InvoiceModal({
           )}
         </div>
       </section>
+      {receiptInvoice && (
+        <RefundableSlipModal
+          invoiceId={receiptInvoice.id}
+          onClose={() => setReceiptInvoice(null)}
+          onUnauthorized={onUnauthorized}
+          onReceiptUpdated={handleReceiptUpdated}
+        />
+      )}
     </div>
   );
 }

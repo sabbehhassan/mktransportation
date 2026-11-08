@@ -12,7 +12,7 @@ function generateTrackingId() {
   const date = new Date().toISOString().slice(0, 10).replace(/-/g, "");
   const uniqueCode = crypto.randomBytes(4).toString("hex").toUpperCase();
 
-  return `SSL-${date}-${uniqueCode}`;
+  return `MKT-${date}-${uniqueCode}`;
 }
 
 // Submit agreement

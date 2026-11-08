@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InvoiceModal from "./InvoiceModal";
+import DepositVerificationModal from "./DepositVerificationModal";
 
 const API_URL = "http://localhost:4000/api/admin";
 
@@ -18,6 +19,8 @@ const AdminDashboard = () => {
   const [loadFormError, setLoadFormError] = useState("");
   const [loadFormSuccess, setLoadFormSuccess] = useState("");
   const [invoiceAgreementId, setInvoiceAgreementId] = useState(null);
+  const [depositAgreement, setDepositAgreement] = useState(null);
+  const [replacingPaymentRecord, setReplacingPaymentRecord] = useState(false);
   const [loadForm, setLoadForm] = useState({
     agreement_id: "",
     load_title: "",
@@ -124,21 +127,38 @@ const AdminDashboard = () => {
     fetchDashboardData();
   }, [fetchDashboardData]);
 
-  const updateDepositStatus = async (agreementId, newStatus) => {
+  const updateDepositStatus = async (
+    agreement,
+    newStatus,
+    payment = null,
+    replaceExistingVerification = false,
+  ) => {
     const token = localStorage.getItem("adminToken");
+    const agreementId = agreement.id;
 
     if (!token) {
       handleUnauthorized();
       return;
     }
 
-    const action =
-      newStatus === "verified"
-        ? "verify this deposit"
-        : "mark this deposit as pending";
+    if (newStatus === "verified" && !payment) {
+      if (
+        !agreement.invoice_id ||
+        !["sent", "paid"].includes(agreement.invoice_status)
+      ) {
+        setError("Send an invoice successfully before verifying this deposit.");
+        return false;
+      }
+      setDepositAgreement(agreement);
+      setReplacingPaymentRecord(replaceExistingVerification);
+      return false;
+    }
 
-    if (!window.confirm(`Are you sure you want to ${action}?`)) {
-      return;
+    if (
+      newStatus === "pending" &&
+      !window.confirm("Are you sure you want to mark this deposit as pending?")
+    ) {
+      return false;
     }
 
     setUpdatingId(agreementId);
@@ -155,6 +175,14 @@ const AdminDashboard = () => {
           },
           body: JSON.stringify({
             deposit_status: newStatus,
+            ...(newStatus === "verified"
+              ? {
+                  invoice_id: agreement.invoice_id,
+                  replace_existing_verification:
+                    replaceExistingVerification,
+                }
+              : {}),
+            ...(payment ? { payment } : {}),
           }),
         },
       );
@@ -170,18 +198,47 @@ const AdminDashboard = () => {
         throw new Error(data.message || "Unable to update deposit status.");
       }
 
+      const verifiedPayment = data.agreement?.payment;
+      setAgreements((current) =>
+        current.map((item) =>
+          String(item.id) === String(agreementId)
+            ? {
+                ...item,
+                deposit_status: data.agreement.deposit_status,
+                deposit_payment_id:
+                  newStatus === "verified" ? verifiedPayment?.id : null,
+                deposit_amount_received:
+                  newStatus === "verified"
+                    ? verifiedPayment?.amount_received
+                    : null,
+                deposit_payment_method:
+                  newStatus === "verified"
+                    ? verifiedPayment?.payment_method
+                    : null,
+                deposit_payment_date:
+                  newStatus === "verified"
+                    ? verifiedPayment?.payment_date
+                    : null,
+                deposit_payment_reference:
+                  newStatus === "verified"
+                    ? verifiedPayment?.payment_reference
+                    : null,
+              }
+            : item,
+        ),
+      );
       await fetchDashboardData();
+      return true;
     } catch (err) {
       setError(err.message || "Failed to update deposit status.");
+      return false;
     } finally {
       setUpdatingId(null);
     }
   };
 
   const isDepositVerified = (status) =>
-    ["verified", "paid", "approved", "completed"].includes(
-      String(status || "").toLowerCase(),
-    );
+    String(status || "").toLowerCase() === "verified";
 
   // Use the unique agreement record / tracking ID, not email, to decide
   // which verified agreement can receive a load. An active load excludes only
@@ -737,12 +794,25 @@ const AdminDashboard = () => {
                             type="button"
                             onClick={() =>
                               updateDepositStatus(
-                                agreement.id,
+                                agreement,
                                 verified ? "pending" : "verified",
                               )
                             }
                             disabled={
-                              updatingId === agreement.id || !agreement.id
+                              updatingId === agreement.id ||
+                              !agreement.id ||
+                              (!verified &&
+                                !["sent", "paid"].includes(
+                                  agreement.invoice_status,
+                                ))
+                            }
+                            title={
+                              !verified &&
+                              !["sent", "paid"].includes(
+                                agreement.invoice_status,
+                              )
+                                ? "Send an invoice successfully before verifying the deposit."
+                                : undefined
                             }
                             className={`whitespace-nowrap rounded-lg px-3 py-2 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${
                               verified
@@ -756,6 +826,36 @@ const AdminDashboard = () => {
                                 ? "Mark Pending"
                                 : "Verify Deposit"}
                           </button>
+                          {verified && (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                updateDepositStatus(
+                                  agreement,
+                                  "verified",
+                                  null,
+                                  true,
+                                )
+                              }
+                              disabled={
+                                updatingId === agreement.id ||
+                                !agreement.id ||
+                                !["sent", "paid"].includes(
+                                  agreement.invoice_status,
+                                )
+                              }
+                              title={
+                                !["sent", "paid"].includes(
+                                  agreement.invoice_status,
+                                )
+                                  ? "Send an invoice successfully before updating payment details."
+                                  : undefined
+                              }
+                              className="whitespace-nowrap rounded-lg border border-slate-600 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+                            >
+                              Update Payment Record
+                            </button>
+                          )}
                           <button
                             type="button"
                             onClick={() => setInvoiceAgreementId(agreement.id)}
@@ -1245,6 +1345,28 @@ const AdminDashboard = () => {
           onClose={() => setInvoiceAgreementId(null)}
           onUnauthorized={handleUnauthorized}
           onUpdated={fetchDashboardData}
+        />
+      )}
+      {depositAgreement && (
+        <DepositVerificationModal
+          agreement={depositAgreement}
+          busy={updatingId === depositAgreement.id}
+          onClose={() => {
+            setDepositAgreement(null);
+            setReplacingPaymentRecord(false);
+          }}
+          onSubmit={async (payment) => {
+            const updated = await updateDepositStatus(
+              depositAgreement,
+              "verified",
+              payment,
+              replacingPaymentRecord,
+            );
+            if (updated) {
+              setDepositAgreement(null);
+              setReplacingPaymentRecord(false);
+            }
+          }}
         />
       )}
     </div>

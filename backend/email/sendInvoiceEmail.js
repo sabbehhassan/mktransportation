@@ -1,5 +1,5 @@
-const nodemailer = require("nodemailer");
 const company = require("../companyDetails");
+const createTransporter = require("./createTransporter");
 
 const escapeHtml = (value) =>
   String(value ?? "").replace(/[&<>"']/g, (character) => {
@@ -14,26 +14,14 @@ const escapeHtml = (value) =>
   });
 
 const sendInvoiceEmail = async (invoice, pdfPath) => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    throw new Error("Invoice email credentials are not configured.");
-  }
   if (!invoice.carrier.email) {
     throw new Error("The agreement does not contain a carrier email address.");
   }
 
-  const port = Number(process.env.EMAIL_PORT || 465);
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST || "smtp.gmail.com",
-    port,
-    secure: port === 465,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  const transporter = createTransporter();
 
   const result = await transporter.sendMail({
-    from: `"${company.name}" <${process.env.EMAIL_USER}>`,
+    from: `"${company.name}" <${process.env.EMAIL_FROM}>`,
     to: invoice.carrier.email,
     replyTo: company.email,
     subject: `MKTransportation Group – Invoice #${invoice.invoiceNumber}`,

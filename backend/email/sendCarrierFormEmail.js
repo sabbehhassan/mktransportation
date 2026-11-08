@@ -1,16 +1,6 @@
-const nodemailer = require("nodemailer");
 const fs = require("fs");
 const company = require("../companyDetails");
-
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || "smtp.gmail.com",
-  port: Number(process.env.EMAIL_PORT || 465),
-  secure: Number(process.env.EMAIL_PORT || 465) === 465,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const createTransporter = require("./createTransporter");
 
 // Escape user-submitted values before inserting them into HTML.
 const escapeHtml = (value = "") =>
@@ -147,8 +137,8 @@ const detailRow = (label, value) => `
 
 const sendCarrierFormEmail = async (carrierFormData, pdfPath) => {
   try {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-      throw new Error("Email credentials are missing from the .env file.");
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS || !process.env.EMAIL_FROM) {
+      throw new Error("SMTP email credentials are missing from the .env file.");
     }
 
     if (!carrierFormData?.email) {
@@ -159,6 +149,7 @@ const sendCarrierFormEmail = async (carrierFormData, pdfPath) => {
       throw new Error("Carrier application PDF file was not found.");
     }
 
+    const transporter = createTransporter();
     const firstName = escapeHtml(carrierFormData.firstName || "Applicant");
     const lastName = escapeHtml(carrierFormData.lastName || "");
     const businessName = escapeHtml(
@@ -175,8 +166,7 @@ const sendCarrierFormEmail = async (carrierFormData, pdfPath) => {
     ========================================
     */
 
-    const companyEmail =
-      process.env.COMPANY_EMAIL || "admin@mktransportationgroup.com";
+    const companyEmail = company.email;
 
     const companyHtml = emailLayout(`
       <div style="
@@ -297,7 +287,7 @@ const sendCarrierFormEmail = async (carrierFormData, pdfPath) => {
     `);
 
     await transporter.sendMail({
-      from: `"${company.name}" <${process.env.EMAIL_USER}>`,
+      from: `"${company.name}" <${process.env.EMAIL_FROM}>`,
       to: companyEmail,
       replyTo: carrierFormData.email,
       subject: `New Carrier Application - ${
@@ -435,7 +425,7 @@ const sendCarrierFormEmail = async (carrierFormData, pdfPath) => {
     `);
 
     await transporter.sendMail({
-      from: `"${company.name}" <${process.env.EMAIL_USER}>`,
+      from: `"${company.name}" <${process.env.EMAIL_FROM}>`,
       to: carrierFormData.email,
       replyTo:
         process.env.CONTACT_EMAIL || "contact@mktransportationgroup.com",
