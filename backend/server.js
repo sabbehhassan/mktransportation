@@ -17,25 +17,32 @@ const app = express();
 // ===============================
 // MIDDLEWARE
 // ===============================
-const allowedOrigins = (
-  process.env.FRONTEND_URLS ||
-  process.env.FRONTEND_URL ||
-  (process.env.NODE_ENV === "production" ? "" : "http://localhost:5173")
-)
-  .split(",")
-  .map((origin) => origin.trim().replace(/\/+$/, ""))
+const normalizeOrigin = (origin) => origin.trim().replace(/\/+$/, "");
+const configuredOrigins = [
+  process.env.FRONTEND_URLS,
+  process.env.FRONTEND_URL,
+]
+  .filter(Boolean)
+  .flatMap((origins) => origins.split(","))
+  .map(normalizeOrigin)
   .filter(Boolean);
+const allowedOrigins = new Set([
+  "https://www.mktransportationgroup.com",
+  "https://mktransportationgroup.com",
+  "https://mktransportation.vercel.app",
+  ...configuredOrigins,
+  ...(process.env.NODE_ENV === "production" ? [] : ["http://localhost:5173"]),
+]);
 
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin.replace(/\/+$/, ""))) {
+      if (!origin || allowedOrigins.has(normalizeOrigin(origin))) {
         return callback(null, true);
       }
-      return callback(new Error("Origin is not allowed by CORS."));
+      return callback(null, false);
     },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    credentials: true,
   })
 );
 
@@ -135,6 +142,18 @@ app.use("/api/admin", adminRoutes);
 // ===============================
 
 app.use("/api/tracking", trackingRoutes);
+
+app.use((error, req, res, next) => {
+  if (res.headersSent) {
+    return next(error);
+  }
+
+  console.error("Unhandled API error:", error.code || error.name);
+  return res.status(500).json({
+    success: false,
+    message: "An unexpected server error occurred.",
+  });
+});
 
 // ===============================
 // LOCAL DEVELOPMENT
