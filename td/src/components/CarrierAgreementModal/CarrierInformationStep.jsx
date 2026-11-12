@@ -21,7 +21,6 @@ const pickupSchedule = [
   "Wednesday",
   "Thursday",
   "Friday",
-  "Saturday",
 ];
 
 function CarrierField({

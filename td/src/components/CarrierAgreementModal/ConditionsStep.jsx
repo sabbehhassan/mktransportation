@@ -90,69 +90,6 @@ export default function ConditionsStep({ setStep, agreementData }) {
           </p>
         </header>
 
-        <TermsCard icon={Handshake} title="Shipper Responsibilities">
-          <TermsList items={shipperResponsibilities} />
-        </TermsCard>
-
-        {agreementData.carrierType !== "old" && (
-          <TermsCard
-            icon={BadgeDollarSign}
-            title="Onboarding Lane Setup Deposit"
-            className="border-[#D4A84F]/50 bg-gradient-to-br from-[#FBF6E9] to-white"
-          >
-            <div className="space-y-3 text-sm leading-7 text-[#725F3B]">
-              <p>
-                The Carrier provides a <strong>$425 security deposit</strong>{" "}
-                to MK Transportation Group Inc. by direct or instant payment. The
-                deposit is refundable after the Carrier completes its first
-                delivery and receives payment for that load. The Carrier
-                should obtain a deposit receipt from an MK Transportation
-                representative.
-              </p>
-              <p>
-                At contract termination, the deposit is refundable when there
-                are no outstanding obligations or Carrier-caused damages. Any
-                termination notice must follow the 15-day notice provision
-                below. Detention charges, when applicable, are the Shipper's
-                responsibility.
-              </p>
-            </div>
-          </TermsCard>
-        )}
-
-        <TermsCard icon={Landmark} title="Payment Terms">
-          <p className="mb-4 text-sm leading-7 text-slate-600">
-            To request payment, the Carrier submits a signed Rate Confirmation
-            together with its company invoice to the Shipper.
-          </p>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              {
-                name: "Quick Pay",
-                detail: "A 2% fee applies for same-day deposit.",
-              },
-              {
-                name: "Standard Pay",
-                detail: "No fee; deposit is made within 24 hours.",
-              },
-              {
-                name: "Cash on Delivery",
-                detail: "Available as a payment arrangement.",
-              },
-            ].map((option) => (
-              <div
-                key={option.name}
-                className="rounded-xl border border-[#DCE7DF] bg-[#F8FAF8] p-4"
-              >
-                <p className="font-extrabold text-[#103C3A]">{option.name}</p>
-                <p className="mt-1 text-sm leading-6 text-slate-600">
-                  {option.detail}
-                </p>
-              </div>
-            ))}
-          </div>
-        </TermsCard>
-
         <TermsCard icon={Truck} title="Carrier Responsibilities">
           <TermsList items={carrierResponsibilities} />
           <div className="mt-5 grid gap-3 border-t border-[#DCE7DF] pt-5 sm:grid-cols-3">
@@ -200,6 +137,69 @@ export default function ConditionsStep({ setStep, agreementData }) {
             duties under applicable Canadian and United States laws, including
             Customs Regulations, remain in effect.
           </p>
+        </TermsCard>
+
+        <TermsCard icon={Landmark} title="Payment Terms">
+          <p className="mb-4 text-sm leading-7 text-slate-600">
+            To request payment, the Carrier submits a signed Rate Confirmation
+            together with its company invoice to the Shipper.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {[
+              {
+                name: "Quick Pay",
+                detail: "A 2% fee applies for same-day deposit.",
+              },
+              {
+                name: "Standard Pay",
+                detail: "No fee; deposit is made within 24 hours.",
+              },
+              {
+                name: "Cash on Delivery",
+                detail: "Available as a payment arrangement.",
+              },
+            ].map((option) => (
+              <div
+                key={option.name}
+                className="rounded-xl border border-[#DCE7DF] bg-[#F8FAF8] p-4"
+              >
+                <p className="font-extrabold text-[#103C3A]">{option.name}</p>
+                <p className="mt-1 text-sm leading-6 text-slate-600">
+                  {option.detail}
+                </p>
+              </div>
+            ))}
+          </div>
+        </TermsCard>
+
+        {agreementData.carrierType !== "old" && (
+          <TermsCard
+            icon={BadgeDollarSign}
+            title="Onboarding Lane Setup Deposit"
+            className="border-[#D4A84F]/50 bg-gradient-to-br from-[#FBF6E9] to-white"
+          >
+            <div className="space-y-3 text-sm leading-7 text-[#725F3B]">
+              <p>
+                The Carrier provides a <strong>$425 security deposit</strong>{" "}
+                to MK Transportation Group Inc. by direct or instant payment. The
+                deposit is refundable after the Carrier completes its first
+                delivery and receives payment for that load. The Carrier
+                should obtain a deposit receipt from an MK Transportation
+                representative.
+              </p>
+              <p>
+                At contract termination, the deposit is refundable when there
+                are no outstanding obligations or Carrier-caused damages. Any
+                termination notice must follow the 15-day notice provision
+                below. Detention charges, when applicable, are the Shipper's
+                responsibility.
+              </p>
+            </div>
+          </TermsCard>
+        )}
+
+        <TermsCard icon={Handshake} title="Shipper Responsibilities">
+          <TermsList items={shipperResponsibilities} />
         </TermsCard>
 
         <div className="flex flex-col-reverse gap-3 border-t border-[#DCE7DF] pt-6 sm:flex-row sm:justify-between">
