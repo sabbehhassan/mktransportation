@@ -189,6 +189,54 @@ export default function TruckingAgreement({
               </div>
             </section>
 
+            {/* Dispatch selection */}
+            <section className="rounded-2xl border border-[#DCE7DF] bg-white p-4 sm:p-6">
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EAF3EC] text-[#17665B]">
+                  <Truck size={20} />
+                </div>
+
+                <div>
+                  <h2 className="text-lg font-bold text-[#103C3A]">
+                    Select Your Dispatch Service
+                  </h2>
+
+                  <p className="mt-1 text-sm text-gray-500">
+                    Choose the dispatch service applicable to your agreement.
+                  </p>
+                </div>
+              </div>
+
+              <DispatchStep
+                selectedDispatch={agreementData.selectedDispatch}
+                setSelectedDispatch={handleDispatchChange}
+              />
+
+              {error && (
+                <p
+                  role="alert"
+                  className="mt-4 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-600"
+                >
+                  <AlertCircle size={17} />
+                  {error}
+                </p>
+              )}
+
+              {agreementData.selectedDispatch && (
+                <div className="mt-4 flex items-start gap-2 rounded-xl border border-[#D4A84F]/40 bg-[#FBF6E9] p-3">
+                  <CheckCircle2
+                    size={17}
+                    className="mt-0.5 shrink-0 text-[#806020]"
+                  />
+
+                  <p className="text-sm leading-6 text-[#725F3B]">
+                    Selected service:{" "}
+                    <strong>{agreementData.selectedDispatch}</strong>
+                  </p>
+                </div>
+              )}
+            </section>
+
             {/* Company information */}
             <section className="overflow-hidden rounded-2xl border border-[#DCE7DF]">
               <div className="flex items-center gap-4 bg-[#103C3A] p-5 text-white sm:p-6">
@@ -256,54 +304,6 @@ export default function TruckingAgreement({
                   );
                 })}
               </div>
-            </section>
-
-            {/* Dispatch selection */}
-            <section className="rounded-2xl border border-[#DCE7DF] bg-white p-4 sm:p-6">
-              <div className="mb-5 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EAF3EC] text-[#17665B]">
-                  <Truck size={20} />
-                </div>
-
-                <div>
-                  <h2 className="text-lg font-bold text-[#103C3A]">
-                    Select Your Dispatch Service
-                  </h2>
-
-                  <p className="mt-1 text-sm text-gray-500">
-                    Choose the dispatch service applicable to your agreement.
-                  </p>
-                </div>
-              </div>
-
-              <DispatchStep
-                selectedDispatch={agreementData.selectedDispatch}
-                setSelectedDispatch={handleDispatchChange}
-              />
-
-              {error && (
-                <p
-                  role="alert"
-                  className="mt-4 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-600"
-                >
-                  <AlertCircle size={17} />
-                  {error}
-                </p>
-              )}
-
-              {agreementData.selectedDispatch && (
-                <div className="mt-4 flex items-start gap-2 rounded-xl border border-[#D4A84F]/40 bg-[#FBF6E9] p-3">
-                  <CheckCircle2
-                    size={17}
-                    className="mt-0.5 shrink-0 text-[#806020]"
-                  />
-
-                  <p className="text-sm leading-6 text-[#725F3B]">
-                    Selected service:{" "}
-                    <strong>{agreementData.selectedDispatch}</strong>
-                  </p>
-                </div>
-              )}
             </section>
 
             {/* Agreement notice */}
