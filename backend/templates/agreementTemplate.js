@@ -86,10 +86,6 @@ module.exports = function agreementTemplate(formData) {
         .join("")
     : `<tr><td colspan="3" class="empty-state">No services selected.</td></tr>`;
 
-  const signature = formData.signature
-    ? `<img class="signature-image" src="${escapeHtml(formData.signature)}" alt="Carrier signature" />`
-    : `<span class="signature-placeholder" aria-label="Signature line"></span>`;
-
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -384,7 +380,7 @@ module.exports = function agreementTemplate(formData) {
       color: var(--brand-black);
     }
 
-    .signature-section {
+    .carrier-details-section {
       margin-top: 7pt;
       padding: 6pt;
       border: 0.8pt solid var(--brand-border);
@@ -393,32 +389,8 @@ module.exports = function agreementTemplate(formData) {
       page-break-inside: avoid;
     }
 
-    .signature-section .section-title {
+    .carrier-details-section .section-title {
       margin-bottom: 7pt;
-    }
-
-    .signature-table th {
-      width: 31%;
-    }
-
-    .signature-cell {
-      height: 46pt;
-      vertical-align: bottom !important;
-    }
-
-    .signature-image {
-      display: block;
-      max-width: 220pt;
-      max-height: 48pt;
-      object-fit: contain;
-      object-position: left bottom;
-    }
-
-    .signature-placeholder {
-      display: block;
-      width: 220pt;
-      height: 30pt;
-      border-bottom: 0.8pt solid #85888D;
     }
 
     .certificate-page {
@@ -629,14 +601,10 @@ module.exports = function agreementTemplate(formData) {
       </p>
     </section>
 
-    <section class="signature-section">
-      <h2 class="section-title">Carrier Details and Signature</h2>
-      <table class="info-table signature-table">
+    <section class="carrier-details-section">
+      <h2 class="section-title">Carrier Details</h2>
+      <table class="info-table">
         <tbody>
-          <tr>
-            <th scope="row">Carrier Signature</th>
-            <td class="signature-cell">${signature}</td>
-          </tr>
           ${detailRow("Printed Name", formData.printName || formData.carrierName)}
           ${detailRow("Company Name", formData.companyName)}
           ${detailRow("Agreement Date", agreementDate)}
