@@ -54,8 +54,8 @@ const Industries = () => {
     <section className="relative overflow-hidden bg-white py-20 sm:py-24 lg:py-28">
 
       {/* Background Decorations */}
-      <div className="pointer-events-none absolute -left-40 top-20 h-80 w-80 rounded-full bg-[#17665B]/8 blur-[100px]" />
-      <div className="pointer-events-none absolute -right-40 bottom-10 h-96 w-96 rounded-full bg-[#D4A84F]/10 blur-[110px]" />
+      <div className="pointer-events-none absolute -left-40 top-20 h-80 w-80 rounded-full bg-[var(--brand-gold)]/8 blur-[100px]" />
+      <div className="pointer-events-none absolute -right-40 bottom-10 h-96 w-96 rounded-full bg-[var(--brand-gold)]/10 blur-[110px]" />
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
 
@@ -63,16 +63,16 @@ const Industries = () => {
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
 
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#17665B]/15 bg-[#17665B]/5 px-4 py-2">
-              <span className="h-2 w-2 rounded-full bg-[#D4A84F]" />
-              <span className="text-xs font-bold uppercase tracking-[0.16em] text-[#17665B]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--brand-gold)]/15 bg-[var(--brand-gold)]/5 px-4 py-2">
+              <span className="h-2 w-2 rounded-full bg-[var(--brand-gold)]" />
+              <span className="text-xs font-bold uppercase tracking-[0.16em] text-brand-black">
                 Our Logistics Network
               </span>
             </div>
 
-            <h2 className="mt-6 max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-[#103C3A] sm:text-4xl md:text-5xl">
+            <h2 className="mt-6 max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-[var(--brand-black)] sm:text-4xl md:text-5xl">
               Strong Connections.
-              <span className="mt-1 block text-[#17665B]">
+              <span className="mt-1 block text-brand-black">
                 Reliable Deliveries.
               </span>
             </h2>
@@ -87,7 +87,7 @@ const Industries = () => {
 
             <a
               href="#services"
-              className="group mt-5 inline-flex items-center gap-2 font-bold text-[#17665B] transition-colors hover:text-[#103C3A]"
+              className="group mt-5 inline-flex items-center gap-2 font-bold text-brand-black transition-colors hover:text-[var(--brand-black)]"
             >
               Explore Our Services
               <FiArrowUpRight className="text-lg transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
@@ -100,18 +100,18 @@ const Industries = () => {
         <div className="mt-14 sm:mt-16">
 
           <div className="mb-5 flex items-center justify-between gap-4">
-            <p className="text-sm font-bold text-[#103C3A]">
+            <p className="text-sm font-bold text-[var(--brand-black)]">
               Our Partner Network
             </p>
 
-            <div className="h-px flex-1 bg-gradient-to-r from-[#17665B]/20 to-transparent" />
+            <div className="h-px flex-1 bg-gradient-to-r from-[var(--brand-gold)]/20 to-transparent" />
           </div>
 
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
             {partners.map((partner) => (
               <div
                 key={partner.alt}
-                className="group flex h-28 items-center justify-center rounded-2xl border border-[#103C3A]/10 bg-[#F8FAF9] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#D4A84F]/70 hover:bg-white hover:shadow-xl hover:shadow-[#103C3A]/8 sm:h-32 sm:p-7"
+                className="group flex h-28 items-center justify-center rounded-2xl border border-[var(--brand-black)]/10 bg-[var(--brand-light-gray)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--brand-gold)]/70 hover:bg-white hover:shadow-xl hover:shadow-[var(--brand-black)]/8 sm:h-32 sm:p-7"
               >
                 <img
                   src={partner.image}
@@ -130,16 +130,16 @@ const Industries = () => {
         </div>
 
         {/* Statistics Section */}
-        <div className="mt-20 overflow-hidden rounded-3xl bg-[#103C3A] sm:mt-24">
+        <div className="mt-20 overflow-hidden rounded-3xl bg-[var(--brand-black)] sm:mt-24">
 
           {/* Stats Header */}
           <div className="relative border-b border-white/10 px-6 py-8 sm:px-10 sm:py-10 lg:flex lg:items-end lg:justify-between lg:px-12">
 
             <div className="pointer-events-none absolute -right-12 -top-28 h-64 w-64 rounded-full border border-white/10" />
-            <div className="pointer-events-none absolute -right-2 -top-20 h-44 w-44 rounded-full border border-[#D4A84F]/20" />
+            <div className="pointer-events-none absolute -right-2 -top-20 h-44 w-44 rounded-full border border-[var(--brand-gold)]/20" />
 
             <div className="relative">
-              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[#F0D99B]">
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[var(--brand-gold)]">
                 <FiTrendingUp className="text-base" />
                 Performance at a Glance
               </div>
@@ -160,11 +160,11 @@ const Industries = () => {
             {stats.map((item, index) => (
               <div
                 key={item.title}
-                className="group relative overflow-hidden bg-[#103C3A] p-6 transition-colors duration-300 hover:bg-[#145047] sm:p-8"
+                className="group relative overflow-hidden bg-[var(--brand-black)] p-6 transition-colors duration-300 hover:bg-[var(--brand-dark-gray)] sm:p-8"
               >
-                <div className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-[#D4A84F] transition-transform duration-300 group-hover:scale-x-100" />
+                <div className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-[var(--brand-gold)] transition-transform duration-300 group-hover:scale-x-100" />
 
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D4A84F]/25 bg-[#D4A84F]/10 text-xl text-[#F0D99B] transition-all duration-300 group-hover:bg-[#D4A84F] group-hover:text-[#103C3A]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--brand-gold)]/25 bg-[var(--brand-gold)]/10 text-xl text-[var(--brand-gold)] transition-all duration-300 group-hover:bg-[var(--brand-gold-dark)] group-hover:text-[var(--brand-black)]">
                   {item.icon}
                 </div>
 
@@ -172,7 +172,7 @@ const Industries = () => {
                   {item.value}
                 </h4>
 
-                <p className="mt-3 font-bold text-[#F0D99B]">
+                <p className="mt-3 font-bold text-[var(--brand-gold)]">
                   {item.title}
                 </p>
 
@@ -184,7 +184,7 @@ const Industries = () => {
           </div>
 
           {/* Bottom Accent */}
-          <div className="h-1.5 bg-gradient-to-r from-[#17665B] via-[#D4A84F] to-[#17665B]" />
+          <div className="h-1.5 bg-gradient-to-r from-[var(--brand-gold)] via-[var(--brand-gold)] to-[var(--brand-gold)]" />
         </div>
 
       </div>

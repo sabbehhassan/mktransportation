@@ -229,10 +229,10 @@ export default function FinalSubmissionStep({
   };
 
   const inputClass = (field) =>
-    `w-full rounded-xl border bg-white px-4 py-3.5 text-sm text-[#173F3A] placeholder:text-gray-400 outline-none transition-all duration-200 focus:border-[#17665B] focus:ring-4 focus:ring-[#17665B]/10 ${
+    `w-full rounded-xl border bg-white px-4 py-3.5 text-sm text-[var(--brand-dark-gray)] placeholder:text-gray-400 outline-none transition-all duration-200 focus:border-[var(--brand-gold)] focus:ring-4 focus:ring-[var(--brand-gold)]/10 ${
       errors[field]
         ? "border-red-400 focus:border-red-500 focus:ring-red-100"
-        : "border-gray-200 hover:border-[#17665B]/40"
+        : "border-gray-200 hover:border-[var(--brand-gold)]/40"
     }`;
 
   const FieldError = ({ field }) =>
@@ -247,38 +247,38 @@ export default function FinalSubmissionStep({
     ) : null;
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#F5F8F5] px-3 py-4 sm:px-6 sm:py-7">
-      <div className="pointer-events-none absolute -right-28 -top-24 h-80 w-80 rounded-full bg-[#D4A84F]/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-[#17665B]/10 blur-3xl" />
+    <div className="relative w-full overflow-hidden bg-[var(--brand-light-gray)] px-3 py-4 sm:px-6 sm:py-7">
+      <div className="pointer-events-none absolute -right-28 -top-24 h-80 w-80 rounded-full bg-[var(--brand-gold)]/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-[var(--brand-gold)]/10 blur-3xl" />
 
-      <div className="relative mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-[#DCE7DF] bg-white shadow-[0_24px_70px_rgba(16,60,58,0.10)]">
-        <div className="h-1.5 bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
+      <div className="relative mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-[var(--brand-light-gray)] bg-white shadow-[0_24px_70px_rgba(8,9,11,0.10)]">
+        <div className="h-1.5 bg-gradient-to-r from-[var(--brand-black)] via-[var(--brand-gold)] to-[var(--brand-gold)]" />
 
         <div>
           {/* Header */}
-          <div className="border-b border-gray-100 bg-gradient-to-br from-white via-white to-[#F3F7F3] px-5 py-6 sm:px-9 sm:py-8">
+          <div className="border-b border-gray-100 bg-gradient-to-br from-white via-white to-[var(--brand-light-gray)] px-5 py-6 sm:px-9 sm:py-8">
             <button
               type="button"
               onClick={() => setStep(5)}
               disabled={isLoading}
-              className="mb-7 inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-[#17665B] transition hover:bg-[#17665B]/5 hover:text-[#103C3A] disabled:cursor-not-allowed disabled:opacity-50"
+              className="mb-7 inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-brand-black transition hover:bg-[var(--brand-gold-dark)]/5 hover:text-[var(--brand-black)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <ArrowLeft size={17} />
               Back to Previous Step
             </button>
 
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#103C3A] text-[#F0D99B] shadow-lg shadow-[#103C3A]/15">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[var(--brand-black)] text-[var(--brand-gold)] shadow-lg shadow-[var(--brand-black)]/15">
                 <FileCheck2 size={31} strokeWidth={1.7} />
               </div>
 
               <div className="min-w-0 flex-1">
-                <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[#D4A84F]/40 bg-[#FBF6E9] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.17em] text-[#806020] sm:text-xs">
+                <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-[var(--brand-gold)]/40 bg-[var(--brand-light-gray)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.17em] text-brand-black sm:text-xs">
                   <ShieldCheck size={14} />
                   Final Review & Submission
                 </div>
 
-                <h1 className="text-2xl font-bold leading-tight tracking-tight text-[#103C3A] sm:text-3xl">
+                <h1 className="text-2xl font-bold leading-tight tracking-tight text-[var(--brand-black)] sm:text-3xl">
                   Trucking Service Agreement
                 </h1>
 
@@ -291,33 +291,33 @@ export default function FinalSubmissionStep({
 
             <div className="mt-8">
               <div className="mb-2 flex items-center justify-between text-xs font-semibold">
-                <span className="text-[#103C3A]">Final submission</span>
-                <span className="text-[#17665B]">Step 6 of 7</span>
+                <span className="text-[var(--brand-black)]">Final submission</span>
+                <span className="text-brand-black">Step 6 of 7</span>
               </div>
 
               <div
-                className="h-2 overflow-hidden rounded-full bg-[#E8EEE9]"
+                className="h-2 overflow-hidden rounded-full bg-[var(--brand-light-gray)]"
                 role="progressbar"
                 aria-label="Agreement progress"
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-valuenow={86}
               >
-                <div className="h-full w-[86%] rounded-full bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
+                <div className="h-full w-[86%] rounded-full bg-gradient-to-r from-[var(--brand-black)] via-[var(--brand-gold)] to-[var(--brand-gold)]" />
               </div>
             </div>
           </div>
 
           <div className="space-y-8 px-5 py-7 sm:px-9 sm:py-9">
             {/* Agreement terms */}
-            <section className="overflow-hidden rounded-2xl border border-[#DCE7DF]">
-              <div className="flex items-center gap-3 border-b border-[#DCE7DF] bg-[#F1F6F1] px-5 py-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#103C3A] text-[#F0D99B]">
+            <section className="overflow-hidden rounded-2xl border border-[var(--brand-light-gray)]">
+              <div className="flex items-center gap-3 border-b border-[var(--brand-light-gray)] bg-[var(--brand-light-gray)] px-5 py-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-black)] text-[var(--brand-gold)]">
                   <FileText size={20} />
                 </div>
 
                 <div>
-                  <h2 className="font-bold text-[#103C3A]">Agreement Terms</h2>
+                  <h2 className="font-bold text-[var(--brand-black)]">Agreement Terms</h2>
                   <p className="mt-0.5 text-xs text-gray-500">
                     Please review before signing.
                   </p>
@@ -328,15 +328,15 @@ export default function FinalSubmissionStep({
                 <div className="flex items-start gap-3">
                   <CalendarDays
                     size={19}
-                    className="mt-0.5 shrink-0 text-[#17665B]"
+                    className="mt-0.5 shrink-0 text-brand-black"
                   />
                   <div>
-                    <h3 className="text-sm font-bold text-[#103C3A]">
+                    <h3 className="text-sm font-bold text-[var(--brand-black)]">
                       Agreement Duration
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-gray-600">
                       The term of this Agreement shall be{" "}
-                      <strong className="text-[#103C3A]">120 days</strong>,
+                      <strong className="text-[var(--brand-black)]">120 days</strong>,
                       commencing on the date listed above. If not cancelled, it
                       will automatically renew.
                     </p>
@@ -346,10 +346,10 @@ export default function FinalSubmissionStep({
                 <div className="flex items-start gap-3 border-t border-gray-100 pt-4">
                   <CalendarDays
                     size={19}
-                    className="mt-0.5 shrink-0 text-[#17665B]"
+                    className="mt-0.5 shrink-0 text-brand-black"
                   />
                   <div>
-                    <h3 className="text-sm font-bold text-[#103C3A]">
+                    <h3 className="text-sm font-bold text-[var(--brand-black)]">
                       Agreement Date
                     </h3>
                     <p className="mt-1 text-sm text-gray-600">
@@ -361,10 +361,10 @@ export default function FinalSubmissionStep({
                 <div className="flex items-start gap-3 border-t border-gray-100 pt-4">
                   <CalendarDays
                     size={19}
-                    className="mt-0.5 shrink-0 text-[#17665B]"
+                    className="mt-0.5 shrink-0 text-brand-black"
                   />
                   <div>
-                    <h3 className="text-sm font-bold text-[#103C3A]">
+                    <h3 className="text-sm font-bold text-[var(--brand-black)]">
                       Submission Date
                     </h3>
                     <p className="mt-1 text-sm text-gray-600">{today}</p>
@@ -376,12 +376,12 @@ export default function FinalSubmissionStep({
             {/* Signature and contact */}
             <section>
               <div className="mb-5 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EAF3EC] text-[#17665B]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-light-gray)] text-brand-black">
                   <PenLine size={20} />
                 </div>
 
                 <div>
-                  <h2 className="text-lg font-bold text-[#103C3A]">
+                  <h2 className="text-lg font-bold text-[var(--brand-black)]">
                     Signature & Contact
                   </h2>
                   <p className="text-sm text-gray-500">
@@ -394,7 +394,7 @@ export default function FinalSubmissionStep({
                 <div>
                   <label
                     htmlFor="signature"
-                    className="mb-2 block text-sm font-semibold text-[#244C45]"
+                    className="mb-2 block text-sm font-semibold text-[var(--brand-dark-gray)]"
                   >
                     Signature <span className="text-red-500">*</span>
                   </label>
@@ -422,7 +422,7 @@ export default function FinalSubmissionStep({
                 <div>
                   <label
                     htmlFor="printName"
-                    className="mb-2 block text-sm font-semibold text-[#244C45]"
+                    className="mb-2 block text-sm font-semibold text-[var(--brand-dark-gray)]"
                   >
                     Printed Full Name <span className="text-red-500">*</span>
                   </label>
@@ -450,7 +450,7 @@ export default function FinalSubmissionStep({
                 <div className="sm:col-span-2">
                   <label
                     htmlFor="agreementEmail"
-                    className="mb-2 block text-sm font-semibold text-[#244C45]"
+                    className="mb-2 block text-sm font-semibold text-[var(--brand-dark-gray)]"
                   >
                     Email Address <span className="text-red-500">*</span>
                   </label>
@@ -484,12 +484,12 @@ export default function FinalSubmissionStep({
             {/* Payment preferences */}
             <section>
               <div className="mb-5 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EAF3EC] text-[#17665B]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-light-gray)] text-brand-black">
                   <CreditCard size={20} />
                 </div>
 
                 <div>
-                  <h2 className="text-lg font-bold text-[#103C3A]">
+                  <h2 className="text-lg font-bold text-[var(--brand-black)]">
                     How Do You Get Paid?
                   </h2>
                   <p className="text-sm text-gray-500">
@@ -509,8 +509,8 @@ export default function FinalSubmissionStep({
                       key={method.value}
                       className={`relative flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all duration-200 ${
                         isSelected
-                          ? "border-[#17665B] bg-[#F0F6F1] shadow-[0_0_0_1px_rgba(23,102,91,0.12)]"
-                          : "border-gray-200 bg-white hover:border-[#17665B]/40 hover:bg-[#FAFCFA]"
+                          ? "border-[var(--brand-gold)] bg-[var(--brand-light-gray)] shadow-[0_0_0_1px_rgba(23,102,91,0.12)]"
+                          : "border-gray-200 bg-white hover:border-[var(--brand-gold)]/40 hover:bg-[var(--brand-light-gray)]"
                       }`}
                     >
                       <input
@@ -527,8 +527,8 @@ export default function FinalSubmissionStep({
                       <div
                         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
                           isSelected
-                            ? "bg-[#103C3A] text-[#F0D99B]"
-                            : "bg-[#EDF2ED] text-[#17665B]"
+                            ? "bg-[var(--brand-black)] text-[var(--brand-gold)]"
+                            : "bg-[var(--brand-light-gray)] text-brand-black"
                         }`}
                       >
                         <Icon size={20} />
@@ -536,14 +536,14 @@ export default function FinalSubmissionStep({
 
                       <div className="min-w-0 flex-1">
                         <div className="flex items-start justify-between gap-2">
-                          <span className="text-sm font-bold leading-5 text-[#103C3A]">
+                          <span className="text-sm font-bold leading-5 text-[var(--brand-black)]">
                             {method.title}
                           </span>
 
                           {isSelected && (
                             <CheckCircle2
                               size={18}
-                              className="shrink-0 text-[#17665B]"
+                              className="shrink-0 text-brand-black"
                             />
                           )}
                         </div>
@@ -560,16 +560,16 @@ export default function FinalSubmissionStep({
               <FieldError field="paymentMethod" />
 
               {agreementData.paymentMethod === "Cash On Delivery" && (
-                <div className="mt-4 flex items-start gap-3 rounded-xl border border-[#D4A84F]/40 bg-[#FBF6E9] p-4">
+                <div className="mt-4 flex items-start gap-3 rounded-xl border border-[var(--brand-gold)]/40 bg-[var(--brand-light-gray)] p-4">
                   <CheckCircle2
                     size={19}
-                    className="mt-0.5 shrink-0 text-[#8C6924]"
+                    className="mt-0.5 shrink-0 text-brand-black"
                   />
                   <div>
-                    <p className="text-sm font-bold text-[#72541D]">
+                    <p className="text-sm font-bold text-brand-black">
                       Cash on Delivery Selected
                     </p>
-                    <p className="mt-1 text-xs leading-5 text-[#806B43]">
+                    <p className="mt-1 text-xs leading-5 text-brand-black">
                       Bank name, account number, and routing number are not
                       required for this selection.
                     </p>
@@ -579,8 +579,8 @@ export default function FinalSubmissionStep({
             </section>
 
             <section className="grid gap-4 sm:grid-cols-2">
-              <article className="rounded-2xl border border-[#DCE7DF] bg-white p-5 sm:p-6">
-                <h2 className="font-bold text-[#103C3A]">Entire Contract</h2>
+              <article className="rounded-2xl border border-[var(--brand-light-gray)] bg-white p-5 sm:p-6">
+                <h2 className="font-bold text-[var(--brand-black)]">Entire Contract</h2>
                 <p className="mt-3 text-sm leading-7 text-gray-600">
                   This CARRIER SETUP / AGREEMENT contains all the terms and
                   conditions that fully represent the mutual understanding and
@@ -591,8 +591,8 @@ export default function FinalSubmissionStep({
                   this document.
                 </p>
               </article>
-              <article className="rounded-2xl border border-[#DCE7DF] bg-white p-5 sm:p-6">
-                <h2 className="font-bold text-[#103C3A]">Notices</h2>
+              <article className="rounded-2xl border border-[var(--brand-light-gray)] bg-white p-5 sm:p-6">
+                <h2 className="font-bold text-[var(--brand-black)]">Notices</h2>
                 <p className="mt-3 text-sm leading-7 text-gray-600">
                   If the Carrier intends to terminate the contract or change
                   jobs, the Carrier must provide at least 15 days&apos; prior
@@ -603,14 +603,14 @@ export default function FinalSubmissionStep({
 
             {/* Bank details */}
             {agreementData.paymentMethod !== "Cash On Delivery" && (
-                <section className="rounded-2xl border border-[#DCE7DF] bg-[#F8FAF8] p-5 sm:p-6">
+                <section className="rounded-2xl border border-[var(--brand-light-gray)] bg-[var(--brand-light-gray)] p-5 sm:p-6">
                   <div className="mb-5 flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#103C3A] text-[#F0D99B]">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-black)] text-[var(--brand-gold)]">
                       <Landmark size={20} />
                     </div>
 
                     <div>
-                      <h2 className="font-bold text-[#103C3A]">
+                      <h2 className="font-bold text-[var(--brand-black)]">
                         Bank Account Details
                       </h2>
                       <p className="text-xs text-gray-500">
@@ -623,7 +623,7 @@ export default function FinalSubmissionStep({
                     <div className="sm:col-span-2">
                       <label
                         htmlFor="bankName"
-                        className="mb-2 block text-sm font-semibold text-[#244C45]"
+                        className="mb-2 block text-sm font-semibold text-[var(--brand-dark-gray)]"
                       >
                         Bank Name <span className="text-red-500">*</span>
                       </label>
@@ -647,7 +647,7 @@ export default function FinalSubmissionStep({
                     <div>
                       <label
                         htmlFor="accountNumber"
-                        className="mb-2 block text-sm font-semibold text-[#244C45]"
+                        className="mb-2 block text-sm font-semibold text-[var(--brand-dark-gray)]"
                       >
                         Account Number <span className="text-red-500">*</span>
                       </label>
@@ -672,7 +672,7 @@ export default function FinalSubmissionStep({
                     <div>
                       <label
                         htmlFor="routingNumber"
-                        className="mb-2 block text-sm font-semibold text-[#244C45]"
+                        className="mb-2 block text-sm font-semibold text-[var(--brand-dark-gray)]"
                       >
                         Routing Number <span className="text-red-500">*</span>
                       </label>
@@ -698,7 +698,7 @@ export default function FinalSubmissionStep({
                   <div className="mt-4 flex items-start gap-2 rounded-lg bg-white p-3 text-xs leading-5 text-gray-500">
                     <ShieldCheck
                       size={16}
-                      className="mt-0.5 shrink-0 text-[#17665B]"
+                      className="mt-0.5 shrink-0 text-brand-black"
                     />
                     <p>
                       Only enter banking information required for your selected
@@ -710,9 +710,9 @@ export default function FinalSubmissionStep({
               )}
 
             {/* Broker obligations */}
-            <section className="rounded-2xl border border-[#DCE7DF] bg-white p-5 sm:p-6">
-              <h2 className="mb-3 flex items-center gap-2 font-bold text-[#103C3A]">
-                <ShieldCheck size={19} className="text-[#17665B]" />
+            <section className="rounded-2xl border border-[var(--brand-light-gray)] bg-white p-5 sm:p-6">
+              <h2 className="mb-3 flex items-center gap-2 font-bold text-[var(--brand-black)]">
+                <ShieldCheck size={19} className="text-brand-black" />
                 Broker Obligations
               </h2>
 
@@ -723,9 +723,9 @@ export default function FinalSubmissionStep({
             </section>
 
             {/* Carrier obligations */}
-            <section className="rounded-2xl border border-[#DCE7DF] bg-white p-5 sm:p-6">
-              <h2 className="mb-4 flex items-center gap-2 font-bold text-[#103C3A]">
-                <FileCheck2 size={19} className="text-[#17665B]" />
+            <section className="rounded-2xl border border-[var(--brand-light-gray)] bg-white p-5 sm:p-6">
+              <h2 className="mb-4 flex items-center gap-2 font-bold text-[var(--brand-black)]">
+                <FileCheck2 size={19} className="text-brand-black" />
                 Carrier Obligations
               </h2>
 
@@ -742,7 +742,7 @@ export default function FinalSubmissionStep({
                   >
                     <CheckCircle2
                       size={17}
-                      className="mt-0.5 shrink-0 text-[#17665B]"
+                      className="mt-0.5 shrink-0 text-brand-black"
                     />
                     <span>{obligation}</span>
                   </li>
@@ -772,7 +772,7 @@ export default function FinalSubmissionStep({
                   type="button"
                   onClick={() => setStep(5)}
                   disabled={isLoading}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#DCE7DF] bg-white px-6 py-3.5 text-sm font-bold text-[#103C3A] transition hover:border-[#17665B] hover:bg-[#F5F8F5] disabled:cursor-not-allowed disabled:opacity-50 sm:w-1/2"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[var(--brand-light-gray)] bg-white px-6 py-3.5 text-sm font-bold text-[var(--brand-black)] transition hover:border-[var(--brand-gold)] hover:bg-[var(--brand-light-gray)] disabled:cursor-not-allowed disabled:opacity-50 sm:w-1/2"
                 >
                   <ArrowLeft size={17} />
                   Previous Step
@@ -782,7 +782,7 @@ export default function FinalSubmissionStep({
                   type="button"
                   onClick={handleSubmit}
                   disabled={isLoading}
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#103C3A] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#103C3A]/15 transition duration-200 hover:bg-[#17665B] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70 sm:w-1/2"
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand-black)] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[var(--brand-black)]/15 transition duration-200 hover:bg-[var(--brand-gold-dark)] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70 sm:w-1/2"
                 >
                   {isLoading ? (
                     <>

@@ -88,15 +88,15 @@ export default function ServicesAndPaymentStep({
   };
 
   return (
-    <section className="overflow-hidden rounded-3xl border border-[#DCE7DF] bg-white shadow-[0_24px_70px_rgba(16,60,58,0.08)]">
-      <div className="h-1.5 bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
+    <section className="overflow-hidden rounded-3xl border border-[var(--brand-light-gray)] bg-white shadow-[0_24px_70px_rgba(8,9,11,0.08)]">
+      <div className="h-1.5 bg-gradient-to-r from-[var(--brand-black)] via-[var(--brand-gold)] to-[var(--brand-gold)]" />
       <div className="space-y-8 p-5 sm:p-8 lg:p-10">
         <header>
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#D4A84F]/40 bg-[#FBF6E9] px-3 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#806020]">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[var(--brand-gold)]/40 bg-[var(--brand-light-gray)] px-3 py-1.5 text-xs font-extrabold uppercase tracking-wider text-brand-black">
             <CircleDollarSign size={15} />
             Step 5 · Services & Fees
           </div>
-          <h2 className="text-2xl font-black text-[#103C3A] sm:text-3xl">
+          <h2 className="text-2xl font-black text-[var(--brand-black)] sm:text-3xl">
             Select Services
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
@@ -110,7 +110,7 @@ export default function ServicesAndPaymentStep({
             <div>
               <h3
                 id="services-heading"
-                className="text-lg font-extrabold text-[#103C3A]"
+                className="text-lg font-extrabold text-[var(--brand-black)]"
               >
                 Services & Fees
               </h3>
@@ -118,7 +118,7 @@ export default function ServicesAndPaymentStep({
                 Select one or more services.
               </p>
             </div>
-            <span className="rounded-full bg-[#EAF4EF] px-3 py-1.5 text-xs font-bold text-[#17665B]">
+            <span className="rounded-full bg-[var(--brand-light-gray)] px-3 py-1.5 text-xs font-bold text-brand-black">
               {selectedServices.length} selected
             </span>
           </div>
@@ -136,31 +136,31 @@ export default function ServicesAndPaymentStep({
                   key={service.value}
                   className={`flex cursor-pointer gap-4 rounded-2xl border p-5 transition sm:p-6 ${
                     isSelected
-                      ? "border-[#17665B] bg-[#17665B]/5 shadow-[0_10px_28px_rgba(23,102,91,0.09)]"
-                      : "border-[#103C3A]/10 bg-white hover:border-[#D4A84F]/70 hover:shadow-md"
+                      ? "border-[var(--brand-gold)] bg-[var(--brand-gold)]/5 shadow-[0_10px_28px_rgba(23,102,91,0.09)]"
+                      : "border-[var(--brand-black)]/10 bg-white hover:border-[var(--brand-gold)]/70 hover:shadow-md"
                   }`}
                 >
                   <input
                     type="checkbox"
                     checked={isSelected}
                     onChange={() => toggleService(service.value)}
-                    className="mt-1 h-4 w-4 shrink-0 accent-[#17665B]"
+                    className="mt-1 h-4 w-4 shrink-0 accent-[var(--brand-gold)]"
                   />
                   <span
                     className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
                       isSelected
-                        ? "bg-[#103C3A] text-[#F0D99B]"
-                        : "bg-[#103C3A]/5 text-[#17665B]"
+                        ? "bg-[var(--brand-black)] text-[var(--brand-gold)]"
+                        : "bg-[var(--brand-black)]/5 text-brand-black"
                     }`}
                   >
                     <Icon size={21} />
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-start justify-between gap-2">
-                      <span className="text-sm font-extrabold leading-6 text-[#103C3A]">
+                      <span className="text-sm font-extrabold leading-6 text-[var(--brand-black)]">
                         {service.title}
                       </span>
-                      <span className="text-sm font-black text-[#17665B]">
+                      <span className="text-sm font-black text-brand-black">
                         {onboardingFeeWaived ? "No fee" : service.price}
                       </span>
                     </span>
@@ -173,7 +173,7 @@ export default function ServicesAndPaymentStep({
                         : service.note}
                     </span>
                     {isSelected && (
-                      <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-[#17665B]">
+                      <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-brand-black">
                         <CheckCircle2 size={14} />
                         Selected
                       </span>
@@ -193,7 +193,7 @@ export default function ServicesAndPaymentStep({
           <>
             <section aria-labelledby="payment-terms-heading">
               <div className="mb-5">
-                <div className="mb-3 inline-flex items-center gap-2 text-[#17665B]">
+                <div className="mb-3 inline-flex items-center gap-2 text-brand-black">
                   <Wallet size={19} />
                   <span className="text-xs font-extrabold uppercase tracking-wider">
                     Payment Terms
@@ -201,7 +201,7 @@ export default function ServicesAndPaymentStep({
                 </div>
                 <h3
                   id="payment-terms-heading"
-                  className="text-xl font-black text-[#103C3A]"
+                  className="text-xl font-black text-[var(--brand-black)]"
                 >
                   Payment Terms
                 </h3>
@@ -222,8 +222,8 @@ export default function ServicesAndPaymentStep({
                       key={option.value}
                       className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition ${
                         isSelected
-                          ? "border-[#17665B] bg-[#F0F6F1] ring-1 ring-[#17665B]/15"
-                          : "border-[#DCE7DF] bg-white hover:border-[#17665B]/50"
+                          ? "border-[var(--brand-gold)] bg-[var(--brand-light-gray)] ring-1 ring-[var(--brand-gold)]/15"
+                          : "border-[var(--brand-light-gray)] bg-white hover:border-[var(--brand-gold)]/50"
                       }`}
                     >
                       <input
@@ -232,18 +232,18 @@ export default function ServicesAndPaymentStep({
                         value={option.value}
                         checked={isSelected}
                         onChange={() => handlePaymentChange(option.value)}
-                        className="h-4 w-4 accent-[#17665B]"
+                        className="h-4 w-4 accent-[var(--brand-gold)]"
                       />
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EAF3EC] text-[#17665B]">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-light-gray)] text-brand-black">
                         <Icon size={19} />
                       </span>
-                      <span className="font-bold text-[#103C3A]">
+                      <span className="font-bold text-[var(--brand-black)]">
                         {option.value}
                       </span>
                       {isSelected && (
                         <CheckCircle2
                           size={18}
-                          className="ml-auto shrink-0 text-[#17665B]"
+                          className="ml-auto shrink-0 text-brand-black"
                         />
                       )}
                     </label>
@@ -252,7 +252,7 @@ export default function ServicesAndPaymentStep({
               </div>
 
               {agreementData.paymentTermsMethod && (
-                <p className="mt-4 rounded-xl border border-[#17665B]/20 bg-[#EAF4EF] p-4 text-sm leading-7 text-[#244C45]">
+                <p className="mt-4 rounded-xl border border-[var(--brand-gold)]/20 bg-[var(--brand-light-gray)] p-4 text-sm leading-7 text-[var(--brand-dark-gray)]">
                   {agreementData.carrierType === "old"
                     ? oldCarrierExplanation
                     : newCarrierExplanation}
@@ -262,21 +262,21 @@ export default function ServicesAndPaymentStep({
 
             <section className="grid gap-4 sm:grid-cols-2">
               {agreementData.carrierType === "new" && (
-                <article className="rounded-2xl border border-[#D4A84F]/45 bg-[#FBF6E9] p-5">
-                  <h3 className="flex items-center gap-2 font-extrabold text-[#72541D]">
+                <article className="rounded-2xl border border-[var(--brand-gold)]/45 bg-[var(--brand-light-gray)] p-5">
+                  <h3 className="flex items-center gap-2 font-extrabold text-brand-black">
                     <RefreshCw size={18} />
                     Refundable Security Deposit
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-[#725F3B]">
+                  <p className="mt-3 text-sm leading-7 text-brand-black">
                     The $425 dedicated lane setup fee is refundable after the
                     first delivery arranged by the company, according to the
                     applicable agreement terms.
                   </p>
                 </article>
               )}
-              <article className="rounded-2xl border border-[#DCE7DF] bg-[#F8FAF8] p-5">
-                <h3 className="flex items-center gap-2 font-extrabold text-[#103C3A]">
-                  <FileText size={18} className="text-[#17665B]" />
+              <article className="rounded-2xl border border-[var(--brand-light-gray)] bg-[var(--brand-light-gray)] p-5">
+                <h3 className="flex items-center gap-2 font-extrabold text-[var(--brand-black)]">
+                  <FileText size={18} className="text-brand-black" />
                   Payment Processing
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-slate-600">
@@ -300,11 +300,11 @@ export default function ServicesAndPaymentStep({
           </p>
         )}
 
-        <div className="flex flex-col-reverse gap-3 border-t border-[#DCE7DF] pt-6 sm:flex-row sm:justify-between">
+        <div className="flex flex-col-reverse gap-3 border-t border-[var(--brand-light-gray)] pt-6 sm:flex-row sm:justify-between">
           <button
             type="button"
             onClick={() => setStep(4)}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#DCE7DF] bg-white px-6 py-3.5 text-sm font-bold text-[#103C3A] transition hover:border-[#17665B]"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--brand-light-gray)] bg-white px-6 py-3.5 text-sm font-bold text-[var(--brand-black)] transition hover:border-[var(--brand-gold)]"
           >
             <ArrowLeft size={17} />
             Previous
@@ -312,7 +312,7 @@ export default function ServicesAndPaymentStep({
           <button
             type="button"
             onClick={handleNext}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#103C3A] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#17665B]"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-black)] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[var(--brand-gold-dark)]"
           >
             Continue to Final Submission
             <ArrowRight size={17} />
@@ -320,7 +320,7 @@ export default function ServicesAndPaymentStep({
         </div>
 
         <p className="flex items-center justify-center gap-2 text-center text-xs leading-5 text-slate-500">
-          <ShieldCheck size={15} className="text-[#17665B]" />
+          <ShieldCheck size={15} className="text-brand-black" />
           Your selected services are included in your agreement submission.
         </p>
       </div>

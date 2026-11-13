@@ -40,20 +40,20 @@ const sections = [
 
 const SectionHeading = ({ eyebrow, title, icon: Icon }) => (
   <div className="mb-6 flex items-start gap-4">
-    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#103C3A] text-[#F0D99B]">
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-black)] text-[var(--brand-gold)]">
       <Icon size={23} strokeWidth={1.8} />
     </div>
 
     <div>
       {eyebrow && (
-        <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#B28A35]">
+        <p className="mb-1 text-[11px] font-bold uppercase tracking-[0.18em] text-brand-black">
           {eyebrow}
         </p>
       )}
-      <h2 className="text-xl font-black leading-tight text-[#103C3A] sm:text-2xl">
+      <h2 className="text-xl font-black leading-tight text-[var(--brand-black)] sm:text-2xl">
         {title}
       </h2>
-      <div className="mt-3 h-1 w-12 rounded-full bg-[#D4A84F]" />
+      <div className="mt-3 h-1 w-12 rounded-full bg-[var(--brand-gold)]" />
     </div>
   </div>
 );
@@ -61,7 +61,7 @@ const SectionHeading = ({ eyebrow, title, icon: Icon }) => (
 const PolicyCard = ({ id, eyebrow, title, icon, children }) => (
   <section
     id={id}
-    className="scroll-mt-28 rounded-2xl border border-[#103C3A]/10 bg-white p-6 shadow-[0_8px_30px_rgba(16,60,58,0.035)] transition-shadow duration-300 hover:shadow-[0_14px_35px_rgba(16,60,58,0.07)] sm:p-8 lg:p-9"
+    className="scroll-mt-28 rounded-2xl border border-[var(--brand-black)]/10 bg-white p-6 shadow-[0_8px_30px_rgba(8,9,11,0.035)] transition-shadow duration-300 hover:shadow-[0_14px_35px_rgba(8,9,11,0.07)] sm:p-8 lg:p-9"
   >
     <SectionHeading eyebrow={eyebrow} title={title} icon={icon} />
     <div className="space-y-4 text-sm leading-7 text-slate-600 sm:text-base sm:leading-8">
@@ -76,7 +76,7 @@ const BulletList = ({ items }) => (
       <li key={item} className="flex items-start gap-3">
         <CheckCircle2
           size={18}
-          className="mt-1 shrink-0 text-[#17665B]"
+          className="mt-1 shrink-0 text-brand-black"
         />
         <span>{item}</span>
       </li>
@@ -88,33 +88,33 @@ const InfoBox = ({ title, children, gold = false }) => (
   <div
     className={`rounded-xl border p-5 sm:p-6 ${
       gold
-        ? "border-[#D4A84F]/35 bg-[#F0D99B]/15"
-        : "border-[#103C3A]/10 bg-[#F5F7F4]"
+        ? "border-[var(--brand-gold)]/35 bg-[var(--brand-gold)]/15"
+        : "border-[var(--brand-black)]/10 bg-[var(--brand-light-gray)]"
     }`}
   >
-    <h3 className="mb-4 font-extrabold text-[#103C3A]">{title}</h3>
+    <h3 className="mb-4 font-extrabold text-[var(--brand-black)]">{title}</h3>
     <div className="text-sm leading-7 text-slate-600">{children}</div>
   </div>
 );
 
 export default function PrivacyPolicy() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#F5F7F4] text-[#103C3A]">
+    <main className="min-h-screen overflow-hidden bg-[var(--brand-light-gray)] text-[var(--brand-black)]">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[#103C3A]">
-        <div className="pointer-events-none absolute -right-24 -top-32 h-96 w-96 rounded-full bg-[#D4A84F]/15 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[#17665B]/50 blur-3xl" />
+      <section className="relative overflow-hidden bg-[var(--brand-black)]">
+        <div className="pointer-events-none absolute -right-24 -top-32 h-96 w-96 rounded-full bg-[var(--brand-gold)]/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[var(--brand-gold)]/50 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-10 lg:py-28">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#D4A84F]/40 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#F0D99B]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--brand-gold)]/40 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[var(--brand-gold)]">
               <ShieldCheck size={17} />
               Legal & Privacy Center
             </div>
 
             <h1 className="mt-7 text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl lg:text-7xl">
               Your Privacy.
-              <span className="block text-[#F0D99B]">
+              <span className="block text-[var(--brand-gold)]">
                 Our Responsibility.
               </span>
             </h1>
@@ -127,23 +127,23 @@ export default function PrivacyPolicy() {
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <div className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm text-white/85">
-                <Lock size={17} className="text-[#F0D99B]" />
+                <Lock size={17} className="text-[var(--brand-gold)]" />
                 Privacy Information
               </div>
 
               <div className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm text-white/85">
-                <FileText size={17} className="text-[#F0D99B]" />
+                <FileText size={17} className="text-[var(--brand-gold)]" />
                 Last Updated: July 2026
               </div>
             </div>
           </div>
         </div>
 
-        <div className="h-1.5 bg-gradient-to-r from-[#D4A84F] via-[#F0D99B] to-transparent" />
+        <div className="h-1.5 bg-gradient-to-r from-[var(--brand-gold)] via-[var(--brand-gold)] to-transparent" />
       </section>
 
       {/* Intro strip */}
-      <section className="border-b border-[#103C3A]/10 bg-white">
+      <section className="border-b border-[var(--brand-black)]/10 bg-white">
         <div className="mx-auto grid max-w-7xl gap-6 px-5 py-7 sm:grid-cols-3 sm:px-8 lg:px-10">
           {[
             {
@@ -166,11 +166,11 @@ export default function PrivacyPolicy() {
 
             return (
               <div key={item.title} className="flex items-start gap-4">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#103C3A]/5 text-[#17665B]">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-black)]/5 text-brand-black">
                   <Icon size={22} />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-[#103C3A]">
+                  <h3 className="font-extrabold text-[var(--brand-black)]">
                     {item.title}
                   </h3>
                   <p className="mt-1 text-sm leading-6 text-slate-500">
@@ -187,9 +187,9 @@ export default function PrivacyPolicy() {
       <div className="mx-auto grid max-w-7xl gap-8 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[270px_minmax(0,1fr)] lg:gap-10 lg:px-10">
         {/* Sticky navigation */}
         <aside className="lg:sticky lg:top-28 lg:self-start">
-          <div className="overflow-hidden rounded-2xl border border-[#103C3A]/10 bg-white shadow-[0_10px_35px_rgba(16,60,58,0.05)]">
-            <div className="bg-[#103C3A] px-5 py-5 text-white">
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#F0D99B]">
+          <div className="overflow-hidden rounded-2xl border border-[var(--brand-black)]/10 bg-white shadow-[0_10px_35px_rgba(8,9,11,0.05)]">
+            <div className="bg-[var(--brand-black)] px-5 py-5 text-white">
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
                 Navigate
               </p>
               <h2 className="mt-2 text-xl font-black">Policy Contents</h2>
@@ -206,11 +206,11 @@ export default function PrivacyPolicy() {
                   <a
                     key={item.id}
                     href={`#${item.id}`}
-                    className="group flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-[#F5F7F4] hover:text-[#17665B]"
+                    className="group flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-semibold text-slate-600 transition-colors hover:bg-[var(--brand-light-gray)] hover:text-brand-black"
                   >
                     <Icon
                       size={17}
-                      className="shrink-0 text-[#B28A35]"
+                      className="shrink-0 text-brand-black"
                     />
                     <span className="flex-1">{item.label}</span>
                     <ChevronRight
@@ -222,10 +222,10 @@ export default function PrivacyPolicy() {
               })}
             </nav>
 
-            <div className="border-t border-[#103C3A]/10 p-4">
+            <div className="border-t border-[var(--brand-black)]/10 p-4">
               <a
                 href="mailto:contact@mktransportationgroup.com"
-                className="flex items-center justify-center gap-2 rounded-xl bg-[#D4A84F] px-4 py-3 text-sm font-extrabold text-[#103C3A] transition hover:bg-[#F0D99B]"
+                className="flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-gold)] px-4 py-3 text-sm font-extrabold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)]"
               >
                 Ask a Privacy Question
                 <ArrowUpRight size={17} />
@@ -524,17 +524,17 @@ export default function PrivacyPolicy() {
           {/* Contact panel */}
           <section
             id="contact"
-            className="scroll-mt-28 overflow-hidden rounded-2xl bg-[#103C3A] shadow-[0_20px_55px_rgba(16,60,58,0.16)]"
+            className="scroll-mt-28 overflow-hidden rounded-2xl bg-[var(--brand-black)] shadow-[0_20px_55px_rgba(8,9,11,0.16)]"
           >
             <div className="relative p-6 sm:p-9 lg:p-10">
-              <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#D4A84F]/15 blur-3xl" />
+              <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[var(--brand-gold)]/15 blur-3xl" />
 
               <div className="relative">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D4A84F]/30 bg-white/5 text-[#F0D99B]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--brand-gold)]/30 bg-white/5 text-[var(--brand-gold)]">
                   <Mail size={24} />
                 </div>
 
-                <p className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-[#F0D99B]">
+                <p className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
                   13 — Contact & Support
                 </p>
 
@@ -550,7 +550,7 @@ export default function PrivacyPolicy() {
 
                 <div className="mt-8 grid gap-4 sm:grid-cols-2">
                   <div className="rounded-xl border border-white/15 bg-white/5 p-5">
-                    <p className="text-xs font-bold uppercase tracking-wider text-[#F0D99B]">
+                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--brand-gold)]">
                       Company
                     </p>
                     <p className="mt-2 font-bold text-white">
@@ -562,26 +562,26 @@ export default function PrivacyPolicy() {
                       Mailing address: {COMPANY_MAILING_ADDRESS}
                     </p>
 
-                    <p className="mt-5 text-xs font-bold uppercase tracking-wider text-[#F0D99B]">
+                    <p className="mt-5 text-xs font-bold uppercase tracking-wider text-[var(--brand-gold)]">
                       Privacy Contact
                     </p>
                     <a
                       href={`mailto:${COMPANY_EMAIL}`}
-                      className="mt-2 block break-words text-sm font-semibold leading-6 text-white transition hover:text-[#F0D99B]"
+                      className="mt-2 block break-words text-sm font-semibold leading-6 text-white transition hover:text-[var(--brand-gold)]"
                     >
                       {COMPANY_EMAIL}
                     </a>
 
                     <a
                       href={`mailto:${ADMIN_EMAIL}`}
-                      className="mt-2 block break-words text-sm font-semibold leading-6 text-white/80 transition hover:text-[#F0D99B]"
+                      className="mt-2 block break-words text-sm font-semibold leading-6 text-white/80 transition hover:text-[var(--brand-gold)]"
                     >
                       {ADMIN_EMAIL}
                     </a>
                   </div>
 
                   <div className="rounded-xl border border-white/15 bg-white/5 p-5">
-                    <p className="text-xs font-bold uppercase tracking-wider text-[#F0D99B]">
+                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--brand-gold)]">
                       Business Hours
                     </p>
                     <p className="mt-2 font-bold text-white">
@@ -595,7 +595,7 @@ export default function PrivacyPolicy() {
 
                     <a
                       href={`mailto:${COMPANY_EMAIL}`}
-                      className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#D4A84F] px-4 py-3 text-sm font-extrabold text-[#103C3A] transition hover:bg-[#F0D99B]"
+                      className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[var(--brand-gold)] px-4 py-3 text-sm font-extrabold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)]"
                     >
                       Contact Us
                       <ArrowUpRight size={17} />

@@ -385,19 +385,19 @@ export default function RefundableSlipModal({
     String(eventType || "").replaceAll("_", " ");
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/85 p-3 backdrop-blur-sm sm:p-6">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-[var(--brand-black)]/85 p-3 backdrop-blur-sm sm:p-6">
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby="refundable-slip-title"
-        className="flex max-h-[96vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl"
+        className="flex max-h-[96vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] shadow-2xl"
       >
-        <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 px-5 py-4 sm:px-7">
+        <header className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--brand-border)] px-5 py-4 sm:px-7">
           <div>
             <h2 id="refundable-slip-title" className="text-xl font-bold">
               {isSent ? "Refundable Deposit Receipt" : "Refundable Slip Preview"}
             </h2>
-            <p className="mt-1 text-sm text-slate-400">
+            <p className="mt-1 text-sm text-[var(--brand-gray)]">
               {context?.invoice?.invoice_number || "Loading invoice..."} ·{" "}
               {agreement?.tracking_id || "Loading agreement..."}
             </p>
@@ -408,8 +408,8 @@ export default function RefundableSlipModal({
               onClick={() => setActiveTab("receipt")}
               className={`rounded-lg px-3 py-2 text-sm font-semibold ${
                 activeTab === "receipt"
-                  ? "bg-emerald-500 text-slate-950"
-                  : "border border-slate-700 text-slate-300"
+                  ? "bg-[var(--brand-gold)] text-[var(--brand-black)]"
+                  : "border border-[var(--brand-border)] text-white/75"
               }`}
             >
               Receipt
@@ -419,8 +419,8 @@ export default function RefundableSlipModal({
               onClick={() => setActiveTab("settings")}
               className={`rounded-lg px-3 py-2 text-sm font-semibold ${
                 activeTab === "settings"
-                  ? "bg-emerald-500 text-slate-950"
-                  : "border border-slate-700 text-slate-300"
+                  ? "bg-[var(--brand-gold)] text-[var(--brand-black)]"
+                  : "border border-[var(--brand-border)] text-white/75"
               }`}
             >
               Receipt Settings
@@ -428,7 +428,7 @@ export default function RefundableSlipModal({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
+              className="rounded-lg border border-[var(--brand-border)] px-3 py-2 text-sm text-white/75 hover:bg-[var(--brand-dark-gray)]"
             >
               Close
             </button>
@@ -447,12 +447,12 @@ export default function RefundableSlipModal({
             </div>
           )}
           {loading || !context || !settings ? (
-            <p className="py-16 text-center text-slate-400">Loading payment verification and receipt information...</p>
+            <p className="py-16 text-center text-[var(--brand-gray)]">Loading payment verification and receipt information...</p>
           ) : activeTab === "settings" ? (
             <div className="mx-auto max-w-4xl space-y-5">
-              <section className="rounded-xl border border-slate-800 bg-slate-950/50 p-5">
-                <h3 className="font-semibold text-emerald-300">Company Information</h3>
-                <p className="mt-1 text-xs leading-5 text-slate-400">
+              <section className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-5">
+                <h3 className="font-semibold text-[var(--brand-gold)]">Company Information</h3>
+                <p className="mt-1 text-xs leading-5 text-[var(--brand-gray)]">
                   These details are saved for future slips. Receipt records keep their own immutable snapshots.
                 </p>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -468,24 +468,24 @@ export default function RefundableSlipModal({
                     ["mailingAddress", "Mailing address", false],
                   ].map(([name, label, required]) => (
                     <label key={name}>
-                      <span className="mb-1.5 block text-xs font-medium text-slate-400">{label}</span>
+                      <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">{label}</span>
                       <input
                         name={name}
                         value={settings[name] || ""}
                         onChange={updateSetting}
                         maxLength={name.includes("Address") ? 255 : 255}
                         required={required}
-                        className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+                        className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
                       />
                     </label>
                   ))}
                   <label>
-                    <span className="mb-1.5 block text-xs font-medium text-slate-400">Company logo (PNG/JPEG/WebP, max 2.15 MB)</span>
+                    <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">Company logo (PNG/JPEG/WebP, max 2.15 MB)</span>
                     <input
                       type="file"
                       accept="image/png,image/jpeg,image/webp"
                       onChange={(event) => updateImage(event, "logoDataUrl", 2_250_000)}
-                      className="block w-full text-xs text-slate-400 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-800 file:px-3 file:py-2 file:text-slate-200"
+                      className="block w-full text-xs text-[var(--brand-gray)] file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--brand-dark-gray)] file:px-3 file:py-2 file:text-white/85"
                     />
                     {settings.logoDataUrl && (
                       <img src={settings.logoDataUrl} alt="Current company logo" className="mt-3 max-h-16 max-w-40 rounded bg-white p-2" />
@@ -494,9 +494,9 @@ export default function RefundableSlipModal({
                 </div>
               </section>
 
-              <section className="rounded-xl border border-slate-800 bg-slate-950/50 p-5">
-                <h3 className="font-semibold text-emerald-300">Refund Policy</h3>
-                <p className="mt-1 text-xs leading-5 text-slate-400">
+              <section className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-5">
+                <h3 className="font-semibold text-[var(--brand-gold)]">Refund Policy</h3>
+                <p className="mt-1 text-xs leading-5 text-[var(--brand-gray)]">
                   Review this policy against the signed agreement. The current text is based on the refundable deposit terms and does not promise a processing timeframe.
                 </p>
                 <textarea
@@ -506,43 +506,43 @@ export default function RefundableSlipModal({
                   rows={7}
                   maxLength={6000}
                   required
-                  className="mt-3 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm leading-6 outline-none focus:border-emerald-500"
+                  className="mt-3 w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm leading-6 outline-none focus:border-[var(--brand-gold)]"
                 />
               </section>
 
-              <section className="rounded-xl border border-slate-800 bg-slate-950/50 p-5">
-                <h3 className="font-semibold text-emerald-300">Receipt Authorization</h3>
-                <p className="mt-1 text-xs leading-5 text-slate-400">
+              <section className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-5">
+                <h3 className="font-semibold text-[var(--brand-gold)]">Receipt Authorization</h3>
+                <p className="mt-1 text-xs leading-5 text-[var(--brand-gray)]">
                   Enter only an authorized representative and upload a genuine, company-approved signature. Sending is blocked until all three fields are configured.
                 </p>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   <label>
-                    <span className="mb-1.5 block text-xs font-medium text-slate-400">Authorized representative name</span>
+                    <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">Authorized representative name</span>
                     <input
                       name="authorizedName"
                       value={settings.authorizedName || ""}
                       onChange={updateSetting}
                       maxLength={160}
-                      className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+                      className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
                     />
                   </label>
                   <label>
-                    <span className="mb-1.5 block text-xs font-medium text-slate-400">Authorized job title</span>
+                    <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">Authorized job title</span>
                     <input
                       name="authorizedPosition"
                       value={settings.authorizedPosition || ""}
                       onChange={updateSetting}
                       maxLength={160}
-                      className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+                      className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
                     />
                   </label>
                   <label className="sm:col-span-2">
-                    <span className="mb-1.5 block text-xs font-medium text-slate-400">Approved signature image (PNG/JPEG/WebP, max 293 KB)</span>
+                    <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">Approved signature image (PNG/JPEG/WebP, max 293 KB)</span>
                     <input
                       type="file"
                       accept="image/png,image/jpeg,image/webp"
                       onChange={(event) => updateImage(event, "signatureDataUrl", 300_000)}
-                      className="block w-full text-xs text-slate-400 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-800 file:px-3 file:py-2 file:text-slate-200"
+                      className="block w-full text-xs text-[var(--brand-gray)] file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--brand-dark-gray)] file:px-3 file:py-2 file:text-white/85"
                     />
                     {settings.signatureDataUrl ? (
                       <img src={settings.signatureDataUrl} alt="Configured approved signature" className="mt-3 max-h-20 max-w-64 rounded bg-white p-2" />
@@ -557,7 +557,7 @@ export default function RefundableSlipModal({
                   type="button"
                   onClick={handleSaveSettings}
                   disabled={Boolean(busy) || !settingsDirty}
-                  className="rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-950 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="rounded-lg bg-[var(--brand-gold)] px-5 py-2.5 text-sm font-bold text-[var(--brand-black)] disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {busy === "settings" ? "Saving..." : "Save Receipt Settings"}
                 </button>
@@ -566,66 +566,66 @@ export default function RefundableSlipModal({
           ) : (
             <div className="grid gap-5 xl:grid-cols-[minmax(320px,0.75fr)_minmax(0,1.25fr)]">
               <div className="space-y-4">
-                <section className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
+                <section className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-semibold text-emerald-300">Receipt Status</h3>
-                      <p className="mt-1 text-sm capitalize text-slate-300">
+                      <h3 className="font-semibold text-[var(--brand-gold)]">Receipt Status</h3>
+                      <p className="mt-1 text-sm capitalize text-white/75">
                         {receipt?.status || "Not Generated"}
                       </p>
                     </div>
                     {receipt?.receipt_number && (
-                      <span className="rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-200">
+                      <span className="rounded-lg border border-[var(--brand-border)] px-3 py-2 text-xs font-semibold text-white/85">
                         {receipt.receipt_number}
                       </span>
                     )}
                   </div>
                   <dl className="mt-4 grid grid-cols-[125px_1fr] gap-x-3 gap-y-2 text-sm">
-                    <dt className="text-slate-500">Carrier</dt>
+                    <dt className="text-[var(--brand-gray)]">Carrier</dt>
                     <dd>{currentCarrier.carrier_name || currentCarrier.name || currentCarrier.print_name || "—"}</dd>
-                    <dt className="text-slate-500">Company</dt>
+                    <dt className="text-[var(--brand-gray)]">Company</dt>
                     <dd>{currentCarrier.company_name || currentCarrier.company || "—"}</dd>
-                    <dt className="text-slate-500">Carrier email</dt>
+                    <dt className="text-[var(--brand-gray)]">Carrier email</dt>
                     <dd className="break-all">{receipt?.email_sent_to || currentCarrier.email || "—"}</dd>
-                    <dt className="text-slate-500">Phone</dt>
+                    <dt className="text-[var(--brand-gray)]">Phone</dt>
                     <dd>{currentCarrier.phone || "—"}</dd>
-                    <dt className="text-slate-500">MC / DOT</dt>
+                    <dt className="text-[var(--brand-gray)]">MC / DOT</dt>
                     <dd>{currentCarrier.mc_dot || currentCarrier.mcDot || "—"}</dd>
-                    <dt className="text-slate-500">Deposit status</dt>
-                    <dd className={String(agreement.deposit_status).toLowerCase() === "verified" ? "text-emerald-300" : "text-amber-300"}>
+                    <dt className="text-[var(--brand-gray)]">Deposit status</dt>
+                    <dd className={String(agreement.deposit_status).toLowerCase() === "verified" ? "text-[var(--brand-gold)]" : "text-amber-300"}>
                       {agreement.deposit_status || "Not verified"}
                     </dd>
-                    <dt className="text-slate-500">Amount received</dt>
+                    <dt className="text-[var(--brand-gray)]">Amount received</dt>
                     <dd>{currentPayment ? formatCurrency(currentPayment.amountReceived ?? currentPayment.amount_received) : "—"}</dd>
-                    <dt className="text-slate-500">Payment method</dt>
+                    <dt className="text-[var(--brand-gray)]">Payment method</dt>
                     <dd>{currentPayment?.method || currentPayment?.payment_method || "—"}</dd>
-                    <dt className="text-slate-500">Payment date</dt>
+                    <dt className="text-[var(--brand-gray)]">Payment date</dt>
                     <dd>{formatDate(currentPayment?.date || currentPayment?.payment_date)}</dd>
                     {(currentPayment?.reference || currentPayment?.payment_reference) && (
                       <>
-                        <dt className="text-slate-500">Reference</dt>
+                        <dt className="text-[var(--brand-gray)]">Reference</dt>
                         <dd className="break-all">{currentPayment.reference || currentPayment.payment_reference}</dd>
                       </>
                     )}
-                    <dt className="text-slate-500">Sent date</dt>
+                    <dt className="text-[var(--brand-gray)]">Sent date</dt>
                     <dd>{receipt?.email_sent_at ? new Date(receipt.email_sent_at).toLocaleString() : "—"}</dd>
-                    <dt className="text-slate-500">Authorized by</dt>
+                    <dt className="text-[var(--brand-gray)]">Authorized by</dt>
                     <dd>{currentAuthorization.name || "Not configured"}{currentAuthorization.position ? ` · ${currentAuthorization.position}` : ""}</dd>
                   </dl>
                 </section>
 
-                <section className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-                  <h3 className="font-semibold text-emerald-300">Refund Policy Snapshot</h3>
-                  <div className="mt-3 max-h-48 space-y-3 overflow-y-auto whitespace-pre-wrap text-sm leading-6 text-slate-300">
+                <section className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-4">
+                  <h3 className="font-semibold text-[var(--brand-gold)]">Refund Policy Snapshot</h3>
+                  <div className="mt-3 max-h-48 space-y-3 overflow-y-auto whitespace-pre-wrap text-sm leading-6 text-white/75">
                     {currentPolicy || "No refund policy configured."}
                   </div>
                   {!isSent && (
-                    <label className="mt-4 flex items-start gap-2 text-sm text-slate-300">
+                    <label className="mt-4 flex items-start gap-2 text-sm text-white/75">
                       <input
                         type="checkbox"
                         checked={policyReviewed}
                         onChange={(event) => setPolicyReviewed(event.target.checked)}
-                        className="mt-1 accent-emerald-500"
+                        className="mt-1 accent-[var(--brand-gold)]"
                       />
                       <span>I reviewed and approve the refund policy shown in this receipt.</span>
                     </label>
@@ -643,9 +643,9 @@ export default function RefundableSlipModal({
                 </section>
 
                 {context.events?.length > 0 && (
-                  <section className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-                    <h3 className="font-semibold text-emerald-300">Receipt History</h3>
-                    <ul className="mt-3 space-y-2 text-xs text-slate-400">
+                  <section className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-4">
+                    <h3 className="font-semibold text-[var(--brand-gold)]">Receipt History</h3>
+                    <ul className="mt-3 space-y-2 text-xs text-[var(--brand-gray)]">
                       {context.events.map((event, index) => (
                         <li key={`${event.event_type}-${event.created_at}-${index}`} className="flex justify-between gap-3">
                           <span className="capitalize">{eventLabel(event.event_type)}</span>
@@ -656,11 +656,11 @@ export default function RefundableSlipModal({
                   </section>
                 )}
                 {context.paymentHistory?.length > 0 && (
-                  <section className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-                    <h3 className="font-semibold text-emerald-300">Payment Verification History</h3>
-                    <ul className="mt-3 space-y-3 text-xs text-slate-400">
+                  <section className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-4">
+                    <h3 className="font-semibold text-[var(--brand-gold)]">Payment Verification History</h3>
+                    <ul className="mt-3 space-y-3 text-xs text-[var(--brand-gray)]">
                       {context.paymentHistory.map((record) => (
-                        <li key={record.id} className="border-t border-slate-800 pt-2">
+                        <li key={record.id} className="border-t border-[var(--brand-border)] pt-2">
                           <div className="flex justify-between gap-3">
                             <span className={`capitalize ${record.status === "verified" ? "text-emerald-300" : "text-amber-300"}`}>
                               {record.status}
@@ -688,12 +688,12 @@ export default function RefundableSlipModal({
                 )}
               </div>
 
-              <section className="flex min-h-[520px] flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 px-4 py-3">
+              <section className="flex min-h-[520px] flex-col overflow-hidden rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--brand-border)] px-4 py-3">
                   <div>
                     <h3 className="font-semibold">Refundable Receipt PDF</h3>
                     {receiptData && (
-                      <p className="mt-1 text-sm font-bold text-emerald-300">
+                      <p className="mt-1 text-sm font-bold text-[var(--brand-gold)]">
                         {formatCurrency(receiptData.payment?.amountReceived)} · {receiptData.payment?.method}
                       </p>
                     )}
@@ -702,7 +702,7 @@ export default function RefundableSlipModal({
                     type="button"
                     onClick={handleDownload}
                     disabled={Boolean(busy) || !receipt}
-                    className="rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-800 disabled:opacity-50"
+                    className="rounded-lg border border-[var(--brand-border)] px-3 py-2 text-xs font-semibold text-white/85 hover:bg-[var(--brand-dark-gray)] disabled:opacity-50"
                   >
                     {busy === "download" ? "Preparing..." : "Download PDF"}
                   </button>
@@ -710,20 +710,20 @@ export default function RefundableSlipModal({
                 {previewUrl ? (
                   <iframe title="Refundable deposit receipt preview" src={previewUrl} className="min-h-[520px] flex-1 bg-white" />
                 ) : (
-                  <div className="flex min-h-[520px] flex-1 items-center justify-center p-8 text-center text-sm text-slate-500">
+                  <div className="flex min-h-[520px] flex-1 items-center justify-center p-8 text-center text-sm text-[var(--brand-gray)]">
                     {context.payment
                       ? "Generate a PDF preview to review the refundable deposit receipt."
                       : "A receipt is available only after an administrator records and verifies the payment details."}
                   </div>
                 )}
-                <div className="flex flex-wrap justify-end gap-3 border-t border-slate-800 p-4">
+                <div className="flex flex-wrap justify-end gap-3 border-t border-[var(--brand-border)] p-4">
                   {!isSent && (
                     <>
                       <button
                         type="button"
                         onClick={handlePreview}
                         disabled={Boolean(busy) || !context.payment || settingsDirty}
-                        className="rounded-lg border border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-200 disabled:opacity-50"
+                        className="rounded-lg border border-[var(--brand-border)] px-4 py-2.5 text-sm font-semibold text-white/85 disabled:opacity-50"
                       >
                         {busy === "preview" ? "Generating..." : "Preview PDF"}
                       </button>
@@ -731,7 +731,7 @@ export default function RefundableSlipModal({
                         type="button"
                         onClick={handleSend}
                         disabled={Boolean(busy) || !canSend}
-                        className="rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-950 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="rounded-lg bg-[var(--brand-gold)] px-5 py-2.5 text-sm font-bold text-[var(--brand-black)] disabled:cursor-not-allowed disabled:opacity-40"
                       >
                         {busy === "send" ? "Sending..." : "Send Refundable Slip"}
                       </button>
@@ -742,7 +742,7 @@ export default function RefundableSlipModal({
                       type="button"
                       onClick={handleResend}
                       disabled={Boolean(busy)}
-                      className="rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-950 disabled:opacity-50"
+                      className="rounded-lg bg-[var(--brand-gold)] px-5 py-2.5 text-sm font-bold text-[var(--brand-black)] disabled:opacity-50"
                     >
                       {busy === "resend" ? "Resending..." : "Resend Refundable Slip"}
                     </button>

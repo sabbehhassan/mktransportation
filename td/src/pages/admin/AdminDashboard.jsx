@@ -454,7 +454,7 @@ const AdminDashboard = () => {
       label: normalized.replaceAll("_", " "),
       style:
         styles[normalized] ||
-        "bg-slate-500/10 text-slate-300 ring-slate-500/20",
+        "bg-slate-500/10 text-white/75 ring-slate-500/20",
     };
   };
 
@@ -561,11 +561,11 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <header className="sticky top-0 z-20 border-b border-slate-800 bg-slate-950/95 backdrop-blur">
+    <div className="min-h-screen bg-[var(--brand-black)] text-white">
+      <header className="sticky top-0 z-20 border-b border-[var(--brand-border)] bg-[var(--brand-black)]/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500 text-xl font-bold">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--brand-gold)] text-xl font-bold text-[var(--brand-black)]">
               S
             </div>
 
@@ -573,7 +573,7 @@ const AdminDashboard = () => {
               <h1 className="text-lg font-bold sm:text-xl">
                 MK Transportation
               </h1>
-              <p className="text-xs text-slate-400">Administration Portal</p>
+              <p className="text-xs text-[var(--brand-gray)]">Administration Portal</p>
             </div>
           </div>
 
@@ -581,7 +581,7 @@ const AdminDashboard = () => {
             <button
               onClick={fetchDashboardData}
               disabled={loading}
-              className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:bg-slate-800 disabled:opacity-50"
+              className="rounded-lg border border-[var(--brand-border)] px-4 py-2 text-sm font-medium text-white/85 transition hover:bg-[var(--brand-dark-gray)] disabled:opacity-50"
             >
               {loading ? "Refreshing..." : "↻ Refresh"}
             </button>
@@ -598,7 +598,7 @@ const AdminDashboard = () => {
 
       <main className="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <p className="mb-2 text-sm font-medium text-emerald-400">
+          <p className="mb-2 text-sm font-medium text-[var(--brand-gold)]">
             ADMINISTRATION
           </p>
 
@@ -606,7 +606,7 @@ const AdminDashboard = () => {
             Dashboard Overview
           </h2>
 
-          <p className="mt-2 text-sm text-slate-400 sm:text-base">
+          <p className="mt-2 text-sm text-[var(--brand-gray)] sm:text-base">
             Manage carrier agreements, deposits and assigned loads.
           </p>
         </div>
@@ -631,22 +631,22 @@ const AdminDashboard = () => {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className={`rounded-2xl border border-slate-800 border-l-4 ${stat.accent} bg-slate-900 p-6 shadow-lg`}
+              className={`rounded-2xl border border-[var(--brand-border)] border-l-4 ${stat.accent} bg-[var(--brand-dark-gray)] p-6 shadow-lg`}
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-sm font-medium text-slate-400">
+                  <p className="text-sm font-medium text-[var(--brand-gray)]">
                     {stat.label}
                   </p>
                   <p className="mt-3 text-4xl font-bold">
                     {loading ? "—" : stat.value}
                   </p>
-                  <p className="mt-2 text-xs text-slate-500">
+                  <p className="mt-2 text-xs text-[var(--brand-gray)]">
                     {stat.description}
                   </p>
                 </div>
 
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-800 text-2xl">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--brand-dark-gray)] text-2xl">
                   {stat.icon}
                 </div>
               </div>
@@ -654,10 +654,10 @@ const AdminDashboard = () => {
           ))}
         </section>
 
-        <div className="mb-8 rounded-2xl border border-slate-800 bg-slate-900 p-5 sm:p-6">
+        <div className="mb-8 rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] p-5 sm:p-6">
           <label
             htmlFor="dashboard-search"
-            className="mb-2 block text-sm font-medium text-slate-300"
+            className="mb-2 block text-sm font-medium text-white/75"
           >
             Search agreements and loads
           </label>
@@ -667,25 +667,25 @@ const AdminDashboard = () => {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Search carrier, email, tracking ID, location..."
-            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+            className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-4 py-3 text-sm text-white outline-none placeholder:text-[var(--brand-gray)] focus:border-[var(--brand-gold)] focus:ring-2 focus:ring-[var(--brand-gold)]/30"
           />
         </div>
 
         {/* Agreements */}
-        <section className="mb-8 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
-          <div className="border-b border-slate-800 p-5 sm:p-6">
+        <section className="mb-8 overflow-hidden rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)]">
+          <div className="border-b border-[var(--brand-border)] p-5 sm:p-6">
             <h3 className="text-xl font-bold">Carrier Agreements</h3>
-            <p className="mt-1 text-sm text-slate-400">
+            <p className="mt-1 text-sm text-[var(--brand-gray)]">
               Review submitted agreements and verify deposits.
             </p>
           </div>
 
           {loading ? (
-            <div className="px-6 py-12 text-center text-slate-400">
+            <div className="px-6 py-12 text-center text-[var(--brand-gray)]">
               Loading agreements...
             </div>
           ) : filteredAgreements.length === 0 ? (
-            <div className="px-6 py-12 text-center text-slate-400">
+            <div className="px-6 py-12 text-center text-[var(--brand-gray)]">
               {agreements.length === 0
                 ? "No agreements found."
                 : "No agreements match your search."}
@@ -693,7 +693,7 @@ const AdminDashboard = () => {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full min-w-[1300px] text-left text-sm">
-                <thead className="bg-slate-950/70 text-xs uppercase tracking-wider text-slate-400">
+                <thead className="bg-[var(--brand-black)]/70 text-xs uppercase tracking-wider text-[var(--brand-gray)]">
                   <tr>
                     <th className="px-5 py-4">Tracking ID</th>
                     <th className="px-5 py-4">Carrier</th>
@@ -707,7 +707,7 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-slate-800">
+                <tbody className="divide-y divide-[var(--brand-border)]">
                   {filteredAgreements.map((agreement, index) => {
                     const verified = isDepositVerified(
                       agreement.deposit_status,
@@ -717,9 +717,9 @@ const AdminDashboard = () => {
                     return (
                       <tr
                         key={agreement.id || agreement.tracking_id || index}
-                        className="transition hover:bg-slate-800/40"
+                        className="transition hover:bg-[var(--brand-dark-gray)]/40"
                       >
-                        <td className="whitespace-nowrap px-5 py-4 font-semibold text-emerald-400">
+                        <td className="whitespace-nowrap px-5 py-4 font-semibold text-[var(--brand-gold)]">
                           {agreement.tracking_id || "—"}
                         </td>
 
@@ -729,23 +729,23 @@ const AdminDashboard = () => {
                               agreement.print_name ||
                               "—"}
                           </p>
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-[var(--brand-gray)]">
                             {agreement.company_name || ""}
                           </p>
                         </td>
 
                         <td className="px-5 py-4">
                           <p>{agreement.email || "—"}</p>
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-[var(--brand-gray)]">
                             {agreement.phone || ""}
                           </p>
                         </td>
 
-                        <td className="px-5 py-4 text-slate-300">
+                        <td className="px-5 py-4 text-white/75">
                           {agreement.agreement_type || "—"}
                         </td>
 
-                        <td className="px-5 py-4 text-slate-300">
+                        <td className="px-5 py-4 text-white/75">
                           {agreement.payment_terms_method ||
                             agreement.payment_method ||
                             "—"}
@@ -774,7 +774,7 @@ const AdminDashboard = () => {
                               <span
                                 className={`inline-flex whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold capitalize ring-1 ${
                                   invoiceStyles[invoiceStatus] ||
-                                  "bg-slate-500/10 text-slate-300 ring-slate-500/20"
+                                  "bg-slate-500/10 text-white/75 ring-slate-500/20"
                                 }`}
                               >
                                 {invoiceStatus}
@@ -783,7 +783,7 @@ const AdminDashboard = () => {
                           })()}
                         </td>
 
-                        <td className="whitespace-nowrap px-5 py-4 text-slate-400">
+                        <td className="whitespace-nowrap px-5 py-4 text-[var(--brand-gray)]">
                           {formatDate(
                             agreement.created_at || agreement.agreement_date,
                           )}
@@ -818,7 +818,7 @@ const AdminDashboard = () => {
                             className={`whitespace-nowrap rounded-lg px-3 py-2 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${
                               verified
                                 ? "border border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20"
-                                : "bg-emerald-500 text-white hover:bg-emerald-400"
+                                : "bg-[var(--brand-gold)] text-[var(--brand-black)] hover:bg-[var(--brand-gold-dark)]"
                             }`}
                           >
                             {updatingId === agreement.id
@@ -852,7 +852,7 @@ const AdminDashboard = () => {
                                   ? "Send an invoice successfully before updating payment details."
                                   : undefined
                               }
-                              className="whitespace-nowrap rounded-lg border border-slate-600 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+                              className="whitespace-nowrap rounded-lg border border-[var(--brand-border)] px-3 py-2 text-xs font-semibold text-white/75 transition hover:bg-[var(--brand-dark-gray)] disabled:cursor-not-allowed disabled:opacity-50"
                             >
                               Update Payment Record
                             </button>
@@ -861,7 +861,7 @@ const AdminDashboard = () => {
                             type="button"
                             onClick={() => setInvoiceAgreementId(agreement.id)}
                             disabled={!agreement.id}
-                            className="whitespace-nowrap rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-2 text-xs font-semibold text-blue-300 transition hover:bg-blue-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="whitespace-nowrap rounded-lg border border-[var(--brand-gold)]/30 bg-[var(--brand-gold)]/10 px-3 py-2 text-xs font-semibold text-[var(--brand-gold)] transition hover:bg-[var(--brand-gold)]/20 disabled:cursor-not-allowed disabled:opacity-50"
                           >
                             {agreement.invoice_id ? "View Invoice" : "Send Invoice"}
                           </button>
@@ -877,12 +877,12 @@ const AdminDashboard = () => {
         </section>
 
         {/* Loads */}
-        <section className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900">
-          <div className="border-b border-slate-800 p-5 sm:p-6">
+        <section className="overflow-hidden rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)]">
+          <div className="border-b border-[var(--brand-border)] p-5 sm:p-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h3 className="text-xl font-bold">Assigned Loads</h3>
-                <p className="mt-1 text-sm text-slate-400">
+                <p className="mt-1 text-sm text-[var(--brand-gray)]">
                   Loads saved in your database and linked to carrier agreements.
                 </p>
               </div>
@@ -895,7 +895,7 @@ const AdminDashboard = () => {
                     setLoadFormSuccess("");
                     setShowLoadForm((current) => !current);
                   }}
-                  className="rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-emerald-400"
+                  className="rounded-lg bg-[var(--brand-gold)] px-4 py-2.5 text-sm font-bold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)]"
                 >
                   {showLoadForm ? "Close Form" : "+ Assign New Load"}
                 </button>
@@ -909,11 +909,11 @@ const AdminDashboard = () => {
           {showLoadForm && (
             <form
               onSubmit={handleAssignLoad}
-              className="border-b border-slate-800 bg-slate-950/50 p-5 sm:p-6"
+              className="border-b border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-5 sm:p-6"
             >
               <div className="mb-5">
                 <h4 className="text-lg font-bold">Assign a New Load</h4>
-                <p className="mt-1 text-sm text-slate-400">
+                <p className="mt-1 text-sm text-[var(--brand-gray)]">
                   Only verified carriers without an active load are listed.
                 </p>
               </div>
@@ -935,10 +935,10 @@ const AdminDashboard = () => {
                 </div>
               )}
 
-              <div className="mb-6 rounded-xl border border-slate-800 bg-slate-900 p-4">
+              <div className="mb-6 rounded-xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] p-4">
                 <label
                   htmlFor="agreement_id"
-                  className="mb-2 block text-sm font-semibold text-slate-200"
+                  className="mb-2 block text-sm font-semibold text-white/85"
                 >
                   Select Verified Agreement by Tracking ID{" "}
                   <span className="text-red-400">*</span>
@@ -949,7 +949,7 @@ const AdminDashboard = () => {
                   value={loadForm.agreement_id}
                   onChange={handleLoadFieldChange}
                   required
-                  className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-3 text-sm text-white outline-none focus:border-emerald-500"
+                  className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-3 text-sm text-white outline-none focus:border-[var(--brand-gold)]"
                 >
                   <option value="">Choose a carrier...</option>
                   {eligibleCarriers.map((carrier) => (
@@ -974,17 +974,17 @@ const AdminDashboard = () => {
                         String(item.id) === String(loadForm.agreement_id),
                     );
                     return carrier ? (
-                      <div className="mt-3 grid gap-2 text-sm text-slate-400 sm:grid-cols-3">
+                      <div className="mt-3 grid gap-2 text-sm text-[var(--brand-gray)] sm:grid-cols-3">
                         <p>
-                          <span className="text-slate-200">Carrier:</span>{" "}
+                          <span className="text-white/85">Carrier:</span>{" "}
                           {carrier.carrier_name || carrier.print_name || "—"}
                         </p>
                         <p>
-                          <span className="text-slate-200">Company:</span>{" "}
+                          <span className="text-white/85">Company:</span>{" "}
                           {carrier.company_name || "—"}
                         </p>
                         <p>
-                          <span className="text-slate-200">
+                          <span className="text-white/85">
                             Agreement Tracking ID:
                           </span>{" "}
                           {carrier.tracking_id || "—"}
@@ -1136,7 +1136,7 @@ const AdminDashboard = () => {
                   <div key={field.name}>
                     <label
                       htmlFor={field.name}
-                      className="mb-1.5 block text-sm font-medium text-slate-300"
+                      className="mb-1.5 block text-sm font-medium text-white/75"
                     >
                       {field.label}
                     </label>
@@ -1150,7 +1150,7 @@ const AdminDashboard = () => {
                       min={field.min}
                       step={field.step}
                       placeholder={field.placeholder || ""}
-                      className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                      className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/40 focus:border-[var(--brand-gold)] focus:ring-2 focus:ring-[var(--brand-gold)]/30"
                     />
                   </div>
                 ))}
@@ -1158,7 +1158,7 @@ const AdminDashboard = () => {
                 <div className="md:col-span-2 xl:col-span-3">
                   <label
                     htmlFor="load_details"
-                    className="mb-1.5 block text-sm font-medium text-slate-300"
+                    className="mb-1.5 block text-sm font-medium text-white/75"
                   >
                     Additional Load Details
                   </label>
@@ -1169,27 +1169,27 @@ const AdminDashboard = () => {
                     value={loadForm.load_details}
                     onChange={handleLoadFieldChange}
                     placeholder="Add instructions or other load information..."
-                    className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                    className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/40 focus:border-[var(--brand-gold)] focus:ring-2 focus:ring-[var(--brand-gold)]/30"
                   />
                 </div>
 
-                <label className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-900 p-3 text-sm text-slate-300">
+                <label className="flex items-center gap-3 rounded-lg border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] p-3 text-sm text-white/75">
                   <input
                     type="checkbox"
                     name="full_week_option"
                     checked={loadForm.full_week_option}
                     onChange={handleLoadFieldChange}
-                    className="h-4 w-4 accent-emerald-500"
+                    className="h-4 w-4 accent-[var(--brand-gold)]"
                   />
                   Full-week option available
                 </label>
-                <label className="flex items-center gap-3 rounded-lg border border-slate-800 bg-slate-900 p-3 text-sm text-slate-300">
+                <label className="flex items-center gap-3 rounded-lg border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] p-3 text-sm text-white/75">
                   <input
                     type="checkbox"
                     name="reservation_fee_refundable"
                     checked={loadForm.reservation_fee_refundable}
                     onChange={handleLoadFieldChange}
-                    className="h-4 w-4 accent-emerald-500"
+                    className="h-4 w-4 accent-[var(--brand-gold)]"
                   />
                   Reservation fee is refundable
                 </label>
@@ -1205,14 +1205,14 @@ const AdminDashboard = () => {
                     setShowLoadForm(false);
                   }}
                   disabled={submittingLoad}
-                  className="rounded-lg border border-slate-700 px-5 py-2.5 text-sm font-semibold text-slate-300 transition hover:bg-slate-800 disabled:opacity-50"
+                  className="rounded-lg border border-[var(--brand-border)] px-5 py-2.5 text-sm font-semibold text-white/75 transition hover:bg-[var(--brand-dark-gray)] disabled:opacity-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submittingLoad || eligibleCarriers.length === 0}
-                  className="rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded-lg bg-[var(--brand-gold)] px-5 py-2.5 text-sm font-bold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {submittingLoad ? "Assigning Load..." : "Assign Load"}
                 </button>
@@ -1221,7 +1221,7 @@ const AdminDashboard = () => {
           )}
 
           {loading ? (
-            <div className="px-6 py-12 text-center text-slate-400">
+            <div className="px-6 py-12 text-center text-[var(--brand-gray)]">
               Loading loads...
             </div>
           ) : filteredLoads.length === 0 ? (
@@ -1232,14 +1232,14 @@ const AdminDashboard = () => {
                   ? "No loads found"
                   : "No loads match your search"}
               </p>
-              <p className="mt-1 text-sm text-slate-400">
+              <p className="mt-1 text-sm text-[var(--brand-gray)]">
                 Loads returned by the backend will appear here.
               </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full min-w-[1150px] text-left text-sm">
-                <thead className="bg-slate-950/70 text-xs uppercase tracking-wider text-slate-400">
+                <thead className="bg-[var(--brand-black)]/70 text-xs uppercase tracking-wider text-[var(--brand-gray)]">
                   <tr>
                     <th className="px-5 py-4">Load Tracking ID</th>
                     <th className="px-5 py-4">Load Title</th>
@@ -1252,18 +1252,18 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-slate-800">
+                <tbody className="divide-y divide-[var(--brand-border)]">
                   {filteredLoads.map((load, index) => {
                     const status = getLoadStatus(load.load_status);
 
                     return (
                       <tr
                         key={load.id || load.load_tracking_id || index}
-                        className="transition hover:bg-slate-800/40"
+                        className="transition hover:bg-[var(--brand-dark-gray)]/40"
                       >
-                        <td className="whitespace-nowrap px-5 py-4 font-semibold text-emerald-400">
+                        <td className="whitespace-nowrap px-5 py-4 font-semibold text-[var(--brand-gold)]">
                           {load.load_tracking_id || "—"}
-                          <p className="mt-1 text-xs font-normal text-slate-500">
+                          <p className="mt-1 text-xs font-normal text-[var(--brand-gray)]">
                             Agreement #{load.agreement_id ?? "—"}
                           </p>
                         </td>
@@ -1272,7 +1272,7 @@ const AdminDashboard = () => {
                           <p className="font-medium text-white">
                             {load.load_title || "—"}
                           </p>
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-[var(--brand-gray)]">
                             {load.lane_type || ""}
                           </p>
                         </td>
@@ -1281,30 +1281,30 @@ const AdminDashboard = () => {
                           <p className="font-medium">
                             {load.carrier_name || "—"}
                           </p>
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-[var(--brand-gray)]">
                             {load.company_name || load.carrier_email || ""}
                           </p>
                         </td>
 
-                        <td className="px-5 py-4 text-slate-300">
+                        <td className="px-5 py-4 text-white/75">
                           {load.pickup_location || "—"}
                           {load.pickup_date && (
-                            <p className="mt-1 text-xs text-slate-500">
+                            <p className="mt-1 text-xs text-[var(--brand-gray)]">
                               {formatDate(load.pickup_date)}
                             </p>
                           )}
                         </td>
 
-                        <td className="px-5 py-4 text-slate-300">
+                        <td className="px-5 py-4 text-white/75">
                           {load.delivery_location || "—"}
                           {load.delivery_date && (
-                            <p className="mt-1 text-xs text-slate-500">
+                            <p className="mt-1 text-xs text-[var(--brand-gray)]">
                               {formatDate(load.delivery_date)}
                             </p>
                           )}
                         </td>
 
-                        <td className="px-5 py-4 text-slate-300">
+                        <td className="px-5 py-4 text-white/75">
                           {load.contract_duration || "—"}
                         </td>
 
@@ -1336,7 +1336,7 @@ const AdminDashboard = () => {
           )}
         </section>
 
-        <footer className="py-8 text-center text-xs text-slate-600">
+        <footer className="py-8 text-center text-xs text-white/40">
           MK Transportation Admin Portal
         </footer>
       </main>

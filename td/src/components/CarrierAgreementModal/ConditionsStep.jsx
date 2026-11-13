@@ -37,13 +37,13 @@ const accessorialFees = [
 function TermsCard({ icon: Icon, title, children, className = "" }) {
   return (
     <article
-      className={`rounded-2xl border border-[#DCE7DF] bg-white p-5 shadow-sm sm:p-6 ${className}`}
+      className={`rounded-2xl border border-[var(--brand-light-gray)] bg-white p-5 shadow-sm sm:p-6 ${className}`}
     >
       <div className="mb-4 flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EAF3EC] text-[#17665B]">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-light-gray)] text-brand-black">
           <Icon size={20} />
         </span>
-        <h3 className="text-base font-extrabold text-[#103C3A] sm:text-lg">
+        <h3 className="text-base font-extrabold text-[var(--brand-black)] sm:text-lg">
           {title}
         </h3>
       </div>
@@ -62,7 +62,7 @@ function TermsList({ items }) {
         >
           <CheckCircle2
             size={17}
-            className="mt-1 shrink-0 text-[#17665B]"
+            className="mt-1 shrink-0 text-brand-black"
           />
           <span>{item}</span>
         </li>
@@ -73,11 +73,11 @@ function TermsList({ items }) {
 
 export default function ConditionsStep({ setStep, agreementData }) {
   return (
-    <section className="overflow-hidden rounded-3xl border border-[#DCE7DF] bg-[#F5F8F5] shadow-[0_24px_70px_rgba(16,60,58,0.08)]">
-      <div className="h-1.5 bg-gradient-to-r from-[#103C3A] via-[#17665B] to-[#D4A84F]" />
+    <section className="overflow-hidden rounded-3xl border border-[var(--brand-light-gray)] bg-[var(--brand-light-gray)] shadow-[0_24px_70px_rgba(8,9,11,0.08)]">
+      <div className="h-1.5 bg-gradient-to-r from-[var(--brand-black)] via-[var(--brand-gold)] to-[var(--brand-gold)]" />
       <div className="space-y-6 p-5 sm:p-8 lg:p-10">
-        <header className="rounded-2xl bg-[#103C3A] p-5 text-white sm:p-7">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#F0D99B]">
+        <header className="rounded-2xl bg-[var(--brand-black)] p-5 text-white sm:p-7">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[var(--brand-gold)]">
             <ShieldCheck size={15} />
             Step 4 · Agreement Terms
           </div>
@@ -92,23 +92,23 @@ export default function ConditionsStep({ setStep, agreementData }) {
 
         <TermsCard icon={Truck} title="Carrier Responsibilities">
           <TermsList items={carrierResponsibilities} />
-          <div className="mt-5 grid gap-3 border-t border-[#DCE7DF] pt-5 sm:grid-cols-3">
+          <div className="mt-5 grid gap-3 border-t border-[var(--brand-light-gray)] pt-5 sm:grid-cols-3">
             {accessorialFees.map((fee) => (
               <div
                 key={fee.label}
-                className="rounded-xl bg-[#F8FAF8] p-4"
+                className="rounded-xl bg-[var(--brand-light-gray)] p-4"
               >
-                <p className="font-extrabold text-[#103C3A]">{fee.label}</p>
+                <p className="font-extrabold text-[var(--brand-black)]">{fee.label}</p>
                 <p className="mt-1 text-sm leading-6 text-slate-600">
                   {fee.detail}
                 </p>
               </div>
             ))}
           </div>
-          <p className="mt-4 flex items-start gap-2 rounded-xl border border-[#D4A84F]/40 bg-[#FBF6E9] p-4 text-sm leading-6 text-[#725F3B]">
+          <p className="mt-4 flex items-start gap-2 rounded-xl border border-[var(--brand-gold)]/40 bg-[var(--brand-light-gray)] p-4 text-sm leading-6 text-brand-black">
             <FileCheck2
               size={17}
-              className="mt-1 shrink-0 text-[#806020]"
+              className="mt-1 shrink-0 text-brand-black"
             />
             The Shipper must approve and confirm delays or cancellations.
             Layover, detention, and other accessorial charges also require
@@ -119,10 +119,10 @@ export default function ConditionsStep({ setStep, agreementData }) {
         <TermsCard icon={Clock3} title="Agreement Period & Ending the Agreement">
           <p className="text-sm leading-7 text-slate-600">
             This Agreement begins on its stated effective date and continues
-            for <strong className="text-[#103C3A]">120 days</strong>. Unless
+            for <strong className="text-[var(--brand-black)]">120 days</strong>. Unless
             either party ends it, the Agreement renews for successive one-year
             periods. Either party may terminate by giving at least{" "}
-            <strong className="text-[#103C3A]">
+            <strong className="text-[var(--brand-black)]">
               15 days&apos; written or electronic notice
             </strong>
             , provided outstanding balances have been settled.
@@ -161,9 +161,9 @@ export default function ConditionsStep({ setStep, agreementData }) {
             ].map((option) => (
               <div
                 key={option.name}
-                className="rounded-xl border border-[#DCE7DF] bg-[#F8FAF8] p-4"
+                className="rounded-xl border border-[var(--brand-light-gray)] bg-[var(--brand-light-gray)] p-4"
               >
-                <p className="font-extrabold text-[#103C3A]">{option.name}</p>
+                <p className="font-extrabold text-[var(--brand-black)]">{option.name}</p>
                 <p className="mt-1 text-sm leading-6 text-slate-600">
                   {option.detail}
                 </p>
@@ -176,9 +176,9 @@ export default function ConditionsStep({ setStep, agreementData }) {
           <TermsCard
             icon={BadgeDollarSign}
             title="Onboarding Lane Setup Deposit"
-            className="border-[#D4A84F]/50 bg-gradient-to-br from-[#FBF6E9] to-white"
+            className="border-[var(--brand-gold)]/50 bg-gradient-to-br from-[var(--brand-light-gray)] to-white"
           >
-            <div className="space-y-3 text-sm leading-7 text-[#725F3B]">
+            <div className="space-y-3 text-sm leading-7 text-brand-black">
               <p>
                 The Carrier provides a <strong>$425 security deposit</strong>{" "}
                 to MK Transportation Group Inc. by direct or instant payment. The
@@ -202,11 +202,11 @@ export default function ConditionsStep({ setStep, agreementData }) {
           <TermsList items={shipperResponsibilities} />
         </TermsCard>
 
-        <div className="flex flex-col-reverse gap-3 border-t border-[#DCE7DF] pt-6 sm:flex-row sm:justify-between">
+        <div className="flex flex-col-reverse gap-3 border-t border-[var(--brand-light-gray)] pt-6 sm:flex-row sm:justify-between">
           <button
             type="button"
             onClick={() => setStep(3)}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#DCE7DF] bg-white px-6 py-3.5 text-sm font-bold text-[#103C3A] transition hover:border-[#17665B]"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--brand-light-gray)] bg-white px-6 py-3.5 text-sm font-bold text-[var(--brand-black)] transition hover:border-[var(--brand-gold)]"
           >
             <ArrowLeft size={17} />
             Previous
@@ -214,7 +214,7 @@ export default function ConditionsStep({ setStep, agreementData }) {
           <button
             type="button"
             onClick={() => setStep(5)}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#103C3A] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#17665B]"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-black)] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[var(--brand-gold-dark)]"
           >
             Continue to Services & Fees
             <ArrowRight size={17} />

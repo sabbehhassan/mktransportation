@@ -56,19 +56,19 @@ export default function CarrierAgreementPage() {
   };
 
   return (
-    <div className="bg-[#F5F8F5] px-4 pb-12 pt-4 sm:px-6 lg:px-8 lg:pt-12">
+    <div className="bg-[var(--brand-light-gray)] px-4 pb-12 pt-4 sm:px-6 lg:px-8 lg:pt-12">
       <div className="mx-auto max-w-7xl">
-        <header className="mb-7 rounded-2xl border border-[#DCE7DF] bg-white p-4 shadow-sm sm:mb-9 sm:p-6">
+        <header className="mb-7 rounded-2xl border border-[var(--brand-light-gray)] bg-white p-4 shadow-sm sm:mb-9 sm:p-6">
           <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#17665B]">
+              <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-brand-black">
                 MK Transportation
               </p>
-              <h1 className="mt-1 text-xl font-black text-[#103C3A] sm:text-2xl">
+              <h1 className="mt-1 text-xl font-black text-[var(--brand-black)] sm:text-2xl">
                 Carrier Agreement
               </h1>
             </div>
-            <p className="text-sm font-bold text-[#61766E]">
+            <p className="text-sm font-bold text-[var(--brand-gray)]">
               Step {step} of 7
             </p>
           </div>
@@ -88,10 +88,10 @@ export default function CarrierAgreementPage() {
                   aria-current={isCurrent ? "step" : undefined}
                   className={`flex min-w-0 items-center gap-2 rounded-xl px-2 py-2 text-xs font-bold sm:px-3 ${
                     isCurrent
-                      ? "bg-[#103C3A] text-white"
+                      ? "bg-[var(--brand-black)] text-white"
                       : isComplete
-                        ? "bg-[#EAF4EF] text-[#17665B]"
-                        : "bg-[#F5F8F5] text-slate-500"
+                        ? "bg-[var(--brand-light-gray)] text-brand-black"
+                        : "bg-[var(--brand-light-gray)] text-slate-500"
                   }`}
                 >
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-current text-[11px]">

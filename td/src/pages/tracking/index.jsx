@@ -87,8 +87,8 @@ export default function TrackingPage() {
   };
 
   const Detail = ({ label, value }) => (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-4">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+    <div className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)]/80 p-4">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--brand-gray)]">
         {label}
       </p>
       <p className="break-words text-sm font-medium text-white">
@@ -98,14 +98,14 @@ export default function TrackingPage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#050816] px-4 py-12 pt-20 text-white sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[var(--brand-black)] px-4 py-12 pt-20 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl">
         <header className="mb-10 text-center">
-          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500 text-xl font-black text-slate-950">
+          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--brand-gold)] text-xl font-black text-[var(--brand-black)]">
             S
           </div>
 
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-emerald-400">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-[var(--brand-gold)]">
             MK Transportation
           </p>
 
@@ -113,17 +113,17 @@ export default function TrackingPage() {
             Track Your Agreement
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-400 sm:text-base">
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-[var(--brand-gray)] sm:text-base">
             Enter your Agreement Tracking ID to check your verification status
             and view your assigned load information.
           </p>
         </header>
 
-        <section className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 shadow-2xl sm:p-8">
+        <section className="rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)]/70 p-5 shadow-2xl sm:p-8">
           <form onSubmit={handleTrack}>
             <label
               htmlFor="trackingId"
-              className="mb-3 block text-sm font-semibold text-slate-200"
+              className="mb-3 block text-sm font-semibold text-white/85"
             >
               Agreement Tracking ID
             </label>
@@ -136,13 +136,13 @@ export default function TrackingPage() {
                 onChange={(event) => setTrackingId(event.target.value)}
                 placeholder="e.g. MKT-20261027-02564D9A"
                 autoComplete="off"
-                className="min-w-0 flex-1 rounded-xl border border-slate-700 bg-[#050816] px-4 py-4 text-white outline-none transition placeholder:text-slate-600 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                className="min-w-0 flex-1 rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)] px-4 py-4 text-white outline-none transition placeholder:text-white/40 focus:border-[var(--brand-gold)] focus:ring-2 focus:ring-[var(--brand-gold)]/30"
               />
 
               <button
                 type="submit"
                 disabled={loading}
-                className="rounded-xl bg-emerald-500 px-7 py-4 font-bold text-slate-950 transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded-xl bg-[var(--brand-gold)] px-7 py-4 font-bold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? "Checking..." : "Track Agreement"}
               </button>
@@ -161,18 +161,18 @@ export default function TrackingPage() {
 
         {result && agreement && (
           <section className="mt-8 space-y-6">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-8">
+            <div className="rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)]/70 p-5 sm:p-8">
               <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
                 <div>
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-[var(--brand-gray)]">
                     Agreement Tracking ID
                   </p>
 
-                  <h2 className="mt-2 break-all text-xl font-extrabold text-emerald-400 sm:text-2xl">
+                  <h2 className="mt-2 break-all text-xl font-extrabold text-[var(--brand-gold)] sm:text-2xl">
                     {agreement.tracking_id}
                   </h2>
 
-                  <p className="mt-2 text-sm text-slate-400">
+                  <p className="mt-2 text-sm text-[var(--brand-gray)]">
                     Carrier: {agreement.carrier_name}
                   </p>
                 </div>
@@ -220,9 +220,9 @@ export default function TrackingPage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 sm:p-8">
+            <div className="rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)]/70 p-5 sm:p-8">
               <div className="mb-6">
-                <p className="text-sm font-semibold uppercase tracking-wider text-emerald-400">
+                <p className="text-sm font-semibold uppercase tracking-wider text-[var(--brand-gold)]">
                   Load Information
                 </p>
 
@@ -230,7 +230,7 @@ export default function TrackingPage() {
                   {load ? load.load_title : "Load Not Yet Assigned"}
                 </h2>
 
-                <p className="mt-2 text-sm text-slate-400">
+                <p className="mt-2 text-sm text-[var(--brand-gray)]">
                   {load
                     ? "Your agreement is linked to the following load."
                     : "Your deposit may be verified, but a load has not been assigned to this agreement yet."}
@@ -239,13 +239,13 @@ export default function TrackingPage() {
 
               {load ? (
                 <>
-                  <div className="mb-6 flex flex-col gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="mb-6 flex flex-col gap-3 rounded-xl border border-[var(--brand-gold)]/20 bg-[var(--brand-gold)]/5 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <p className="text-xs uppercase tracking-wider text-slate-400">
+                      <p className="text-xs uppercase tracking-wider text-[var(--brand-gray)]">
                         Load Tracking ID
                       </p>
 
-                      <p className="mt-2 break-all font-bold text-emerald-400">
+                      <p className="mt-2 break-all font-bold text-[var(--brand-gold)]">
                         {load.load_tracking_id}
                       </p>
                     </div>
@@ -325,7 +325,7 @@ export default function TrackingPage() {
                     Waiting for load assignment
                   </p>
 
-                  <p className="mt-2 text-sm leading-6 text-slate-400">
+                  <p className="mt-2 text-sm leading-6 text-[var(--brand-gray)]">
                     Please keep your Agreement Tracking ID. Check again after
                     the logistics team assigns a load to your agreement.
                   </p>
@@ -333,14 +333,14 @@ export default function TrackingPage() {
               )}
             </div>
 
-            <p className="text-center text-xs leading-5 text-slate-500">
+            <p className="text-center text-xs leading-5 text-[var(--brand-gray)]">
               For assistance with your agreement, please contact MK Transportation
               Logistics through its official support channel.
             </p>
           </section>
         )}
 
-        <footer className="mt-10 text-center text-xs text-slate-600">
+        <footer className="mt-10 text-center text-xs text-white/40">
           © {new Date().getFullYear()} MK Transportation. All rights
           reserved.
         </footer>

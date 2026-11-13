@@ -31,30 +31,30 @@ export default function DepositVerificationModal({
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/85 p-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[var(--brand-black)]/85 p-4 backdrop-blur-sm">
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby="deposit-verification-title"
-        className="w-full max-w-xl rounded-2xl border border-slate-700 bg-slate-900 p-5 shadow-2xl sm:p-7"
+        className="w-full max-w-xl rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] p-5 shadow-2xl sm:p-7"
       >
         <h2 id="deposit-verification-title" className="text-xl font-bold">
           Record &amp; Verify Deposit Payment
         </h2>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-sm text-[var(--brand-gray)]">
           Enter the details from the payment you have manually checked. This
           record is the source used for any refundable receipt.
         </p>
-        <div className="mt-4 rounded-lg border border-slate-700 bg-slate-950/60 p-3 text-sm">
+        <div className="mt-4 rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)]/60 p-3 text-sm">
           <p className="font-semibold text-white">
             {agreement.carrier_name || agreement.print_name || "Carrier"}
             {agreement.company_name ? ` · ${agreement.company_name}` : ""}
           </p>
-          <p className="mt-1 text-slate-400">{agreement.tracking_id}</p>
+          <p className="mt-1 text-[var(--brand-gray)]">{agreement.tracking_id}</p>
         </div>
         <form className="mt-5 grid gap-4 sm:grid-cols-2" onSubmit={handleSubmit}>
           <label>
-            <span className="mb-1.5 block text-xs font-medium text-slate-400">
+            <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">
               Amount received ($)
             </span>
             <input
@@ -66,11 +66,11 @@ export default function DepositVerificationModal({
               value={payment.amountReceived}
               onChange={handleChange}
               required
-              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+              className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
             />
           </label>
           <label>
-            <span className="mb-1.5 block text-xs font-medium text-slate-400">
+            <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">
               Payment date
             </span>
             <input
@@ -79,11 +79,11 @@ export default function DepositVerificationModal({
               value={payment.date}
               onChange={handleChange}
               required
-              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+              className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
             />
           </label>
           <label>
-            <span className="mb-1.5 block text-xs font-medium text-slate-400">
+            <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">
               Payment method
             </span>
             <input
@@ -94,11 +94,11 @@ export default function DepositVerificationModal({
               maxLength={100}
               placeholder="e.g. Zelle, ACH, wire transfer"
               required
-              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+              className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
             />
           </label>
           <label>
-            <span className="mb-1.5 block text-xs font-medium text-slate-400">
+            <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">
               Payment reference (optional)
             </span>
             <input
@@ -107,7 +107,7 @@ export default function DepositVerificationModal({
               value={payment.reference}
               onChange={handleChange}
               maxLength={160}
-              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+              className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
             />
           </label>
           <p className="sm:col-span-2 text-xs leading-5 text-amber-300">
@@ -119,14 +119,14 @@ export default function DepositVerificationModal({
               type="button"
               onClick={onClose}
               disabled={busy}
-              className="rounded-lg border border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-300 disabled:opacity-50"
+              className="rounded-lg border border-[var(--brand-border)] px-4 py-2.5 text-sm font-semibold text-white/75 disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={busy}
-              className="rounded-lg bg-emerald-500 px-4 py-2.5 text-sm font-bold text-slate-950 disabled:opacity-50"
+              className="rounded-lg bg-[var(--brand-gold)] px-4 py-2.5 text-sm font-bold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)] disabled:opacity-50"
             >
               {busy ? "Verifying..." : "Confirm Verified Payment"}
             </button>

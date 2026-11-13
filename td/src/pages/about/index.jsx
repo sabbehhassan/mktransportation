@@ -48,9 +48,9 @@ const highlights = [
 
 const About = () => {
   return (
-    <main className="overflow-hidden bg-white text-[#103C3A]">
+    <main className="overflow-hidden bg-white text-[var(--brand-black)]">
       {/* HERO */}
-      <section className="relative isolate min-h-[620px] overflow-hidden bg-[#103C3A] lg:min-h-[700px]">
+      <section className="relative isolate min-h-[620px] overflow-hidden bg-[var(--brand-black)] lg:min-h-[700px]">
         <img
           src={heroBg}
           alt="MK Transportation operations"
@@ -58,21 +58,21 @@ const About = () => {
           fetchPriority="high"
         />
 
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#103C3A]/95 via-[#103C3A]/85 to-[#103C3A]/35" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#103C3A]/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[var(--brand-black)]/95 via-[var(--brand-black)]/85 to-[var(--brand-black)]/35" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[var(--brand-black)]/70 via-transparent to-transparent" />
 
         <div className="mx-auto grid min-h-[620px] max-w-7xl items-center gap-12 px-5 py-20 sm:px-8 lg:min-h-[700px] lg:grid-cols-[1.15fr_0.85fr] lg:px-10">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-3 rounded-full border border-[#F0D99B]/35 bg-white/10 px-4 py-2 backdrop-blur-md">
-              <span className="h-2 w-2 rounded-full bg-[#D4A84F]" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#F0D99B]">
+            <div className="inline-flex items-center gap-3 rounded-full border border-[var(--brand-gold)]/35 bg-white/10 px-4 py-2 backdrop-blur-md">
+              <span className="h-2 w-2 rounded-full bg-[var(--brand-gold)]" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
                 Get to Know Us
               </span>
             </div>
 
             <h1 className="mt-7 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
               Moving Freight.
-              <span className="mt-2 block text-[#F0D99B]">Building Trust.</span>
+              <span className="mt-2 block text-[var(--brand-gold)]">Building Trust.</span>
             </h1>
 
             <p className="mt-7 max-w-2xl text-base leading-8 text-white/80 sm:text-lg">
@@ -84,7 +84,7 @@ const About = () => {
             <div className="mt-9 flex flex-wrap gap-4">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-3 rounded-full bg-[#D4A84F] px-7 py-4 text-sm font-extrabold text-[#103C3A] transition duration-300 hover:-translate-y-1 hover:bg-[#F0D99B]"
+                className="inline-flex items-center gap-3 rounded-full bg-[var(--brand-gold)] px-7 py-4 text-sm font-extrabold text-[var(--brand-black)] transition duration-300 hover:-translate-y-1 hover:bg-[var(--brand-gold-dark)]"
               >
                 Let's Work Together
                 <FaArrowRight />
@@ -92,7 +92,7 @@ const About = () => {
 
               <a
                 href="#our-story"
-                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-4 text-sm font-bold text-white transition hover:border-[#F0D99B] hover:text-[#F0D99B]"
+                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-4 text-sm font-bold text-white transition hover:border-[var(--brand-gold)] hover:text-[var(--brand-gold)]"
               >
                 Discover Our Story
                 <FiArrowUpRight size={18} />
@@ -102,14 +102,14 @@ const About = () => {
 
           {/* Hero side card */}
           <div className="relative hidden lg:block">
-            <div className="absolute -right-5 -top-5 h-24 w-24 rounded-tr-[35px] border-r-2 border-t-2 border-[#D4A84F]" />
+            <div className="absolute -right-5 -top-5 h-24 w-24 rounded-tr-[35px] border-r-2 border-t-2 border-[var(--brand-gold)]" />
 
-            <div className="relative ml-auto max-w-[390px] rounded-[30px] border border-white/20 bg-[#103C3A]/65 p-8 shadow-2xl backdrop-blur-xl">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#D4A84F] text-2xl text-[#103C3A]">
+            <div className="relative ml-auto max-w-[390px] rounded-[30px] border border-white/20 bg-[var(--brand-black)]/65 p-8 shadow-2xl backdrop-blur-xl">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--brand-gold)] text-2xl text-[var(--brand-black)]">
                 <FaTruckMoving />
               </div>
 
-              <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-[#F0D99B]">
+              <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
                 Our Approach
               </p>
 
@@ -128,28 +128,28 @@ const About = () => {
                 <span className="text-sm font-semibold text-white/80">
                   Every shipment matters
                 </span>
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-[#F0D99B]">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-[var(--brand-gold)]">
                   <FaArrowRight />
                 </span>
               </div>
             </div>
 
-            <div className="absolute -bottom-7 -left-8 rounded-2xl border border-[#D4A84F]/40 bg-[#F0D99B] px-5 py-4 shadow-xl">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#17665B]">
+            <div className="absolute -bottom-7 -left-8 rounded-2xl border border-[var(--brand-gold)]/40 bg-[var(--brand-gold)] px-5 py-4 shadow-xl">
+              <p className="text-xs font-bold uppercase tracking-wider text-brand-black">
                 Our priority
               </p>
-              <p className="mt-1 font-extrabold text-[#103C3A]">
+              <p className="mt-1 font-extrabold text-[var(--brand-black)]">
                 People. Freight. Trust.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#17665B] via-[#D4A84F] to-[#17665B]" />
+        <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[var(--brand-gold)] via-[var(--brand-gold)] to-[var(--brand-gold)]" />
       </section>
 
       {/* INTRO STRIP */}
-      <section className="border-b border-[#103C3A]/10 bg-[#F7F9F7]">
+      <section className="border-b border-[var(--brand-black)]/10 bg-[var(--brand-light-gray)]">
         <div className="mx-auto grid max-w-7xl gap-7 px-5 py-9 sm:px-8 md:grid-cols-3 lg:px-10">
           {[
             {
@@ -167,11 +167,11 @@ const About = () => {
             },
           ].map((item, index) => (
             <div key={item.title} className="flex gap-4">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#103C3A] text-sm font-extrabold text-[#F0D99B]">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-black)] text-sm font-extrabold text-[var(--brand-gold)]">
                 0{index + 1}
               </span>
               <div>
-                <h3 className="font-extrabold text-[#103C3A]">{item.title}</h3>
+                <h3 className="font-extrabold text-[var(--brand-black)]">{item.title}</h3>
                 <p className="mt-1 text-sm leading-6 text-slate-600">
                   {item.description}
                 </p>
@@ -187,9 +187,9 @@ const About = () => {
         className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-2 lg:gap-20 lg:px-10 lg:py-28"
       >
         <div className="relative">
-          <div className="absolute -left-4 -top-4 h-28 w-28 rounded-tl-[30px] border-l-2 border-t-2 border-[#D4A84F]" />
+          <div className="absolute -left-4 -top-4 h-28 w-28 rounded-tl-[30px] border-l-2 border-t-2 border-[var(--brand-gold)]" />
 
-          <div className="relative overflow-hidden rounded-[28px] bg-[#E9EFEB]">
+          <div className="relative overflow-hidden rounded-[28px] bg-[var(--brand-light-gray)]">
             <img
               src={storyImg}
               alt="The story behind MK Transportation"
@@ -197,8 +197,8 @@ const About = () => {
               className="h-[340px] w-full object-cover sm:h-[470px]"
             />
 
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#103C3A]/90 to-transparent p-6 pt-20 sm:p-8 sm:pt-24">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#F0D99B]">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[var(--brand-black)]/90 to-transparent p-6 pt-20 sm:p-8 sm:pt-24">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
                 Our Story
               </p>
               <p className="mt-2 max-w-sm text-2xl font-extrabold leading-snug text-white sm:text-3xl">
@@ -207,18 +207,18 @@ const About = () => {
             </div>
           </div>
 
-          <div className="absolute -bottom-5 -right-3 h-24 w-24 rounded-br-[30px] border-b-2 border-r-2 border-[#17665B] sm:-right-5" />
+          <div className="absolute -bottom-5 -right-3 h-24 w-24 rounded-br-[30px] border-b-2 border-r-2 border-[var(--brand-gold)] sm:-right-5" />
         </div>
 
         <div>
-          <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.2em] text-[#17665B]">
-            <span className="h-px w-9 bg-[#D4A84F]" />
+          <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.2em] text-brand-black">
+            <span className="h-px w-9 bg-[var(--brand-gold)]" />
             Who We Are
           </p>
 
           <h2 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
             More than moving freight.{" "}
-            <span className="text-[#17665B]">We're building connections.</span>
+            <span className="text-brand-black">We're building connections.</span>
           </h2>
 
           <p className="mt-6 text-base leading-8 text-slate-600">
@@ -242,8 +242,8 @@ const About = () => {
               "Communication throughout coordination",
             ].map((item) => (
               <div key={item} className="flex items-start gap-3">
-                <FaCheckCircle className="mt-1 shrink-0 text-[#17665B]" />
-                <span className="text-sm font-semibold text-[#103C3A] sm:text-base">
+                <FaCheckCircle className="mt-1 shrink-0 text-brand-black" />
+                <span className="text-sm font-semibold text-[var(--brand-black)] sm:text-base">
                   {item}
                 </span>
               </div>
@@ -252,21 +252,21 @@ const About = () => {
 
           <Link
             to="/contact"
-            className="mt-9 inline-flex items-center gap-3 border-b-2 border-[#D4A84F] pb-2 font-extrabold text-[#103C3A] transition hover:gap-5"
+            className="mt-9 inline-flex items-center gap-3 border-b-2 border-[var(--brand-gold)] pb-2 font-extrabold text-[var(--brand-black)] transition hover:gap-5"
           >
             Start a Conversation
-            <FaArrowRight className="text-[#17665B]" />
+            <FaArrowRight className="text-brand-black" />
           </Link>
         </div>
       </section>
 
       {/* WHAT WE FOCUS ON */}
-      <section className="bg-[#F5F8F6] py-20 sm:py-24 lg:py-28">
+      <section className="bg-[var(--brand-light-gray)] py-20 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
             <div>
-              <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.2em] text-[#17665B]">
-                <span className="h-px w-9 bg-[#D4A84F]" />
+              <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.2em] text-brand-black">
+                <span className="h-px w-9 bg-[var(--brand-gold)]" />
                 What We Do
               </p>
               <h2 className="mt-5 text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
@@ -310,18 +310,18 @@ const About = () => {
             ].map((item) => (
               <article
                 key={item.number}
-                className="group relative overflow-hidden rounded-2xl border border-[#103C3A]/10 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-[#D4A84F]/70 hover:shadow-xl hover:shadow-[#103C3A]/5 sm:p-7"
+                className="group relative overflow-hidden rounded-2xl border border-[var(--brand-black)]/10 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-[var(--brand-gold)]/70 hover:shadow-xl hover:shadow-[var(--brand-black)]/5 sm:p-7"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-extrabold tracking-widest text-[#D4A84F]">
+                  <span className="text-sm font-extrabold tracking-widest text-[var(--brand-gold)]">
                     {item.number}
                   </span>
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#103C3A] text-[#F0D99B] transition group-hover:bg-[#17665B]">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-black)] text-[var(--brand-gold)] transition group-hover:bg-[var(--brand-gold-dark)]">
                     <FaArrowRight />
                   </span>
                 </div>
 
-                <h3 className="mt-9 text-xl font-extrabold text-[#103C3A]">
+                <h3 className="mt-9 text-xl font-extrabold text-[var(--brand-black)]">
                   {item.title}
                 </h3>
 
@@ -329,7 +329,7 @@ const About = () => {
                   {item.description}
                 </p>
 
-                <div className="absolute bottom-0 left-0 h-1 w-0 bg-[#D4A84F] transition-all duration-300 group-hover:w-full" />
+                <div className="absolute bottom-0 left-0 h-1 w-0 bg-[var(--brand-gold)] transition-all duration-300 group-hover:w-full" />
               </article>
             ))}
           </div>
@@ -339,8 +339,8 @@ const About = () => {
       {/* MISSION & VISION */}
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-2 lg:gap-20 lg:px-10 lg:py-28">
         <div>
-          <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.2em] text-[#17665B]">
-            <span className="h-px w-9 bg-[#D4A84F]" />
+          <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.2em] text-brand-black">
+            <span className="h-px w-9 bg-[var(--brand-gold)]" />
             Our Direction
           </p>
 
@@ -354,8 +354,8 @@ const About = () => {
           </p>
 
           <div className="mt-9 space-y-5">
-            <div className="flex gap-5 rounded-2xl border border-[#103C3A]/10 bg-[#F7F9F7] p-5 sm:p-6">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#103C3A] text-xl text-[#F0D99B]">
+            <div className="flex gap-5 rounded-2xl border border-[var(--brand-black)]/10 bg-[var(--brand-light-gray)] p-5 sm:p-6">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-black)] text-xl text-[var(--brand-gold)]">
                 <FaBullseye />
               </div>
               <div>
@@ -368,8 +368,8 @@ const About = () => {
               </div>
             </div>
 
-            <div className="flex gap-5 rounded-2xl border border-[#103C3A]/10 bg-[#F7F9F7] p-5 sm:p-6">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#D4A84F] text-xl text-[#103C3A]">
+            <div className="flex gap-5 rounded-2xl border border-[var(--brand-black)]/10 bg-[var(--brand-light-gray)] p-5 sm:p-6">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-gold)] text-xl text-[var(--brand-black)]">
                 <FaEye />
               </div>
               <div>
@@ -385,7 +385,7 @@ const About = () => {
         </div>
 
         <div className="relative">
-          <div className="absolute -bottom-4 -left-4 h-24 w-24 rounded-bl-[30px] border-b-2 border-l-2 border-[#D4A84F]" />
+          <div className="absolute -bottom-4 -left-4 h-24 w-24 rounded-bl-[30px] border-b-2 border-l-2 border-[var(--brand-gold)]" />
 
           <div className="relative overflow-hidden rounded-[28px]">
             <img
@@ -394,10 +394,10 @@ const About = () => {
               loading="lazy"
               className="h-[360px] w-full object-cover sm:h-[500px]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#103C3A]/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-black)]/80 via-transparent to-transparent" />
 
             <div className="absolute inset-x-0 bottom-0 p-7 sm:p-9">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#F0D99B]">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
                 The Way We Work
               </p>
               <h3 className="mt-3 max-w-sm text-2xl font-extrabold leading-snug text-white sm:text-3xl">
@@ -409,10 +409,10 @@ const About = () => {
       </section>
 
       {/* CORE VALUES */}
-      <section className="bg-[#103C3A] py-20 text-white sm:py-24 lg:py-28">
+      <section className="bg-[var(--brand-black)] py-20 text-white sm:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[#F0D99B]">
+            <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[var(--brand-gold)]">
               The Principles Behind Our Work
             </p>
             <h2 className="mt-5 text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
@@ -428,13 +428,13 @@ const About = () => {
             {values.map((item) => (
               <article
                 key={item.number}
-                className="rounded-2xl border border-white/15 bg-white/[0.04] p-7 transition duration-300 hover:border-[#D4A84F]/60 hover:bg-white/[0.08] sm:p-8"
+                className="rounded-2xl border border-white/15 bg-white/[0.04] p-7 transition duration-300 hover:border-[var(--brand-gold)]/60 hover:bg-white/[0.08] sm:p-8"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-extrabold tracking-widest text-[#D4A84F]">
+                  <span className="text-sm font-extrabold tracking-widest text-[var(--brand-gold)]">
                     {item.number}
                   </span>
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#D4A84F] text-xl text-[#103C3A]">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--brand-gold)] text-xl text-[var(--brand-black)]">
                     {item.icon}
                   </span>
                 </div>
@@ -450,10 +450,10 @@ const About = () => {
       </section>
 
       {/* COMMITMENT */}
-      <section className="bg-[#F7F9F7] py-16 sm:py-20">
+      <section className="bg-[var(--brand-light-gray)] py-16 sm:py-20">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 md:grid-cols-[0.8fr_1.2fr] md:items-center lg:px-10">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#17665B]">
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-black">
               What You Can Expect
             </p>
             <h2 className="mt-4 text-3xl font-extrabold leading-tight sm:text-4xl">
@@ -465,10 +465,10 @@ const About = () => {
             {highlights.map((item) => (
               <div
                 key={item}
-                className="flex items-start gap-3 rounded-xl border border-[#103C3A]/10 bg-white p-4"
+                className="flex items-start gap-3 rounded-xl border border-[var(--brand-black)]/10 bg-white p-4"
               >
-                <FaCheckCircle className="mt-1 shrink-0 text-[#17665B]" />
-                <span className="text-sm font-bold leading-6 text-[#103C3A]">
+                <FaCheckCircle className="mt-1 shrink-0 text-brand-black" />
+                <span className="text-sm font-bold leading-6 text-[var(--brand-black)]">
                   {item}
                 </span>
               </div>
@@ -479,14 +479,14 @@ const About = () => {
 
       {/* FINAL CTA */}
       <section className="px-5 py-20 sm:px-8 sm:py-24 lg:px-10">
-        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[28px] bg-[#103C3A] px-6 py-12 sm:px-10 sm:py-16 lg:px-16 lg:py-20">
+        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[28px] bg-[var(--brand-black)] px-6 py-12 sm:px-10 sm:py-16 lg:px-16 lg:py-20">
           <div className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full border border-white/10" />
-          <div className="pointer-events-none absolute -right-2 -top-10 h-48 w-48 rounded-full border border-[#D4A84F]/25" />
-          <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#17665B] via-[#D4A84F] to-[#17665B]" />
+          <div className="pointer-events-none absolute -right-2 -top-10 h-48 w-48 rounded-full border border-[var(--brand-gold)]/25" />
+          <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[var(--brand-gold)] via-[var(--brand-gold)] to-[var(--brand-gold)]" />
 
           <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#F0D99B]">
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
                 Let's Move Forward
               </p>
 
@@ -502,7 +502,7 @@ const About = () => {
 
             <Link
               to="/contact"
-              className="inline-flex shrink-0 items-center justify-center gap-3 self-start rounded-full bg-[#D4A84F] px-7 py-4 font-extrabold text-[#103C3A] transition hover:-translate-y-1 hover:bg-[#F0D99B] md:self-center"
+              className="inline-flex shrink-0 items-center justify-center gap-3 self-start rounded-full bg-[var(--brand-gold)] px-7 py-4 font-extrabold text-[var(--brand-black)] transition hover:-translate-y-1 hover:bg-[var(--brand-gold-dark)] md:self-center"
             >
               Contact Our Team
               <FaArrowRight />

@@ -62,11 +62,11 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--brand-black)] px-4 py-10">
       <div className="w-full max-w-md">
         {/* Brand */}
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500 text-3xl font-bold text-white shadow-lg shadow-emerald-500/20">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--brand-gold)] text-3xl font-bold text-[var(--brand-black)] shadow-lg shadow-[var(--brand-gold)]/20">
             S
           </div>
 
@@ -74,19 +74,19 @@ const AdminLogin = () => {
             MK Transportation
           </h1>
 
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-[var(--brand-gray)]">
             Administration Portal
           </p>
         </div>
 
         {/* Login Card */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl sm:p-8">
+        <div className="rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] p-6 shadow-2xl sm:p-8">
           <div className="mb-7">
             <h2 className="text-2xl font-semibold text-white">
               Admin Login
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-[var(--brand-gray)]">
               Sign in to manage carrier agreements, deposits, and loads.
             </p>
           </div>
@@ -106,7 +106,7 @@ const AdminLogin = () => {
             <div>
               <label
                 htmlFor="email"
-                className="mb-2 block text-sm font-medium text-slate-200"
+                className="mb-2 block text-sm font-medium text-white/85"
               >
                 Email Address
               </label>
@@ -120,14 +120,14 @@ const AdminLogin = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] px-4 py-3 text-white outline-none transition placeholder:text-[var(--brand-gray)] focus:border-[var(--brand-gold)] focus:ring-2 focus:ring-[var(--brand-gold)]/30"
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="mb-2 block text-sm font-medium text-slate-200"
+                className="mb-2 block text-sm font-medium text-white/85"
               >
                 Password
               </label>
@@ -141,14 +141,14 @@ const AdminLogin = () => {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] px-4 py-3 text-white outline-none transition placeholder:text-[var(--brand-gray)] focus:border-[var(--brand-gold)] focus:ring-2 focus:ring-[var(--brand-gold)]/30"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-500 px-4 py-3 font-semibold text-white transition hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-gold)] px-4 py-3 font-semibold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-gold)] focus:ring-offset-2 focus:ring-offset-[var(--brand-dark-gray)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading && (
                 <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
@@ -158,14 +158,14 @@ const AdminLogin = () => {
             </button>
           </form>
 
-          <div className="mt-6 border-t border-slate-800 pt-5 text-center">
-            <p className="text-xs text-slate-500">
+          <div className="mt-6 border-t border-[var(--brand-border)] pt-5 text-center">
+            <p className="text-xs text-[var(--brand-gray)]">
               Authorized personnel only. Secure admin access.
             </p>
           </div>
         </div>
 
-        <p className="mt-6 text-center text-xs text-slate-500">
+        <p className="mt-6 text-center text-xs text-[var(--brand-gray)]">
           © {new Date().getFullYear()} MK Transportation
         </p>
       </div>

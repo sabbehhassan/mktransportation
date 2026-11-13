@@ -62,9 +62,9 @@ const services = [
 
 const Services = () => {
   return (
-    <main className="overflow-hidden bg-white text-[#103C3A]">
+    <main className="overflow-hidden bg-white text-[var(--brand-black)]">
       {/* HERO — CINEMATIC FREIGHT */}
-      <section className="relative isolate min-h-[600px] overflow-hidden bg-[#103C3A] lg:min-h-[690px]">
+      <section className="relative isolate min-h-[600px] overflow-hidden bg-[var(--brand-black)] lg:min-h-[690px]">
         <video
           autoPlay
           muted
@@ -76,14 +76,14 @@ const Services = () => {
           <source src={heroBg} type="video/mp4" />
         </video>
 
-        <div className="absolute inset-0 -z-10 bg-[#103C3A]/65" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#103C3A]/95 via-[#103C3A]/75 to-transparent" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#103C3A]/80 via-transparent to-[#103C3A]/20" />
+        <div className="absolute inset-0 -z-10 bg-[var(--brand-black)]/65" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[var(--brand-black)]/95 via-[var(--brand-black)]/75 to-transparent" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[var(--brand-black)]/80 via-transparent to-[var(--brand-black)]/20" />
 
         <div className="mx-auto flex min-h-[600px] max-w-7xl items-center px-5 py-20 sm:px-8 lg:min-h-[690px] lg:px-10">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-3 border-l-2 border-[#D4A84F] bg-white/10 px-4 py-3 backdrop-blur-md">
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#F0D99B]">
+            <div className="inline-flex items-center gap-3 border-l-2 border-[var(--brand-gold)] bg-white/10 px-4 py-3 backdrop-blur-md">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
                 Transportation Solutions
               </span>
             </div>
@@ -92,7 +92,7 @@ const Services = () => {
               The right support
               <br />
               for every
-              <span className="text-[#F0D99B]"> mile.</span>
+              <span className="text-[var(--brand-gold)]"> mile.</span>
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-white/80 sm:text-lg">
@@ -104,7 +104,7 @@ const Services = () => {
             <div className="mt-9 flex flex-wrap gap-4">
               <a
                 href="#service-catalog"
-                className="inline-flex items-center gap-3 bg-[#D4A84F] px-7 py-4 text-sm font-extrabold text-[#103C3A] transition hover:bg-[#F0D99B]"
+                className="inline-flex items-center gap-3 bg-[var(--brand-gold)] px-7 py-4 text-sm font-extrabold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)]"
               >
                 Explore Our Services
                 <FaArrowRight />
@@ -112,7 +112,7 @@ const Services = () => {
 
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-3 border border-white/40 px-7 py-4 text-sm font-bold text-white transition hover:border-[#F0D99B] hover:text-[#F0D99B]"
+                className="inline-flex items-center gap-3 border border-white/40 px-7 py-4 text-sm font-bold text-white transition hover:border-[var(--brand-gold)] hover:text-[var(--brand-gold)]"
               >
                 Discuss Your Needs
                 <FiArrowUpRight size={18} />
@@ -129,7 +129,7 @@ const Services = () => {
                   key={item}
                   className="flex items-center gap-2 text-sm font-medium text-white/80"
                 >
-                  <FaCheckCircle className="text-[#D4A84F]" />
+                  <FaCheckCircle className="text-[var(--brand-gold)]" />
                   {item}
                 </div>
               ))}
@@ -137,14 +137,14 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#17665B] via-[#D4A84F] to-[#17665B]" />
+        <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[var(--brand-gold)] via-[var(--brand-gold)] to-[var(--brand-gold)]" />
       </section>
 
       {/* EDITORIAL INTRO */}
       <section className="mx-auto grid max-w-7xl gap-7 px-5 py-16 sm:px-8 md:grid-cols-[1fr_1fr] md:items-end lg:px-10 lg:py-20">
         <div>
-          <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.2em] text-[#17665B]">
-            <span className="h-px w-9 bg-[#D4A84F]" />
+          <p className="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.2em] text-brand-black">
+            <span className="h-px w-9 bg-[var(--brand-gold)]" />
             What We Bring to the Table
           </p>
 
@@ -165,12 +165,12 @@ const Services = () => {
       {/* SERVICE CATALOG — ALTERNATING LAYOUT */}
       <section
         id="service-catalog"
-        className="bg-[#F5F8F6] py-16 sm:py-20 lg:py-24"
+        className="bg-[var(--brand-light-gray)] py-16 sm:py-20 lg:py-24"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-          <div className="mb-12 flex flex-col justify-between gap-5 border-b border-[#103C3A]/15 pb-7 sm:flex-row sm:items-end">
+          <div className="mb-12 flex flex-col justify-between gap-5 border-b border-[var(--brand-black)]/15 pb-7 sm:flex-row sm:items-end">
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#17665B]">
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-black">
                 Service Directory
               </p>
               <h2 className="mt-3 text-3xl font-extrabold sm:text-4xl">
@@ -187,11 +187,11 @@ const Services = () => {
             {services.map((service, index) => (
               <article
                 key={service.number}
-                className="group relative grid overflow-hidden border border-[#103C3A]/10 bg-white transition duration-300 hover:border-[#D4A84F]/70 hover:shadow-xl hover:shadow-[#103C3A]/5 md:grid-cols-[100px_1fr_auto] md:items-center"
+                className="group relative grid overflow-hidden border border-[var(--brand-black)]/10 bg-white transition duration-300 hover:border-[var(--brand-gold)]/70 hover:shadow-xl hover:shadow-[var(--brand-black)]/5 md:grid-cols-[100px_1fr_auto] md:items-center"
               >
                 {/* Number / icon */}
-                <div className="flex items-center justify-between border-b border-[#103C3A]/10 bg-[#103C3A] px-6 py-5 md:h-full md:flex-col md:justify-center md:border-b-0 md:px-4">
-                  <span className="text-xs font-extrabold tracking-widest text-[#F0D99B]">
+                <div className="flex items-center justify-between border-b border-[var(--brand-black)]/10 bg-[var(--brand-black)] px-6 py-5 md:h-full md:flex-col md:justify-center md:border-b-0 md:px-4">
+                  <span className="text-xs font-extrabold tracking-widest text-[var(--brand-gold)]">
                     {service.number}
                   </span>
 
@@ -202,11 +202,11 @@ const Services = () => {
 
                 {/* Text */}
                 <div className="min-w-0 p-6 sm:p-8">
-                  <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#17665B] sm:text-xs">
+                  <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-brand-black sm:text-xs">
                     {service.category}
                   </p>
 
-                  <h3 className="mt-3 text-xl font-extrabold text-[#103C3A] sm:text-2xl">
+                  <h3 className="mt-3 text-xl font-extrabold text-[var(--brand-black)] sm:text-2xl">
                     {service.title}
                   </h3>
 
@@ -218,7 +218,7 @@ const Services = () => {
                     {service.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="border border-[#103C3A]/10 bg-[#F5F8F6] px-3 py-1.5 text-xs font-semibold text-[#17665B]"
+                        className="border border-[var(--brand-black)]/10 bg-[var(--brand-light-gray)] px-3 py-1.5 text-xs font-semibold text-brand-black"
                       >
                         {tag}
                       </span>
@@ -227,7 +227,7 @@ const Services = () => {
                 </div>
 
                 {/* Action */}
-                <div className="flex items-center justify-between border-t border-[#103C3A]/10 px-6 py-4 md:h-full md:flex-col md:justify-center md:border-l md:border-t-0 md:px-5">
+                <div className="flex items-center justify-between border-t border-[var(--brand-black)]/10 px-6 py-4 md:h-full md:flex-col md:justify-center md:border-l md:border-t-0 md:px-5">
                   <span className="text-xs font-semibold text-slate-500 md:hidden">
                     Learn more
                   </span>
@@ -235,14 +235,14 @@ const Services = () => {
                   <Link
                     to="/contact"
                     aria-label={`Ask about ${service.title}`}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-[#103C3A]/15 text-[#103C3A] transition duration-300 hover:border-[#D4A84F] hover:bg-[#D4A84F] group-hover:border-[#D4A84F]"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--brand-black)]/15 text-[var(--brand-black)] transition duration-300 hover:border-[var(--brand-gold)] hover:bg-[var(--brand-gold-dark)] group-hover:border-[var(--brand-gold)]"
                   >
                     <FiArrowUpRight size={20} />
                   </Link>
                 </div>
 
                 <div
-                  className={`absolute bottom-0 left-0 h-1 bg-[#D4A84F] transition-all duration-500 ${
+                  className={`absolute bottom-0 left-0 h-1 bg-[var(--brand-gold)] transition-all duration-500 ${
                     index % 2 === 0
                       ? "w-0 group-hover:w-full"
                       : "w-0 group-hover:w-2/3"
@@ -256,7 +256,7 @@ const Services = () => {
 
       {/* FEATURED SERVICE — SPLIT VISUAL */}
       <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:px-10 lg:py-28">
-        <div className="grid overflow-hidden bg-[#103C3A] lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid overflow-hidden bg-[var(--brand-black)] lg:grid-cols-[1.05fr_0.95fr]">
           <div className="relative min-h-[320px] overflow-hidden sm:min-h-[450px]">
             <img
               src={serviceTruck}
@@ -265,17 +265,17 @@ const Services = () => {
               className="absolute inset-0 h-full w-full object-cover transition duration-700 hover:scale-105"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-[#103C3A]/60 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-black)]/60 via-transparent to-transparent" />
 
-            <div className="absolute bottom-6 left-6 border border-white/20 bg-[#103C3A]/85 px-4 py-3 backdrop-blur-md sm:bottom-8 sm:left-8">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#F0D99B]">
+            <div className="absolute bottom-6 left-6 border border-white/20 bg-[var(--brand-black)]/85 px-4 py-3 backdrop-blur-md sm:bottom-8 sm:left-8">
+              <p className="text-xs font-bold uppercase tracking-widest text-[var(--brand-gold)]">
                 Built Around Your Needs
               </p>
             </div>
           </div>
 
           <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12 xl:p-14">
-            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#F0D99B]">
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
               A More Personal Approach
             </p>
 
@@ -300,7 +300,7 @@ const Services = () => {
                   key={item}
                   className="flex items-start gap-3 text-sm font-medium text-white/90"
                 >
-                  <FaCheckCircle className="mt-1 shrink-0 text-[#D4A84F]" />
+                  <FaCheckCircle className="mt-1 shrink-0 text-[var(--brand-gold)]" />
                   {item}
                 </div>
               ))}
@@ -308,7 +308,7 @@ const Services = () => {
 
             <Link
               to="/contact"
-              className="mt-9 inline-flex w-fit items-center gap-3 bg-[#D4A84F] px-6 py-4 text-sm font-extrabold text-[#103C3A] transition hover:bg-[#F0D99B]"
+              className="mt-9 inline-flex w-fit items-center gap-3 bg-[var(--brand-gold)] px-6 py-4 text-sm font-extrabold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)]"
             >
               Talk to Our Team
               <FaArrowRight />
@@ -318,10 +318,10 @@ const Services = () => {
       </section>
 
       {/* SPECIALIZED SUPPORT */}
-      <section className="border-y border-[#103C3A]/10 bg-white py-16 sm:py-20 lg:py-24">
+      <section className="border-y border-[var(--brand-black)]/10 bg-white py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <div className="mb-12 max-w-3xl">
-            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#17665B]">
+            <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-black">
               Additional Resources
             </p>
 
@@ -365,13 +365,13 @@ const Services = () => {
             ].map((item) => (
               <div
                 key={item.number}
-                className="border-t-2 border-[#D4A84F] bg-[#F5F8F6] p-6 transition hover:bg-[#EDF3EF] sm:p-7"
+                className="border-t-2 border-[var(--brand-gold)] bg-[var(--brand-light-gray)] p-6 transition hover:bg-[var(--brand-light-gray)] sm:p-7"
               >
-                <span className="text-xs font-extrabold tracking-widest text-[#17665B]">
+                <span className="text-xs font-extrabold tracking-widest text-brand-black">
                   {item.number}
                 </span>
 
-                <h3 className="mt-5 text-lg font-extrabold leading-snug text-[#103C3A]">
+                <h3 className="mt-5 text-lg font-extrabold leading-snug text-[var(--brand-black)]">
                   {item.title}
                 </h3>
 
@@ -379,7 +379,7 @@ const Services = () => {
                   {item.description}
                 </p>
 
-                <div className="mt-5 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#17665B]">
+                <div className="mt-5 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-black">
                   Program Details
                   <FaArrowRight />
                 </div>
@@ -390,7 +390,7 @@ const Services = () => {
       </section>
 
       {/* EXISTING FUNCTIONAL COMPONENTS */}
-      <div className="bg-[#F7F9F7]">
+      <div className="bg-[var(--brand-light-gray)]">
         <RentedTrailerProgram />
         <InsuranceApplicationAssistance />
         <TwicCardAssistance />
@@ -399,13 +399,13 @@ const Services = () => {
 
       {/* FINAL CTA */}
       <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
-        <div className="relative mx-auto max-w-7xl overflow-hidden bg-[#103C3A] px-6 py-12 sm:px-10 sm:py-16 lg:px-16">
+        <div className="relative mx-auto max-w-7xl overflow-hidden bg-[var(--brand-black)] px-6 py-12 sm:px-10 sm:py-16 lg:px-16">
           <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full border border-white/10" />
-          <div className="pointer-events-none absolute -right-4 -top-8 h-40 w-40 rounded-full border border-[#D4A84F]/25" />
+          <div className="pointer-events-none absolute -right-4 -top-8 h-40 w-40 rounded-full border border-[var(--brand-gold)]/25" />
 
           <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#F0D99B]">
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--brand-gold)]">
                 Your Next Move Starts Here
               </p>
 
@@ -421,14 +421,14 @@ const Services = () => {
 
             <Link
               to="/contact"
-              className="inline-flex w-fit shrink-0 items-center gap-3 bg-[#D4A84F] px-7 py-4 text-sm font-extrabold text-[#103C3A] transition hover:bg-[#F0D99B]"
+              className="inline-flex w-fit shrink-0 items-center gap-3 bg-[var(--brand-gold)] px-7 py-4 text-sm font-extrabold text-[var(--brand-black)] transition hover:bg-[var(--brand-gold-dark)]"
             >
               Contact Us
               <FaArrowRight />
             </Link>
           </div>
 
-          <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#17665B] via-[#D4A84F] to-[#17665B]" />
+          <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[var(--brand-gold)] via-[var(--brand-gold)] to-[var(--brand-gold)]" />
         </div>
       </section>
     </main>

@@ -506,26 +506,26 @@ export default function InvoiceModal({
   const displayedServices = details?.services || agreementServices;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-3 backdrop-blur-sm sm:p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--brand-black)]/80 p-3 backdrop-blur-sm sm:p-6">
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby="invoice-modal-title"
-        className="flex max-h-[95vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl"
+        className="flex max-h-[95vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-[var(--brand-border)] bg-[var(--brand-dark-gray)] shadow-2xl"
       >
-        <header className="flex items-center justify-between border-b border-slate-800 px-5 py-4 sm:px-7">
+        <header className="flex items-center justify-between border-b border-[var(--brand-border)] px-5 py-4 sm:px-7">
           <div>
             <h2 id="invoice-modal-title" className="text-xl font-bold">
               {isExisting ? "Invoice History" : "Create Invoice"}
             </h2>
-            <p className="mt-1 text-sm text-slate-400">
+            <p className="mt-1 text-sm text-[var(--brand-gray)]">
               {shownAgreement?.tracking_id || "Loading agreement..."}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-300 hover:bg-slate-800"
+            className="rounded-lg border border-[var(--brand-border)] px-3 py-2 text-sm text-white/75 hover:bg-[var(--brand-dark-gray)]"
           >
             Close
           </button>
@@ -543,25 +543,25 @@ export default function InvoiceModal({
             </div>
           )}
           {loading ? (
-            <p className="py-16 text-center text-slate-400">Loading agreement and invoice history...</p>
+            <p className="py-16 text-center text-[var(--brand-gray)]">Loading agreement and invoice history...</p>
           ) : !shownAgreement ? (
-            <p className="py-16 text-center text-slate-400">Agreement details could not be loaded.</p>
+            <p className="py-16 text-center text-[var(--brand-gray)]">Agreement details could not be loaded.</p>
           ) : (
             <>
               {invoice && (
-                <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-700 bg-slate-950/60 p-4">
+                <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/60 p-4">
                   <div>
                     <p className="font-semibold">{invoice.invoice_number}</p>
-                    <p className="mt-1 text-sm capitalize text-slate-400">
+                    <p className="mt-1 text-sm capitalize text-[var(--brand-gray)]">
                       Status: {statusLabel} {invoice.sent_at ? `· Sent ${new Date(invoice.sent_at).toLocaleString()}` : ""}
                     </p>
-                    <p className="mt-1 text-xs text-slate-400">
+                    <p className="mt-1 text-xs text-[var(--brand-gray)]">
                       Deposit:{" "}
                       <span className={depositVerified ? "text-emerald-300" : "text-amber-300"}>
                         {agreement?.agreement?.deposit_status || "not verified"}
                       </span>
                       {" · "}Refundable slip:{" "}
-                      <span className="capitalize text-slate-300">
+                      <span className="capitalize text-white/75">
                         {invoice.receipt_status || "Not Generated"}
                       </span>
                       {invoice.receipt_number ? ` · ${invoice.receipt_number}` : ""}
@@ -575,7 +575,7 @@ export default function InvoiceModal({
                       <button
                         type="button"
                         onClick={handleCreateAnother}
-                        className="rounded-lg border border-emerald-500/40 px-3 py-2 text-sm font-semibold text-emerald-300"
+                        className="rounded-lg border border-[var(--brand-gold)]/40 px-3 py-2 text-sm font-semibold text-[var(--brand-gold)]"
                       >
                         Create Another Invoice
                       </button>
@@ -585,7 +585,7 @@ export default function InvoiceModal({
                         type="button"
                         onClick={handleResend}
                         disabled={Boolean(busy)}
-                        className="rounded-lg bg-emerald-500 px-3 py-2 text-sm font-semibold text-slate-950 disabled:opacity-50"
+                        className="rounded-lg bg-[var(--brand-gold)] px-3 py-2 text-sm font-semibold text-[var(--brand-black)] disabled:opacity-50"
                       >
                         {busy === "resend" ? "Sending..." : invoice.status === "pending" ? "Send Invoice" : "Resend Invoice"}
                       </button>
@@ -595,7 +595,7 @@ export default function InvoiceModal({
                         <button
                           type="button"
                           onClick={() => setReceiptInvoice(invoice)}
-                          className="rounded-lg border border-emerald-500/40 px-3 py-2 text-sm font-semibold text-emerald-300"
+                          className="rounded-lg border border-[var(--brand-gold)]/40 px-3 py-2 text-sm font-semibold text-[var(--brand-gold)]"
                         >
                           View Refundable Slip
                         </button>
@@ -603,14 +603,14 @@ export default function InvoiceModal({
                           type="button"
                           onClick={() => handleDownloadReceipt(invoice)}
                           disabled={Boolean(busy)}
-                          className="rounded-lg border border-slate-600 px-3 py-2 text-sm font-semibold text-slate-300 disabled:opacity-50"
+                          className="rounded-lg border border-[var(--brand-border)] px-3 py-2 text-sm font-semibold text-white/75 disabled:opacity-50"
                         >
                           {busy === "receipt-download" ? "Downloading..." : "Download Refundable Slip"}
                         </button>
                         <button
                           type="button"
                           onClick={() => setReceiptInvoice(invoice)}
-                          className="rounded-lg border border-blue-500/40 px-3 py-2 text-sm font-semibold text-blue-300"
+                          className="rounded-lg border border-[var(--brand-gold)]/40 px-3 py-2 text-sm font-semibold text-[var(--brand-gold)] transition hover:bg-[var(--brand-gold)]/10"
                         >
                           Resend Refundable Slip
                         </button>
@@ -625,7 +625,7 @@ export default function InvoiceModal({
                             ? "Manually verify the deposit before issuing a receipt."
                             : "Open the refundable receipt preview."
                         }
-                        className="rounded-lg border border-emerald-500/40 px-3 py-2 text-sm font-semibold text-emerald-300 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="rounded-lg border border-[var(--brand-gold)]/40 px-3 py-2 text-sm font-semibold text-[var(--brand-gold)] disabled:cursor-not-allowed disabled:opacity-40"
                       >
                         {invoice.receipt_status === "failed"
                           ? "Retry Refundable Slip"
@@ -655,8 +655,8 @@ export default function InvoiceModal({
               )}
 
               {invoiceHistory.length > 1 && (
-                <section className="mb-5 rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-                  <h3 className="mb-3 text-sm font-semibold text-slate-300">Invoice history</h3>
+                <section className="mb-5 rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-4">
+                  <h3 className="mb-3 text-sm font-semibold text-white/75">Invoice history</h3>
                   <div className="flex flex-wrap gap-2">
                     {invoiceHistory.map((historyInvoice) => (
                       <button
@@ -665,17 +665,17 @@ export default function InvoiceModal({
                         onClick={() => handleSelectInvoice(historyInvoice)}
                         className={`rounded-lg border px-3 py-2 text-left text-xs ${
                           invoice?.id === historyInvoice.id
-                            ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-200"
-                            : "border-slate-700 text-slate-300 hover:bg-slate-800"
+                            ? "border-[var(--brand-gold)]/50 bg-[var(--brand-gold)]/10 text-[var(--brand-gold)]"
+                            : "border-[var(--brand-border)] text-white/75 hover:bg-[var(--brand-dark-gray)]"
                         }`}
                       >
                         <span className="block font-semibold">{historyInvoice.invoice_number}</span>
-                        <span className="mt-1 block capitalize text-slate-400">
+                        <span className="mt-1 block capitalize text-[var(--brand-gray)]">
                           Invoice: {historyInvoice.status}
                           {" · "}Receipt: {historyInvoice.receipt_status || "Not Generated"}
                         </span>
                         {historyInvoice.receipt_number && (
-                          <span className="mt-1 block text-emerald-300">
+                          <span className="mt-1 block text-[var(--brand-gold)]">
                             {historyInvoice.receipt_number}
                           </span>
                         )}
@@ -687,19 +687,19 @@ export default function InvoiceModal({
 
               <div className="grid gap-6 xl:grid-cols-[minmax(350px,0.8fr)_minmax(0,1.2fr)]">
                 <div className="space-y-5">
-                  <section className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-                    <h3 className="mb-3 font-semibold text-emerald-300">Agreement information</h3>
+                  <section className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-4">
+                    <h3 className="mb-3 font-semibold text-[var(--brand-gold)]">Agreement information</h3>
                     <dl className="grid grid-cols-[125px_1fr] gap-x-3 gap-y-2 text-sm">
-                      <dt className="text-slate-500">Carrier</dt><dd>{shownAgreement.carrier_name || shownAgreement.print_name || "—"}</dd>
-                      <dt className="text-slate-500">Company</dt><dd>{shownAgreement.company_name || "—"}</dd>
-                      <dt className="text-slate-500">Email</dt><dd className="break-all">{shownAgreement.email || "—"}</dd>
-                      <dt className="text-slate-500">Phone</dt><dd>{shownAgreement.phone || "—"}</dd>
-                      <dt className="text-slate-500">MC / DOT</dt><dd>{shownAgreement.mc_dot || "—"}</dd>
-                      <dt className="text-slate-500">Agreement</dt><dd>{shownAgreement.agreement_type || "—"}</dd>
-                      <dt className="text-slate-500">Carrier type</dt><dd>{shownAgreement.carrier_type || "—"}</dd>
-                      <dt className="text-slate-500">Tracking ID</dt><dd>{shownAgreement.tracking_id}</dd>
-                      <dt className="text-slate-500">Payment method</dt><dd>{shownAgreement.payment_terms_method || "Not recorded"}</dd>
-                      <dt className="text-slate-500">Services</dt>
+                      <dt className="text-[var(--brand-gray)]">Carrier</dt><dd>{shownAgreement.carrier_name || shownAgreement.print_name || "—"}</dd>
+                      <dt className="text-[var(--brand-gray)]">Company</dt><dd>{shownAgreement.company_name || "—"}</dd>
+                      <dt className="text-[var(--brand-gray)]">Email</dt><dd className="break-all">{shownAgreement.email || "—"}</dd>
+                      <dt className="text-[var(--brand-gray)]">Phone</dt><dd>{shownAgreement.phone || "—"}</dd>
+                      <dt className="text-[var(--brand-gray)]">MC / DOT</dt><dd>{shownAgreement.mc_dot || "—"}</dd>
+                      <dt className="text-[var(--brand-gray)]">Agreement</dt><dd>{shownAgreement.agreement_type || "—"}</dd>
+                      <dt className="text-[var(--brand-gray)]">Carrier type</dt><dd>{shownAgreement.carrier_type || "—"}</dd>
+                      <dt className="text-[var(--brand-gray)]">Tracking ID</dt><dd>{shownAgreement.tracking_id}</dd>
+                      <dt className="text-[var(--brand-gray)]">Payment method</dt><dd>{shownAgreement.payment_terms_method || "Not recorded"}</dd>
+                      <dt className="text-[var(--brand-gray)]">Services</dt>
                       <dd className="space-y-1">
                         {displayedServices.length > 0 ? (
                           displayedServices.map((service, index) => (
@@ -734,7 +734,7 @@ export default function InvoiceModal({
                         ["taxRate", "Tax (%)", "number"],
                       ].map(([name, label, type]) => (
                         <label key={name}>
-                          <span className="mb-1.5 block text-xs font-medium text-slate-400">{label}</span>
+                          <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">{label}</span>
                           <input
                             required={type === "date"}
                             min={type === "number" ? "0" : undefined}
@@ -744,28 +744,28 @@ export default function InvoiceModal({
                             name={name}
                             value={form[name]}
                             onChange={handleChange}
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+                            className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
                           />
                         </label>
                       ))}
                       <label className="sm:col-span-2">
-                        <span className="mb-1.5 block text-xs font-medium text-slate-400">Invoice notes (optional)</span>
+                        <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">Invoice notes (optional)</span>
                         <textarea
                           name="notes"
                           rows="2"
                           value={form.notes}
                           onChange={handleChange}
-                          className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+                          className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
                         />
                       </label>
                     </form>
                   )}
 
-                  <section className="rounded-xl border border-slate-800 bg-slate-950/50 p-4">
-                    <h3 className="mb-1 font-semibold text-emerald-300">
+                  <section className="rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]/50 p-4">
+                    <h3 className="mb-1 font-semibold text-[var(--brand-gold)]">
                       Payment Method &amp; Account Details
                     </h3>
-                    <p className="mb-4 text-xs leading-5 text-slate-400">
+                    <p className="mb-4 text-xs leading-5 text-[var(--brand-gray)]">
                       {isExisting
                         ? "Payment details saved with this invoice."
                         : "Enter the payment destination for this invoice. The agreement payment method is only a suggestion; each invoice uses the details entered here."}
@@ -784,7 +784,7 @@ export default function InvoiceModal({
                           .filter(([, value]) => String(value || "").trim())
                           .map(([label, value]) => (
                             <Fragment key={label}>
-                              <dt className="text-slate-500">{label}</dt>
+                              <dt className="text-[var(--brand-gray)]">{label}</dt>
                               <dd className="break-all">{value}</dd>
                             </Fragment>
                           ))}
@@ -792,13 +792,13 @@ export default function InvoiceModal({
                     ) : (
                       <div className="grid gap-3 sm:grid-cols-2">
                         <label className="sm:col-span-2">
-                          <span className="mb-1.5 block text-xs font-medium text-slate-400">Payment method</span>
+                          <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">Payment method</span>
                           <select
                             name="paymentMethod"
                             value={form.paymentMethod}
                             onChange={handleChange}
                             required
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-500"
+                            className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm text-white outline-none focus:border-[var(--brand-gold)]"
                           >
                             <option value="">Select payment method</option>
                             {paymentMethodOptions.map((method) => (
@@ -806,14 +806,14 @@ export default function InvoiceModal({
                             ))}
                           </select>
                           {shownAgreement.payment_terms_method && (
-                            <span className="mt-1 block text-xs text-slate-500">
+                            <span className="mt-1 block text-xs text-[var(--brand-gray)]">
                               Agreement selection suggestion: {getSuggestedPaymentMethod(shownAgreement.payment_terms_method).customPaymentMethod || getSuggestedPaymentMethod(shownAgreement.payment_terms_method).paymentMethod || shownAgreement.payment_terms_method}
                             </span>
                           )}
                         </label>
                         {form.paymentMethod === "Other" && (
                           <label className="sm:col-span-2">
-                            <span className="mb-1.5 block text-xs font-medium text-slate-400">Custom payment method</span>
+                            <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">Custom payment method</span>
                             <input
                               required
                               maxLength={80}
@@ -821,7 +821,7 @@ export default function InvoiceModal({
                               value={form.customPaymentMethod}
                               onChange={handleChange}
                               placeholder="Enter payment method"
-                              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+                              className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
                             />
                           </label>
                         )}
@@ -833,7 +833,7 @@ export default function InvoiceModal({
                           ["accountNumber", "Account Number (optional)", false, 100],
                         ].map(([name, label, required, maxLength]) => (
                           <label key={name}>
-                            <span className="mb-1.5 block text-xs font-medium text-slate-400">{label}</span>
+                            <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">{label}</span>
                             <input
                               name={name}
                               value={form[name]}
@@ -841,19 +841,19 @@ export default function InvoiceModal({
                               required={required}
                               maxLength={maxLength}
                               autoComplete="off"
-                              className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+                              className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
                             />
                           </label>
                         ))}
                         <label className="sm:col-span-2">
-                          <span className="mb-1.5 block text-xs font-medium text-slate-400">Additional Payment Instructions (optional)</span>
+                          <span className="mb-1.5 block text-xs font-medium text-[var(--brand-gray)]">Additional Payment Instructions (optional)</span>
                           <textarea
                             name="paymentInstructions"
                             rows="2"
                             maxLength={1000}
                             value={form.paymentInstructions}
                             onChange={handleChange}
-                            className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm outline-none focus:border-emerald-500"
+                            className="w-full rounded-lg border border-[var(--brand-border)] bg-[var(--brand-black)] px-3 py-2.5 text-sm outline-none focus:border-[var(--brand-gold)]"
                           />
                         </label>
                       </div>
@@ -861,17 +861,17 @@ export default function InvoiceModal({
                   </section>
                 </div>
 
-                <section className="flex min-h-[420px] flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
-                  <div className="flex items-center justify-between gap-3 border-b border-slate-800 px-4 py-3">
+                <section className="flex min-h-[420px] flex-col overflow-hidden rounded-xl border border-[var(--brand-border)] bg-[var(--brand-black)]">
+                  <div className="flex items-center justify-between gap-3 border-b border-[var(--brand-border)] px-4 py-3">
                     <div>
                       <h3 className="font-semibold">Invoice PDF Preview</h3>
-                      {details && <p className="mt-1 text-sm font-bold text-emerald-300">Total due: ${Number(details.total).toFixed(2)}</p>}
+                      {details && <p className="mt-1 text-sm font-bold text-[var(--brand-gold)]">Total due: ${Number(details.total).toFixed(2)}</p>}
                     </div>
                     <button
                       type="button"
                       onClick={handleDownload}
                       disabled={Boolean(busy) || (!previewUrl && !isExisting)}
-                      className="rounded-lg border border-slate-700 px-3 py-2 text-xs font-semibold text-slate-200 hover:bg-slate-800 disabled:opacity-50"
+                      className="rounded-lg border border-[var(--brand-border)] px-3 py-2 text-xs font-semibold text-white/85 hover:bg-[var(--brand-dark-gray)] disabled:opacity-50"
                     >
                       {busy === "download" ? "Preparing..." : "Download PDF"}
                     </button>
@@ -879,18 +879,18 @@ export default function InvoiceModal({
                   {previewUrl ? (
                     <iframe title="Invoice PDF preview" src={previewUrl} className="min-h-[420px] flex-1 bg-white" />
                   ) : (
-                    <div className="flex min-h-[420px] flex-1 items-center justify-center p-8 text-center text-sm text-slate-500">
+                    <div className="flex min-h-[420px] flex-1 items-center justify-center p-8 text-center text-sm text-[var(--brand-gray)]">
                       Generate a preview to review the final amount, payment details, and PDF.
                     </div>
                   )}
-                  <div className="flex flex-wrap justify-end gap-3 border-t border-slate-800 p-4">
+                  <div className="flex flex-wrap justify-end gap-3 border-t border-[var(--brand-border)] p-4">
                     {!isExisting && (
                       <>
                         <button
                           type="button"
                           onClick={handlePreview}
                           disabled={Boolean(busy) || !hasPaymentMethod || !hasPaymentAccount}
-                          className="rounded-lg border border-slate-700 px-4 py-2.5 text-sm font-semibold text-slate-200 disabled:opacity-50"
+                          className="rounded-lg border border-[var(--brand-border)] px-4 py-2.5 text-sm font-semibold text-white/85 disabled:opacity-50"
                         >
                           {busy === "preview" ? "Generating..." : "Preview Invoice"}
                         </button>
@@ -898,7 +898,7 @@ export default function InvoiceModal({
                           type="button"
                           onClick={handleSend}
                           disabled={Boolean(busy) || !canSend}
-                          className="rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-bold text-slate-950 disabled:cursor-not-allowed disabled:opacity-40"
+                          className="rounded-lg bg-[var(--brand-gold)] px-5 py-2.5 text-sm font-bold text-[var(--brand-black)] disabled:cursor-not-allowed disabled:opacity-40"
                         >
                           {busy === "send" ? "Sending..." : "Send Invoice"}
                         </button>

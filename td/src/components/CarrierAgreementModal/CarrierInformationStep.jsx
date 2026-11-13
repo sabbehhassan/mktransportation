@@ -40,17 +40,17 @@ function CarrierField({
     <div className="min-w-0">
       <label
         htmlFor={`carrier-${field}`}
-        className="mb-2 flex items-center gap-1.5 text-sm font-bold text-[#103C3A]"
+        className="mb-2 flex items-center gap-1.5 text-sm font-bold text-[var(--brand-black)]"
       >
         {label}
-        {required && <span className="text-[#B28A35]">*</span>}
+        {required && <span className="text-brand-black">*</span>}
       </label>
       <div className="relative">
         {Icon && (
           <Icon
             size={18}
             className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 ${
-              errors[field] ? "text-red-400" : "text-[#17665B]/70"
+              errors[field] ? "text-red-400" : "text-brand-black/70"
             }`}
           />
         )}
@@ -95,10 +95,10 @@ export default function CarrierInformationStep({
   };
 
   const inputClass = (field) =>
-    `w-full rounded-xl border bg-[#F7F9F7] px-4 py-3.5 text-sm text-[#103C3A] outline-none transition placeholder:text-slate-400 focus:bg-white focus:ring-4 focus:ring-[#17665B]/10 ${
+    `w-full rounded-xl border bg-[var(--brand-light-gray)] px-4 py-3.5 text-sm text-[var(--brand-black)] outline-none transition placeholder:text-slate-400 focus:bg-white focus:ring-4 focus:ring-[var(--brand-gold)]/10 ${
       errors[field]
         ? "border-red-400 focus:border-red-500"
-        : "border-[#103C3A]/15 hover:border-[#17665B]/50 focus:border-[#17665B]"
+        : "border-[var(--brand-black)]/15 hover:border-[var(--brand-gold)]/50 focus:border-[var(--brand-gold)]"
     }`;
 
   const renderField = (props) => (
@@ -148,13 +148,13 @@ export default function CarrierInformationStep({
   };
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-[#DCE7DF] bg-[#F5F8F5] text-[#103C3A] shadow-[0_24px_70px_rgba(16,60,58,0.08)]">
-      <div className="pointer-events-none absolute -right-32 -top-24 h-80 w-80 rounded-full bg-[#D4A84F]/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -left-32 h-80 w-80 rounded-full bg-[#17665B]/10 blur-3xl" />
+    <section className="relative overflow-hidden rounded-3xl border border-[var(--brand-light-gray)] bg-[var(--brand-light-gray)] text-[var(--brand-black)] shadow-[0_24px_70px_rgba(8,9,11,0.08)]">
+      <div className="pointer-events-none absolute -right-32 -top-24 h-80 w-80 rounded-full bg-[var(--brand-gold)]/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -left-32 h-80 w-80 rounded-full bg-[var(--brand-gold)]/10 blur-3xl" />
       <div className="relative mx-auto w-full max-w-5xl px-4 py-7 sm:px-7 sm:py-9 lg:px-10 lg:py-10">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D4A84F]/45 bg-white px-4 py-2">
-          <Truck size={16} className="text-[#17665B]" />
-          <span className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#17665B]">
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--brand-gold)]/45 bg-white px-4 py-2">
+          <Truck size={16} className="text-brand-black" />
+          <span className="text-xs font-extrabold uppercase tracking-[0.16em] text-brand-black">
             Carrier Onboarding · Step 3 of 7
           </span>
         </div>
@@ -167,9 +167,9 @@ export default function CarrierInformationStep({
           New Carrier or Old Carrier.
         </p>
 
-        <div className="overflow-hidden rounded-2xl border border-[#103C3A]/10 bg-white shadow-sm">
-          <div className="flex items-center gap-4 border-b border-[#103C3A]/10 px-5 py-5 sm:px-7">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#103C3A] text-[#F0D99B]">
+        <div className="overflow-hidden rounded-2xl border border-[var(--brand-black)]/10 bg-white shadow-sm">
+          <div className="flex items-center gap-4 border-b border-[var(--brand-black)]/10 px-5 py-5 sm:px-7">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-black)] text-[var(--brand-gold)]">
               <Building2 size={24} />
             </div>
             <div>
@@ -216,8 +216,8 @@ export default function CarrierInformationStep({
             })}
 
             <div className="sm:col-span-2">
-              <div className="mb-4 flex items-center gap-3 border-t border-[#103C3A]/10 pt-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F0D99B]/30 text-[#17665B]">
+              <div className="mb-4 flex items-center gap-3 border-t border-[var(--brand-black)]/10 pt-5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--brand-gold)]/30 text-brand-black">
                   <IdCard size={21} />
                 </div>
                 <div>
@@ -257,12 +257,12 @@ export default function CarrierInformationStep({
 
             <div className="sm:col-span-2">
               <div className="mb-3 flex items-center gap-2">
-                <BadgeCheck size={19} className="text-[#17665B]" />
+                <BadgeCheck size={19} className="text-brand-black" />
                 <label
                   htmlFor="carrier-carrierType"
                   className="text-sm font-bold"
                 >
-                  Carrier Type <span className="text-[#B28A35]">*</span>
+                  Carrier Type <span className="text-brand-black">*</span>
                 </label>
               </div>
               <select
@@ -297,13 +297,13 @@ export default function CarrierInformationStep({
 
         {carrierTypeSelected && (
           <>
-            <section className="mt-7 rounded-2xl border border-[#103C3A]/10 bg-white p-5 shadow-sm sm:p-7">
+            <section className="mt-7 rounded-2xl border border-[var(--brand-black)]/10 bg-white p-5 shadow-sm sm:p-7">
               <div className="mb-5 flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#EAF3EC] text-[#17665B]">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--brand-light-gray)] text-brand-black">
                   <CalendarDays size={21} />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-[#103C3A]">
+                  <h3 className="font-extrabold text-[var(--brand-black)]">
                     Load Pickup and Delivery Schedule
                   </h3>
                   <p className="mt-1 text-xs text-slate-500">
@@ -316,19 +316,19 @@ export default function CarrierInformationStep({
                 {pickupSchedule.map((day, index) => (
                   <li
                     key={day}
-                    className="flex items-start gap-3 rounded-xl border border-[#DCE7DF] bg-[#F8FAF8] p-4"
+                    className="flex items-start gap-3 rounded-xl border border-[var(--brand-light-gray)] bg-[var(--brand-light-gray)] p-4"
                   >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#103C3A] text-sm font-extrabold text-[#F0D99B]">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--brand-black)] text-sm font-extrabold text-[var(--brand-gold)]">
                       {index + 1}
                     </span>
                     <div className="min-w-0">
-                      <p className="font-bold text-[#103C3A]">
+                      <p className="font-bold text-[var(--brand-black)]">
                         Pickup on {day}, 7:00 AM–10:00 AM
                       </p>
                       <p className="mt-1 flex items-start gap-1.5 text-sm leading-6 text-slate-600">
                         <Clock3
                           size={15}
-                          className="mt-1 shrink-0 text-[#17665B]"
+                          className="mt-1 shrink-0 text-brand-black"
                         />
                         Delivery available 24/7 with backhaul service
                       </p>
@@ -338,16 +338,16 @@ export default function CarrierInformationStep({
               </ul>
             </section>
 
-            <section className="mt-5 flex items-start gap-3 rounded-2xl border border-[#D4A84F]/40 bg-[#FBF6E9] p-5">
+            <section className="mt-5 flex items-start gap-3 rounded-2xl border border-[var(--brand-gold)]/40 bg-[var(--brand-light-gray)] p-5">
               <FileText
                 size={20}
-                className="mt-0.5 shrink-0 text-[#806020]"
+                className="mt-0.5 shrink-0 text-brand-black"
               />
               <div>
-                <h3 className="font-extrabold text-[#72541D]">
+                <h3 className="font-extrabold text-brand-black">
                   Carrier Setup Agreement & Security Practices
                 </h3>
-                <p className="mt-2 text-sm leading-7 text-[#725F3B]">
+                <p className="mt-2 text-sm leading-7 text-brand-black">
                   This Carrier Setup Agreement between MK Transportation Group Inc.
                   and the Carrier/Shipper is intended to support cooperation
                   and strengthen cargo and equipment security throughout the
@@ -362,11 +362,11 @@ export default function CarrierInformationStep({
               </div>
             </section>
 
-            <div className="mt-7 flex flex-col-reverse gap-3 border-t border-[#103C3A]/10 pt-6 sm:flex-row sm:justify-between">
+            <div className="mt-7 flex flex-col-reverse gap-3 border-t border-[var(--brand-black)]/10 pt-6 sm:flex-row sm:justify-between">
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#103C3A]/15 bg-white px-6 py-3.5 text-sm font-extrabold text-[#103C3A] transition hover:border-[#D4A84F]"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--brand-black)]/15 bg-white px-6 py-3.5 text-sm font-extrabold text-[var(--brand-black)] transition hover:border-[var(--brand-gold)]"
               >
                 <ArrowLeft size={18} />
                 Previous
@@ -374,10 +374,10 @@ export default function CarrierInformationStep({
               <button
                 type="button"
                 onClick={handleNext}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#103C3A] px-7 py-3.5 text-sm font-extrabold text-white shadow-lg transition hover:bg-[#17665B]"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--brand-black)] px-7 py-3.5 text-sm font-extrabold text-white shadow-lg transition hover:bg-[var(--brand-gold-dark)]"
               >
                 Continue to Conditions
-                <ArrowRight size={18} className="text-[#F0D99B]" />
+                <ArrowRight size={18} className="text-[var(--brand-gold)]" />
               </button>
             </div>
           </>
