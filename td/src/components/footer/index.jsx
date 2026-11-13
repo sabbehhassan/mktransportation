@@ -76,7 +76,7 @@ const Footer = () => {
               to="/carrier-agreement"
               className="group mt-5 inline-flex items-center gap-2 rounded-lg bg-[var(--brand-gold)] px-5 py-3 text-sm font-bold text-[var(--brand-black)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[var(--brand-gold-dark)] hover:shadow-lg hover:shadow-black/10"
             >
-              Become a Carrier
+              Apply as Carrier/agreement
               <FaArrowRight className="text-xs transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>

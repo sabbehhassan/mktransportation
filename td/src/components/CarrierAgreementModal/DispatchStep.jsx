@@ -15,6 +15,7 @@ export default function DispatchStep({
   const [error, setError] = useState("");
 
   const dispatchCompanies = [
+    "Prime Dispatchify",
     "3D Dispatch",
     "GO Lane Dispatch",
     "Logity Dispatch",

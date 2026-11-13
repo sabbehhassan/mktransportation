@@ -21,6 +21,7 @@ const paymentOptions = [
   { value: "Chime", icon: Wallet },
   { value: "Cashapp / BTC", icon: CreditCard },
   { value: "Venmo", icon: Wallet },
+  { value: "Cash Deposit", icon: Wallet },
 ];
 
 const newCarrierExplanation =

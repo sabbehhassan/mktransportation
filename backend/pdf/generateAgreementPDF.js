@@ -2,6 +2,20 @@ const fs = require("fs");
 const path = require("path");
 
 const agreementTemplate = require("../templates/agreementTemplate");
+const company = require("../companyDetails");
+
+const escapeHtml = (value) =>
+  String(value ?? "").replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+
+    return entities[character];
+  });
 
 async function generateAgreementPDF(formData) {
   let browser;
@@ -76,13 +90,25 @@ async function generateAgreementPDF(formData) {
 
     await page.pdf({
       path: pdfPath,
-      format: "A4",
+      format: "Letter",
       printBackground: true,
+      displayHeaderFooter: true,
+      headerTemplate: `
+        <div style="width:100%;margin:0 0.62in;padding:0 0 4px;border-bottom:1px solid #FFB800;color:#34363A;font-family:Arial,Helvetica,sans-serif;font-size:7px;">
+          <span style="font-weight:700;color:#08090B;">${escapeHtml(company.brand)}</span>
+          <span style="margin-left:10px;">MC/MX/FF: ${escapeHtml(company.mcNumber)} &nbsp;|&nbsp; USDOT: ${escapeHtml(company.usdotNumber)}</span>
+          <span style="float:right;">${escapeHtml(company.email)}</span>
+        </div>`,
+      footerTemplate: `
+        <div style="width:100%;margin:0 0.62in;padding-top:4px;border-top:1px solid #FFB800;color:#62656A;font-family:Arial,Helvetica,sans-serif;font-size:7px;">
+          <span>${escapeHtml(company.brand)} &middot; Trucking Service Agreement</span>
+          <span style="float:right;">Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
+        </div>`,
       margin: {
-        top: "20px",
-        right: "20px",
-        bottom: "20px",
-        left: "20px",
+        top: "0.72in",
+        right: "0.62in",
+        bottom: "0.7in",
+        left: "0.62in",
       },
       preferCSSPageSize: true,
     });

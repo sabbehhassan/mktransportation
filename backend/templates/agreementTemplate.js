@@ -4,1248 +4,656 @@ const company = require("../companyDetails");
 
 const logoBase64 = fs.readFileSync(
   path.join(__dirname, "../public/logo.png"),
-  "base64"
+  "base64",
 );
-
 const certificateBase64 = fs.readFileSync(
   path.join(__dirname, "../public/certificate.png"),
-  "base64"
+  "base64",
 );
 
 const logoPath = `data:image/png;base64,${logoBase64}`;
 const certificatePath = `data:image/png;base64,${certificateBase64}`;
 
-module.exports = function agreementTemplate(formData) {
+const escapeHtml = (value) =>
+  String(value ?? "N/A").replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
 
+    return entities[character];
+  });
+
+const detailRow = (label, value) => `
+  <tr>
+    <th scope="row">${escapeHtml(label)}</th>
+    <td>${escapeHtml(value || "N/A")}</td>
+  </tr>`;
+
+module.exports = function agreementTemplate(formData) {
   const agreementDate =
     formData.agreementDate ||
     formData.date ||
     new Date().toLocaleDateString("en-CA");
-
   const carrierType = String(formData.carrierType || "").toLowerCase();
-
   const carrierTypeLabel =
     carrierType === "new"
       ? "New Carrier"
       : carrierType === "old"
-      ? "Old Carrier"
-      : "N/A";
+        ? "Old Carrier"
+        : "N/A";
 
-  const formattedServices = (formData.selectedServices || []).map((service) => {
-    if (carrierType === "old") {
-      if (
-        service ===
-        "Dedicated Lane Setup - $425 (Refundable after first delivery)"
-      ) {
-        return "ONBOARDING LANE SETUP FEE";
-      }
-      return service.split(" - $")[0];
-    }
-    return service;
-  });
+  const selectedServices = Array.isArray(formData.selectedServices)
+    ? formData.selectedServices
+    : formData.selectedServices
+      ? [formData.selectedServices]
+      : [];
+  const serviceRows = selectedServices.length
+    ? selectedServices
+        .map((service) => {
+          const description = String(service);
+          const isWaivedOnboarding =
+            carrierType === "old" &&
+            description ===
+              "Dedicated Lane Setup - $425 (Refundable after first delivery)";
+          const match = description.match(
+            /^(.*?)\s-\s\$(\d+(?:\.\d{1,2})?)(?:\s\((.*?)\))?$/,
+          );
+          const name = isWaivedOnboarding
+            ? "ONBOARDING LANE SETUP FEE"
+            : match
+              ? match[1]
+              : description;
+          const amount = isWaivedOnboarding
+            ? "No fee"
+            : match
+              ? `$${match[2]}`
+              : "As stated";
+          const refundability = isWaivedOnboarding
+            ? "No onboarding fee applies to this carrier category"
+            : match?.[3] || "Not specified";
 
-  return `
+          return `
+            <tr>
+              <td>${escapeHtml(name)}</td>
+              <td class="amount">${escapeHtml(amount)}</td>
+              <td>${escapeHtml(refundability)}</td>
+            </tr>`;
+        })
+        .join("")
+    : `<tr><td colspan="3" class="empty-state">No services selected.</td></tr>`;
 
-<!DOCTYPE html>
+  const signature = formData.signature
+    ? `<img class="signature-image" src="${escapeHtml(formData.signature)}" alt="Carrier signature" />`
+    : `<span class="signature-placeholder" aria-label="Signature line"></span>`;
 
+  return `<!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Trucking Service Agreement</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-
-    font-family: Cambria, Georgia, serif;
-    color:#222;
-    background:#fff;
-    font-size:14px;
-    line-height:1.7;
-
-}
-
-.page{
-
-    width:100%;
-    padding:45px 55px;
-
-}
-
-.page-break{
-
-    page-break-before:always;
-
-}
-
-h1,h2,h3,h4,h5{
-
-    margin:0;
-
-}
-
-p{
-
-    margin:0 0 10px;
-
-}
-
-table{
-
-    width:100%;
-    border-collapse:collapse;
-
-}
-
-td{
-
-    padding:6px 4px;
-    vertical-align:top;
-
-}
-
-ul{
-
-    margin:10px 0 12px 22px;
-
-}
-
-li{
-
-    margin-bottom:7px;
-
-}
-
-.section{
-
-    margin-top:30px;
-
-}
-
-.section-title{
-
-    font-size:18px;
-    font-weight:bold;
-    color:#17665B;
-    border-bottom:2px solid #17665B;
-    padding-bottom:7px;
-    margin-bottom:16px;
-    text-transform:uppercase;
-    letter-spacing:.5px;
-
-}
-
-.header{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    border-bottom:3px solid #17665B;
-    padding-bottom:18px;
-    margin-bottom:28px;
-
-}
-
-.logo{
-    width:130px;
-    height:auto;
-}
-
-.company{
-
-    text-align:right;
-
-}
-
-.company h2{
-
-    font-size:24px;
-    color:#17665B;
-
-}
-
-.company p{
-
-    font-size:13px;
-    margin-top:3px;
-
-}
-
-.title{
-
-    text-align:center;
-    margin-bottom:28px;
-
-}
-
-.title h1{
-
-    font-size:30px;
-    color:#17665B;
-    font-weight:bold;
-    letter-spacing:.5px;
-
-}
-
-.subtitle{
-
-    font-size:15px;
-    color:#666;
-    margin-top:5px;
-
-}
-
-.info-table{
-
-    width:100%;
-
-}
-
-.info-table td{
-
-    padding:7px 3px;
-
-}
-
-.label{
-
-    width:220px;
-    font-weight:bold;
-
-}
-
-.value{
-
-    color:#222;
-
-}
-
-.notice{
-
-    background:#F3F7F3;
-    border-left:4px solid #17665B;
-    padding:18px;
-    margin-top:18px;
-
-}
-
-.notice p{
-
-    margin:0;
-
-}
-
-.footer{
-
-    position:fixed;
-    left:55px;
-    right:55px;
-    bottom:15px;
-
-    display:flex;
-    justify-content:space-between;
-
-    font-size:11px;
-    color:#666;
-
-}
-
-.company-box{
-
-    border:1px solid #D8D8D8;
-    padding:18px;
-    margin-bottom:22px;
-    border-radius:4px;
-
-}
-
-.company-box table td{
-
-    padding:5px 0;
-
-}
-
-.company-box .label{
-
-    width:180px;
-
-}
-
-.info-box{
-
-    border:1px solid #E2E2E2;
-    margin-bottom:10px;
-    padding:10px 12px;
-    border-radius:4px;
-
-}
-
-.info-label{
-
-    display:block;
-    font-size:12px;
-    color:#777;
-    margin-bottom:3px;
-
-}
-
-.info-value{
-
-    font-size:14px;
-    font-weight:bold;
-    color:#222;
-
-}
-
-.highlight{
-
-    color:#17665B;
-    font-weight:bold;
-
-}
-
-.small{
-
-    font-size:13px;
-
-}
-
-.signature-line{
-
-    border-top:1px solid #222;
-    margin-top:45px;
-    padding-top:6px;
-    width:250px;
-
-}
-
-.certificate{
-    width:100%;
-    text-align:center;
-    padding:0;
-    margin-top:10px;
-}
-
-.certificate img{
-    width:100%;
-    max-height:640px;
-    object-fit:contain;
-}
-
-</style>
-
-</head>
-
-    <body>
-
-
-
-<div class="page">
-
-    <!-- ========================= -->
-    <!-- HEADER -->
-    <!-- ========================= -->
-
-    <div class="header">
-
-        <div>
-
-            <img src="${logoPath}" class="logo" alt="Logo" />
-
-        </div>
-
-        <div class="company">
-
-            <h2>${company.brand}</h2>
-
-            <p><strong>MC/MX/FF:</strong> ${company.mcNumber}</p>
-
-            <p><strong>USDOT:</strong> ${company.usdotNumber}</p>
-
-        </div>
-
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- AGREEMENT TITLE -->
-    <!-- ========================= -->
-
-    <div class="title">
-
-        <h1>TRUCKING SERVICE AGREEMENT</h1>
-
-        <div class="subtitle">
-            (Dedicated Lanes, Dispatch, Trailer Rental &
-            Setup Services)
-        </div>
-
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- INTRODUCTION -->
-    <!-- ========================= -->
-
-    <p>
-
-        This Agreement is made and entered into on
-
-        <strong>${agreementDate}</strong>
-
-        by and between
-        <strong>${company.name}</strong>
-        (hereinafter referred to as the
-        <strong>"Company"</strong>)
-        and the following Carrier.
-
-    </p>
-
-
-    <!-- ========================= -->
-    <!-- COMPANY INFORMATION -->
-    <!-- ========================= -->
-
-    <div class="section">
-
-        <div class="section-title">
-
-            Company Information
-
-        </div>
-
-        <div class="company-box">
-
-            <table>
-
-                <tr>
-
-                    <td class="label">
-
-                        Company Name
-
-                    </td>
-
-                    <td class="value">
-
-                        ${company.name}
-
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <td class="label">
-
-                        MC/MX/FF Number
-
-                    </td>
-
-                    <td class="value">
-
-                        ${company.mcNumber}
-
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <td class="label">
-
-                        USDOT Number
-
-                    </td>
-
-                    <td class="value">
-
-                        ${company.usdotNumber}
-
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <td class="label">
-
-                        Physical Address
-
-                    </td>
-
-                    <td class="value">
-
-                        ${company.physicalAddress}
-
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <td class="label">
-
-                        Mailing Address
-
-                    </td>
-
-                    <td class="value">
-
-                        ${company.mailingAddress}
-
-                    </td>
-
-                </tr>
-
-                <tr>
-
-                    <td class="label">
-
-                        Email
-
-                    </td>
-
-                    <td class="value">
-
-                        ${company.email}
-
-                    </td>
-
-                </tr>
-
-            </table>
-
-        </div>
-
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- CARRIER INFORMATION -->
-    <!-- ========================= -->
-
-    <div class="section">
-
-        <div class="section-title">
-
-            Carrier Information
-
-        </div>
-
-        <table class="info-table">
-
-            <tr>
-
-                <td class="label">
-
-                    Carrier Name
-
-                </td>
-
-                <td class="value">
-
-                    ${formData.carrierName || "N/A"}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    Company Name
-
-                </td>
-
-                <td class="value">
-
-                    ${formData.companyName || "N/A"}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    MC / DOT
-
-                </td>
-
-                <td class="value">
-
-                    ${formData.mcDot || "N/A"}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    Driver Name
-
-                </td>
-
-                <td class="value">
-
-                    ${formData.driverName || "N/A"}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    Driver Phone
-
-                </td>
-
-                <td class="value">
-
-                    ${formData.driverPhone || "N/A"}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    License Number
-
-                </td>
-
-                <td class="value">
-
-                    ${formData.licenseNumber || "N/A"}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    Phone Number
-
-                </td>
-
-                <td class="value">
-
-                    ${formData.phone || "N/A"}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    Carrier Type
-
-                </td>
-
-                <td class="value">
-
-                    ${carrierTypeLabel}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    Agreement Date
-
-                </td>
-
-                <td class="value">
-
-                    ${agreementDate}
-
-                </td>
-
-            </tr>
-
-        </table>
-
-    </div>
-
-<div class="section">
-
-    <div class="section-title">
-
-        Load Pickup and Delivery Schedule
-
-    </div>
-
-    <ul>
-
-        ${["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-          .map(
-            (day) => `
-        <li>
-
-            Pickup on ${day} between 7:00 AM and 10:00 AM. Delivery is
-            available 24/7 with backhaul service.
-
-        </li>
-        `,
-          )
-          .join("")}
-
-    </ul>
-
-</div>
-
-<div class="section">
-
-    <div class="section-title">
-
-        Carrier Setup Agreement and Security Practices
-
-    </div>
-
-    <p>
-
-        This Carrier Setup Agreement between ${company.name} and the
-        Carrier/Shipper is intended to support cooperation and strengthen
-        cargo and equipment security throughout the transportation process.
-        The Carrier/Shipper agrees to establish, maintain, and update a
-        traceable, documented security program consistent with applicable
-        guidelines. If the Carrier/Shipper does not oversee a manufacturing
-        site, distribution point, or another part of the supply chain, it will
-        encourage the responsible third parties to follow appropriate
-        security practices.
-
-    </p>
-
-</div>
-
-
-    <!-- ========================= -->
-<!-- SELECTED SERVICES -->
-<!-- ========================= -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        Selected Services
-
-    </div>
-
-    ${
-      formattedServices.length
-        ? `
-    <ul>
-
-        ${formattedServices
-          .map(
-            (service) => `
-        <li>
-
-            ${service}
-
-        </li>
-        `
-          )
-          .join("")}
-
-    </ul>
-    `
-        : `
-    <p>
-
-        No services selected.
-
-    </p>
-    `
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trucking Service Agreement</title>
+  <style>
+    :root {
+      --brand-black: #08090B;
+      --brand-white: #FFFFFF;
+      --brand-gold: #FFB800;
+      --brand-gold-dark: #E5A000;
+      --brand-dark-gray: #17191D;
+      --brand-light-gray: #F3F4F6;
+      --brand-border: #D8DADD;
+      --body-text: #34363A;
     }
 
-</div>
+    * {
+      box-sizing: border-box;
+    }
 
+    @page {
+      size: Letter;
+      margin: 0.72in 0.62in 0.7in;
+    }
 
-<!-- ========================= -->
-<!-- PAYMENT TERMS -->
-<!-- ========================= -->
+    html {
+      color: var(--body-text);
+      background: var(--brand-white);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8.5pt;
+      line-height: 1.36;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
 
-<div class="section">
+    body {
+      margin: 0;
+    }
 
-    <div class="section-title">
+    p {
+      margin: 0 0 6pt;
+    }
 
-        Payment Terms
+    .document-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20pt;
+      padding: 0 0 10pt;
+      border-bottom: 2pt solid var(--brand-gold);
+    }
 
+    .logo {
+      display: block;
+      width: 116pt;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .company {
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    .company-name {
+      margin: 0 0 3pt;
+      color: var(--brand-black);
+      font-size: 15pt;
+      font-weight: 800;
+      letter-spacing: 0.15pt;
+    }
+
+    .company-meta {
+      margin: 0;
+      color: var(--body-text);
+      font-size: 8pt;
+    }
+
+    .title {
+      position: relative;
+      margin: 12pt 0 9pt;
+      padding: 0 0 8pt;
+      border-bottom: 1pt solid var(--brand-border);
+      text-align: center;
+    }
+
+    .title::after {
+      position: absolute;
+      bottom: -1pt;
+      left: calc(50% - 27pt);
+      width: 54pt;
+      height: 2pt;
+      background: var(--brand-gold);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--brand-black);
+      font-size: 20pt;
+      font-weight: 800;
+      letter-spacing: 0.65pt;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin-top: 4pt;
+      color: #55585D;
+      font-size: 9pt;
+    }
+
+    .agreement-summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 14pt;
+      margin: 0 0 8pt;
+      padding: 6pt 8pt;
+      border: 0.7pt solid var(--brand-border);
+      border-left: 3pt solid var(--brand-gold);
+      background: var(--brand-light-gray);
+      font-size: 8.5pt;
+    }
+
+    .agreement-summary strong {
+      color: var(--brand-black);
+    }
+
+    .intro {
+      margin: 0 0 8pt;
+      line-height: 1.45;
+    }
+
+    .section {
+      margin: 0 0 7pt;
+    }
+
+    .information-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12pt;
+      margin-bottom: 7pt;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .information-grid .section {
+      margin: 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 7pt;
+      margin: 0 0 4pt;
+      padding: 0 0 3pt;
+      border-bottom: 0.8pt solid var(--brand-gold);
+      color: var(--brand-black);
+      font-size: 10pt;
+      font-weight: 800;
+      letter-spacing: 0.25pt;
+      text-transform: uppercase;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    .section-title::before {
+      width: 3pt;
+      height: 12pt;
+      flex: 0 0 3pt;
+      border-radius: 1pt;
+      background: var(--brand-gold);
+      content: "";
+    }
+
+    .section p {
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .info-table,
+    .services-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .info-table tr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .info-table th,
+    .info-table td,
+    .services-table th,
+    .services-table td {
+      padding: 3pt 6pt;
+      border-bottom: 0.6pt solid #E1E2E4;
+      text-align: left;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    .info-table th {
+      width: 37%;
+      color: #56595E;
+      font-size: 8pt;
+      font-weight: 700;
+    }
+
+    .info-table td {
+      color: var(--brand-dark-gray);
+      font-size: 8.5pt;
+      font-weight: 500;
+    }
+
+    .company-info {
+      padding: 3pt 8pt;
+      border: 0.7pt solid var(--brand-border);
+      border-radius: 3pt;
+    }
+
+    .company-info .info-table th {
+      width: 35%;
+    }
+
+    .services-table {
+      font-size: 8.25pt;
+    }
+
+    .services-table thead {
+      display: table-header-group;
+    }
+
+    .services-table th {
+      color: var(--brand-black);
+      background: var(--brand-light-gray);
+      font-size: 7.5pt;
+      font-weight: 800;
+      letter-spacing: 0.3pt;
+      text-transform: uppercase;
+    }
+
+    .services-table th:first-child {
+      width: 39%;
+    }
+
+    .services-table th:nth-child(2) {
+      width: 17%;
+    }
+
+    .services-table th:nth-child(3) {
+      width: 44%;
+    }
+
+    .services-table tr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .services-table .amount {
+      color: var(--brand-dark-gray);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .empty-state {
+      color: #65686D;
+      font-style: italic;
+      text-align: center !important;
+    }
+
+    .legal-list {
+      margin: 0;
+      padding-left: 16pt;
+    }
+
+    .legal-list li {
+      margin: 0 0 2pt;
+      padding-left: 2pt;
+    }
+
+    .payment-method {
+      margin: 0 0 5pt;
+      padding: 5pt 7pt;
+      border-left: 2.5pt solid var(--brand-gold);
+      background: var(--brand-light-gray);
+    }
+
+    .payment-method strong {
+      color: var(--brand-black);
+    }
+
+    .signature-section {
+      margin-top: 7pt;
+      padding: 6pt;
+      border: 0.8pt solid var(--brand-border);
+      border-radius: 3pt;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .signature-section .section-title {
+      margin-bottom: 7pt;
+    }
+
+    .signature-table th {
+      width: 31%;
+    }
+
+    .signature-cell {
+      height: 46pt;
+      vertical-align: bottom !important;
+    }
+
+    .signature-image {
+      display: block;
+      max-width: 220pt;
+      max-height: 48pt;
+      object-fit: contain;
+      object-position: left bottom;
+    }
+
+    .signature-placeholder {
+      display: block;
+      width: 220pt;
+      height: 30pt;
+      border-bottom: 0.8pt solid #85888D;
+    }
+
+    .certificate-page {
+      min-height: 9.45in;
+      break-before: page;
+      page-break-before: always;
+    }
+
+    .certificate-title {
+      margin: 0 0 4pt;
+      color: var(--brand-black);
+      font-size: 17pt;
+      font-weight: 800;
+      letter-spacing: 0.5pt;
+      text-align: center;
+    }
+
+    .certificate-subtitle {
+      margin: 0 0 14pt;
+      color: #62656A;
+      font-size: 8.5pt;
+      text-align: center;
+    }
+
+    .certificate-rule {
+      height: 2pt;
+      margin: 0 0 12pt;
+      background: var(--brand-gold);
+    }
+
+    .certificate img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 8.45in;
+      margin: 0 auto;
+      object-fit: contain;
+      object-position: center top;
+    }
+  </style>
+</head>
+<body>
+  <header class="document-header">
+    <img src="${logoPath}" class="logo" alt="${escapeHtml(company.brand)} logo" />
+    <div class="company">
+      <p class="company-name">${escapeHtml(company.brand)}</p>
+      <p class="company-meta"><strong>MC/MX/FF:</strong> ${escapeHtml(company.mcNumber)} &nbsp;|&nbsp; <strong>USDOT:</strong> ${escapeHtml(company.usdotNumber)}</p>
+      <p class="company-meta">${escapeHtml(company.physicalAddress)}</p>
+      <p class="company-meta">${escapeHtml(company.email)} &nbsp;|&nbsp; ${escapeHtml(company.website)}</p>
     </div>
+  </header>
 
-    <p>
-
-        <strong>Selected Option :</strong>
-
-        ${formData.paymentTermsMethod || "N/A"}
-
-    </p>
-
-</div>
-
-
-<!-- ========================= -->
-<!-- CLIENT RESPONSIBILITIES -->
-<!-- ========================= -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        Client Responsibilities
-
-    </div>
-
-    <ul>
-
-        <li>
-
-            Provide accurate information.
-
-        </li>
-
-        <li>
-
-            Maintain insurance & authority.
-
-        </li>
-
-        <li>
-
-            Professional communication.
-
-        </li>
-
-        <li>
-
-            No fraud or chargebacks.
-
-        </li>
-
-    </ul>
-
-</div>
-
-    <!-- ========================= -->
-<!-- LIMITATION OF LIABILITY -->
-<!-- ========================= -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        Limitation Of Liability
-
-    </div>
-
-    <p>
-
-        The BROKER shall not be liable for delays,
-        freight market fluctuations, weather conditions,
-        shipper delays, receiver delays or any events
-        beyond the reasonable control of the BROKER.
-
-    </p>
-
-</div>
-
-
-
-<!-- ========================= -->
-<!-- PAYMENT INFORMATION -->
-<!-- ========================= -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        Payment Information
-
-    </div>
-
-    <table class="info-table">
-
-        <tr>
-
-            <td class="label">
-
-                Method
-
-            </td>
-
-            <td class="value">
-
-                ${formData.paymentMethod || "2% for Quick Pay (Same Day)"}
-
-            </td>
-
-        </tr>
-
-        <tr>
-
-            <td class="label">
-
-                Bank
-
-            </td>
-
-            <td class="value">
-
-                ${formData.bankName || "N/A"}
-
-            </td>
-
-        </tr>
-
-        <tr>
-
-            <td class="label">
-
-                Account
-
-            </td>
-
-            <td class="value">
-
-                ${formData.accountNumber || "N/A"}
-
-            </td>
-
-        </tr>
-
-        <tr>
-
-            <td class="label">
-
-                Routing
-
-            </td>
-
-            <td class="value">
-
-                ${formData.routingNumber || "N/A"}
-
-            </td>
-
-        </tr>
-
-    </table>
-
-</div>
-
-
-
-<!-- ========================= -->
-<!-- TERMS -->
-<!-- ========================= -->
-
-<div class="page-break"></div>
-
-<div class="section">
-
-    <div class="section-title">
-
-        Terms
-
-    </div>
-
-    <p>
-
-        The term of this Agreement shall be 120 days, commencing on the date listed above. If not
-cancelled by one of the Parties, the Agreement shall automatically renew itself for consecutive
-one-year terms.
-This Agreement cannot, by law, exempt the CARRIER / BROKER from any regulatory sanctions in
-the event that discrepancies are discovered during a physical examination of cargo or the review
-of documents associated with the carrier's Customs transactions.
-Nothing in the Agreement relieves CARRIER / BROKER of any responsibilities with respect to
-Canadian and United States law, including Customs Regulations.
-
-
-    </p>
-
-</div>
-
-<div class="section">
-
-    <div class="section-title">
-
-        Entire Contract
-
-    </div>
-
-    <p>
-
-        This CARRIER SETUP / AGREEMENT contains all the terms and conditions
-        that fully represent the mutual understanding and CARRIER SETUP /
-        AGREEMENT between the parties. It supersedes all prior CARRIER SETUP /
-        AGREEMENT, whether verbal or written, and no other understandings -
-        express or implied - exist between the parties, except as expressly
-        stated in this document.
-
-    </p>
-
-</div>
-
-<div class="section">
-
-    <div class="section-title">
-
-        Notices
-
-    </div>
-
-    <p>
-
-        If the Carrier intends to terminate the contract or change jobs, the
-        Carrier must provide at least 15 days' prior notice before ending the
-        contract.
-
-    </p>
-
-</div>
-
-
-<!-- ========================= -->
-<!-- BROKER OBLIGATIONS -->
-<!-- ========================= -->
-
-<div class="section">
-
-    <div class="section-title">
-
-        Broker Obligations
-
-    </div>
-
-    <p>
-
-        BROKER shall pay CARRIER for transportation services
-        rendered in accordance with the rates agreed upon in
-        each Load Confirmation issued under this Agreement.
-
-    </p>
-
-    <p>
-
-        Any Load Confirmation issued by the BROKER shall
-        supplement and amend this Agreement whenever its
-        terms conflict with this Agreement.
-
-    </p>
-
-    <p>
-
-        This Agreement and each Load Confirmation govern
-        all assessorial services. CARRIER shall not invoice
-        any accessorial charges unless approved in writing.
-
-    </p>
-
-    <p>
-
-        Rates may be amended orally; however, they must be
-        confirmed in writing within five (5) working days in
-        order to remain binding upon both Parties.
-
-    </p>
-
-    <p>
-
-        As a condition precedent to payment, CARRIER shall
-        provide Proof of Delivery (POD) together with the
-        freight invoice confirming final delivery.
-
-    </p>
-
-    <p>
-
-        BROKER agrees to arrange transportation services
-        in compliance with all applicable Federal, State and
-        local laws governing freight brokerage operations.
-
-    </p>
-
-    <p>
-
-        The Parties acknowledge that BROKER'S responsibility
-        is limited solely to arranging transportation services
-        and does not include possession of freight or control
-        over the methods used to transport freight.
-
-    </p>
-
-</div>
-
-        <!-- ========================= -->
-    <!-- CARRIER DETAILS -->
-    <!-- ========================= -->
-
-    <div class="section">
-
-        <div class="section-title">
-
-            Carrier Details
-
-        </div>
-
-        <table class="info-table">
-
-            <tr>
-
-                <td class="label">
-                    Signature
-                </td>
-
-                <td class="value">
-
-                    ${
-                        formData.signature
-                            ? `<img
-                                   src="${formData.signature}"
-                                   style="max-width:220px;max-height:80px;"
-                               />`
-                            : "____________________________"
-                    }
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    Print Name
-
-                </td>
-
-                <td class="value">
-
-                    ${formData.printName || formData.carrierName || "N/A"}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    Company Name
-
-                </td>
-
-                <td class="value">
-
-                    ${formData.companyName || "N/A"}
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td class="label">
-
-                    Agreement Date
-
-                </td>
-
-                <td class="value">
-
-                    ${agreementDate}
-
-                </td>
-
-            </tr>
-
-        </table>
-
-    </div>
-
-
-
-<!-- ================================================= -->
-<!-- PAGE 2 -->
-<!-- ================================================= -->
-
-<div class="page-break"></div>
-
-<div class="page">
-
+  <main>
     <div class="title">
+      <h1>TRUCKING SERVICE AGREEMENT</h1>
+      <p class="subtitle">(Dedicated Lanes, Dispatch, Trailer Rental &amp; Setup Services)</p>
+    </div>
 
-        <h1>
+    <div class="agreement-summary">
+      <span><strong>Agreement Date:</strong> ${escapeHtml(agreementDate)}</span>
+      <span><strong>Tracking ID:</strong> ${escapeHtml(formData.trackingId || "N/A")}</span>
+    </div>
 
-            FMCSA BROKER CERTIFICATE
+    <p class="intro">
+      This Agreement is made and entered into on <strong>${escapeHtml(agreementDate)}</strong>
+      by and between <strong>${escapeHtml(company.name)}</strong> (hereinafter referred to as
+      the <strong>"Company"</strong>) and the Carrier identified below.
+    </p>
 
-        </h1>
-
-        <div class="subtitle">
-
-            Reference Document
-
+    <div class="information-grid">
+      <section class="section">
+        <h2 class="section-title">Company Information</h2>
+        <div class="company-info">
+          <table class="info-table">
+            <tbody>
+              ${detailRow("Company Name", company.name)}
+              ${detailRow("MC/MX/FF Number", company.mcNumber)}
+              ${detailRow("USDOT Number", company.usdotNumber)}
+              ${detailRow("Physical Address", company.physicalAddress)}
+              ${detailRow("Mailing Address", company.mailingAddress)}
+              ${detailRow("Email / Website", `${company.email} | ${company.website}`)}
+            </tbody>
+          </table>
         </div>
+      </section>
 
+      <section class="section">
+        <h2 class="section-title">Carrier Information</h2>
+        <table class="info-table">
+          <tbody>
+            ${detailRow("Carrier Name", formData.carrierName)}
+            ${detailRow("Company Name", formData.companyName)}
+            ${detailRow("MC / DOT", formData.mcDot)}
+            ${detailRow("Driver Name", formData.driverName)}
+            ${detailRow("Driver Phone", formData.driverPhone)}
+            ${detailRow("License Number", formData.licenseNumber)}
+            ${detailRow("Phone Number", formData.phone)}
+            ${detailRow("Carrier Type", carrierTypeLabel)}
+            ${detailRow("Agreement Date", agreementDate)}
+          </tbody>
+        </table>
+      </section>
     </div>
 
+    <section class="section">
+      <h2 class="section-title">Selected Services</h2>
+      <table class="services-table">
+        <thead>
+          <tr>
+            <th scope="col">Service Name</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Refundability / Terms</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${serviceRows}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Payment Terms</h2>
+      <p class="payment-method"><strong>Selected Option:</strong> ${escapeHtml(formData.paymentTermsMethod || "N/A")}</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Client Responsibilities</h2>
+      <ul class="legal-list">
+        <li>Provide accurate information.</li>
+        <li>Maintain insurance &amp; authority.</li>
+        <li>Professional communication.</li>
+        <li>No fraud or chargebacks.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Limitation of Liability</h2>
+      <p>
+        The BROKER shall not be liable for delays, freight market fluctuations,
+        weather conditions, shipper delays, receiver delays or any events beyond
+        the reasonable control of the BROKER.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Payment Information</h2>
+      <table class="info-table">
+        <tbody>
+          ${detailRow("Method", formData.paymentMethod || "2% for Quick Pay (Same Day)")}
+          ${detailRow("Bank", formData.bankName)}
+          ${detailRow("Account", formData.accountNumber)}
+          ${detailRow("Routing", formData.routingNumber)}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Terms</h2>
+      <p>
+        The term of this Agreement shall be 120 days, commencing on the date listed above.
+        If not cancelled by one of the Parties, the Agreement shall automatically renew
+        itself for consecutive one-year terms. This Agreement cannot, by law, exempt the
+        CARRIER / BROKER from any regulatory sanctions in the event that discrepancies
+        are discovered during a physical examination of cargo or the review of documents
+        associated with the carrier's Customs transactions. Nothing in the Agreement
+        relieves CARRIER / BROKER of any responsibilities with respect to Canadian and
+        United States law, including Customs Regulations.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Entire Contract</h2>
+      <p>
+        This CARRIER SETUP / AGREEMENT contains all the terms and conditions that fully
+        represent the mutual understanding and CARRIER SETUP / AGREEMENT between the
+        parties. It supersedes all prior CARRIER SETUP / AGREEMENT, whether verbal or
+        written, and no other understandings - express or implied - exist between the
+        parties, except as expressly stated in this document.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Notices</h2>
+      <p>
+        If the Carrier intends to terminate the contract or change jobs, the Carrier must
+        provide at least 15 days' prior notice before ending the contract.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Broker Obligations</h2>
+      <p>
+        BROKER shall pay CARRIER for transportation services rendered in accordance with
+        the rates agreed upon in each Load Confirmation issued under this Agreement.
+        Any Load Confirmation issued by the BROKER shall supplement and amend this
+        Agreement whenever its terms conflict with this Agreement. This Agreement and
+        each Load Confirmation govern all assessorial services. CARRIER shall not invoice
+        any accessorial charges unless approved in writing. Rates may be amended orally;
+        however, they must be confirmed in writing within five (5) working days in order
+        to remain binding upon both Parties. As a condition precedent to payment, CARRIER
+        shall provide Proof of Delivery (POD) together with the freight invoice confirming
+        final delivery. BROKER agrees to arrange transportation services in compliance
+        with all applicable Federal, State and local laws governing freight brokerage
+        operations. The Parties acknowledge that BROKER'S responsibility is limited
+        solely to arranging transportation services and does not include possession of
+        freight or control over the methods used to transport freight.
+      </p>
+    </section>
+
+    <section class="signature-section">
+      <h2 class="section-title">Carrier Details and Signature</h2>
+      <table class="info-table signature-table">
+        <tbody>
+          <tr>
+            <th scope="row">Carrier Signature</th>
+            <td class="signature-cell">${signature}</td>
+          </tr>
+          ${detailRow("Printed Name", formData.printName || formData.carrierName)}
+          ${detailRow("Company Name", formData.companyName)}
+          ${detailRow("Agreement Date", agreementDate)}
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <section class="certificate-page">
+    <h2 class="certificate-title">FMCSA BROKER CERTIFICATE</h2>
+    <p class="certificate-subtitle">Reference Document</p>
+    <div class="certificate-rule"></div>
     <div class="certificate">
-
-        <img src="${certificatePath}" alt="Certificate" style="width:100%;" />
-
+      <img src="${certificatePath}" alt="FMCSA Broker Certificate" />
     </div>
-
-</div>
-
-
-
-<div class="footer">
-
-    <span>
-
-        Trucking Service Agreement
-
-    </span>
-
-    <span>
-
-        Generated on ${agreementDate}
-
-    </span>
-
-</div>
+  </section>
 
 </body>
-
-</html>
-
-`;
+</html>`;
 };
