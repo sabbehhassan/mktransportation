@@ -48,6 +48,14 @@ export const CARRIER_SERVICES = [
     note: "Application support",
     icon: ShieldCheck,
   },
+  {
+    value: "MC Leasing for 3 Months - $600",
+    title: "MC Leasing for 3 Months",
+    price: "$600",
+    description: "MC leasing option for a three-month period.",
+    note: "3-month term",
+    icon: Truck,
+  },
 ];
 
 export const ONBOARDING_LANE_SETUP_VALUE = CARRIER_SERVICES.find(
