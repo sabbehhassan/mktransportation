@@ -507,10 +507,10 @@ export default function FinalSubmissionStep({
                   return (
                     <label
                       key={method.value}
-                      className={`relative flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all duration-200 ${
+                      className={`relative flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all duration-200 ${
                         isSelected
-                          ? "border-[var(--brand-gold)] bg-[var(--brand-light-gray)] shadow-[0_0_0_1px_rgba(23,102,91,0.12)]"
-                          : "border-gray-200 bg-white hover:border-[var(--brand-gold)]/40 hover:bg-[var(--brand-light-gray)]"
+                          ? "border-[var(--brand-gold)] bg-[var(--brand-gold)]/10 shadow-[0_12px_30px_rgba(255,184,0,0.18)]"
+                          : "border-[var(--brand-black)]/20 bg-white shadow-[0_5px_16px_rgba(8,9,11,0.05)] hover:border-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/5"
                       }`}
                     >
                       <input

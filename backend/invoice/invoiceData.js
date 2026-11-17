@@ -19,6 +19,10 @@ const SERVICE_CATALOG = new Map([
     "Insurance Assistance - $399",
     { description: "Insurance Assistance", rate: 399 },
   ],
+  [
+    "MC Leasing for 3 Months - $600",
+    { description: "MC Leasing for 3 Months", rate: 600 },
+  ]
 ]);
 
 const PAYMENT_METHODS = new Set([

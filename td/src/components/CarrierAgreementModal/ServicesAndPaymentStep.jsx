@@ -135,10 +135,10 @@ export default function ServicesAndPaymentStep({
               return (
                 <label
                   key={service.value}
-                  className={`flex cursor-pointer gap-4 rounded-2xl border p-5 transition sm:p-6 ${
+                  className={`flex cursor-pointer gap-4 rounded-2xl border-2 p-5 transition sm:p-6 ${
                     isSelected
-                      ? "border-[var(--brand-gold)] bg-[var(--brand-gold)]/5 shadow-[0_10px_28px_rgba(23,102,91,0.09)]"
-                      : "border-[var(--brand-black)]/10 bg-white hover:border-[var(--brand-gold)]/70 hover:shadow-md"
+                      ? "border-[var(--brand-gold)] bg-[var(--brand-gold)]/10 shadow-[0_12px_32px_rgba(255,184,0,0.18)]"
+                      : "border-[var(--brand-black)]/25 bg-white shadow-[0_6px_18px_rgba(8,9,11,0.06)] hover:border-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/5 hover:shadow-[0_10px_24px_rgba(255,184,0,0.14)]"
                   }`}
                 >
                   <input
@@ -148,10 +148,10 @@ export default function ServicesAndPaymentStep({
                     className="mt-1 h-4 w-4 shrink-0 accent-[var(--brand-gold)]"
                   />
                   <span
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
+                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${
                       isSelected
                         ? "bg-[var(--brand-black)] text-[var(--brand-gold)]"
-                        : "bg-[var(--brand-black)]/5 text-brand-black"
+                        : "border border-[var(--brand-gold)]/50 bg-[var(--brand-gold)]/10 text-brand-black"
                     }`}
                   >
                     <Icon size={21} />
@@ -221,10 +221,10 @@ export default function ServicesAndPaymentStep({
                   return (
                     <label
                       key={option.value}
-                      className={`flex cursor-pointer items-center gap-3 rounded-2xl border p-4 transition ${
+                      className={`flex min-h-[76px] cursor-pointer items-center gap-3 rounded-2xl border-2 p-4 transition ${
                         isSelected
-                          ? "border-[var(--brand-gold)] bg-[var(--brand-light-gray)] ring-1 ring-[var(--brand-gold)]/15"
-                          : "border-[var(--brand-light-gray)] bg-white hover:border-[var(--brand-gold)]/50"
+                          ? "border-[var(--brand-gold)] bg-[var(--brand-gold)]/10 shadow-[0_10px_26px_rgba(255,184,0,0.16)]"
+                          : "border-[var(--brand-black)]/20 bg-white shadow-[0_5px_16px_rgba(8,9,11,0.05)] hover:border-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/5"
                       }`}
                     >
                       <input
