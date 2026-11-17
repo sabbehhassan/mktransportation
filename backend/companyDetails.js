@@ -3,7 +3,7 @@ module.exports = {
   brand: "MKTransportation Group",
   website: "mktransportationgroup.com",
   email: "contact@mktransportationgroup.com",
-  adminEmail: "admin@mktransportationgroup.com",
+  adminEmail: "inna@mktransportationgroup.com",
   mcNumber: "MC-110984",
   usdotNumber: "3160712",
   physicalAddress: "P.O. Box 419, Croydon, PA 19021",

@@ -507,10 +507,10 @@ export default function FinalSubmissionStep({
                   return (
                     <label
                       key={method.value}
-                      className={`relative flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all duration-200 ${
+                      className={`relative flex cursor-pointer items-start gap-3 rounded-2xl border-[3px] p-4 transition-all duration-200 ${
                         isSelected
-                          ? "border-[var(--brand-gold)] bg-[var(--brand-gold)]/10 shadow-[0_12px_30px_rgba(255,184,0,0.18)]"
-                          : "border-[var(--brand-black)]/20 bg-white shadow-[0_5px_16px_rgba(8,9,11,0.05)] hover:border-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/5"
+                          ? "border-[var(--brand-gold)] bg-[var(--brand-gold)] shadow-[0_14px_34px_rgba(255,184,0,0.32)] ring-2 ring-[var(--brand-gold)]/25"
+                          : "border-[var(--brand-gold-dark)]/75 bg-[var(--brand-gold)]/5 shadow-[0_8px_20px_rgba(8,9,11,0.10)] hover:border-[var(--brand-gold)] hover:bg-[var(--brand-gold)]/10"
                       }`}
                     >
                       <input
@@ -528,7 +528,7 @@ export default function FinalSubmissionStep({
                         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
                           isSelected
                             ? "bg-[var(--brand-black)] text-[var(--brand-gold)]"
-                            : "bg-[var(--brand-light-gray)] text-brand-black"
+                            : "border border-[var(--brand-gold)]/60 bg-[var(--brand-gold)]/15 text-brand-black"
                         }`}
                       >
                         <Icon size={20} />
@@ -536,7 +536,7 @@ export default function FinalSubmissionStep({
 
                       <div className="min-w-0 flex-1">
                         <div className="flex items-start justify-between gap-2">
-                          <span className="text-sm font-bold leading-5 text-[var(--brand-black)]">
+                          <span className="text-sm font-extrabold leading-5 text-[var(--brand-black)]">
                             {method.title}
                           </span>
 
